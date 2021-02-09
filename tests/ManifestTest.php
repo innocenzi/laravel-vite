@@ -11,7 +11,7 @@ class ManifestTest extends TestCase
     /** @test */
     public function it_can_read_a_manifest_from_the_config()
     {
-        Config::set('vite.build_path', __DIR__ . './manifests');
+        Config::set('vite.build_path', __DIR__ . '/manifests');
         $manifest = Manifest::read();
 
         $this->assertCount(1, $manifest->getEntries());
