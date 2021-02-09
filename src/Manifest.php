@@ -5,6 +5,7 @@ namespace Innocenzi\Vite;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\HtmlString;
 
 class Manifest implements Htmlable
 {
@@ -44,9 +45,14 @@ class Manifest implements Htmlable
     /**
      * Gets the manifest entry for the given name.
      */
-    public function getEntry(string $name): ?ManifestEntry
+    public function getEntry(string $name): ManifestEntry | Htmlable
     {
-        return $this->entries->get($name);
+        // TODO: clean up
+        return tap(new HtmlString($this->entries->get($name, '')), function (HtmlString $entry) use ($name) {
+            if ($entry->isEmpty() && $name !== 'client') {
+                throw new \Exception("Entry point '${name}' does not exist.");
+            }
+        });
     }
 
     /**

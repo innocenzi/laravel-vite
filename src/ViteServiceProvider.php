@@ -21,13 +21,13 @@ class ViteServiceProvider extends PackageServiceProvider
     {
         Blade::directive('vite', function ($entryName = null) {
             if (! $entryName) {
-                return sprintf('<?php echo %s::read()->toHtml(); ?>', Manifest::class);
+                return sprintf('<?php echo %s::read(); ?>', Manifest::class);
             }
 
             return sprintf(
-                '<?php echo %s::read()->getEntry(e(%s))->toHtml(); ?>',
+                '<?php echo %s::read()->getEntry(e(%s)); ?>',
                 Manifest::class,
-                empty($entryName) ? '"resources/scripts/main.ts"' : $entryName
+                $entryName
             );
         });
     }

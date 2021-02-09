@@ -24,12 +24,12 @@ class BladeDirectivesTest extends TestCase
     public function it_parses_script_directive_arguments()
     {
         $this->assertEquals(
-            '<?php echo Innocenzi\Vite\Manifest::read()->toHtml(); ?>',
+            '<?php echo Innocenzi\Vite\Manifest::read(); ?>',
             $this->directives['vite']()
         );
         
         $this->assertEquals(
-            '<?php echo Innocenzi\Vite\Manifest::read()->getEntry(e(resources/ts/main.ts))->toHtml(); ?>',
+            '<?php echo Innocenzi\Vite\Manifest::read()->getEntry(e(resources/ts/main.ts)); ?>',
             $this->directives['vite']('resources/ts/main.ts')
         );
     }
