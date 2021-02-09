@@ -1,0 +1,19 @@
+{
+    "resources/js/app.js": {
+        "file": "app.83b2e884.js",
+        "src": "resources/js/app.js",
+        "isEntry": true,
+        "dynamicImports": ["resources/js/test.js"],
+        "css": ["app.e33dabbf.css"]
+    },
+    "resources/js/admin.js": {
+        "file": "admin.7df16086.js",
+        "src": "resources/js/admin.js",
+        "isEntry": true
+    },
+    "resources/js/test.js": {
+        "file": "test.70e16183.js",
+        "src": "resources/js/test.js",
+        "isDynamicEntry": true
+    }
+}

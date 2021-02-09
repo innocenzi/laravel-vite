@@ -2,24 +2,33 @@
 
 namespace Innocenzi\Vite;
 
+use Illuminate\Support\Facades\Blade;
+use Innocenzi\Vite\Commands\ViteCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Innocenzi\Vite\Commands\ViteCommand;
 
 class ViteServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
         $package
             ->name('laravel-vite')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_laravel_vite_table')
-            ->hasCommand(ViteCommand::class);
+            ->hasConfigFile();
+        // ->hasCommand(ViteCommand::class);
+    }
+
+    public function registeringPackage()
+    {
+        Blade::directive('vite', function ($entryName = null) {
+            if (! $entryName) {
+                return sprintf('<?php echo %s::read()->toHtml(); ?>', Manifest::class);
+            }
+
+            return sprintf(
+                '<?php echo %s::read()->getEntry(e(%s))->toHtml(); ?>',
+                Manifest::class,
+                empty($entryName) ? '"resources/scripts/main.ts"' : $entryName
+            );
+        });
     }
 }
