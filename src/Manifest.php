@@ -4,8 +4,11 @@ namespace Innocenzi\Vite;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
+use Innocenzi\Vite\Exceptions\ManifestNotFound;
+use Innocenzi\Vite\Exceptions\NoSuchEntrypointException;
+use Stringable;
 
-class Manifest implements Htmlable
+class Manifest implements Htmlable, Stringable
 {
     const MANIFEST_FILE_NAME = 'manifest.json';
 
@@ -36,18 +39,16 @@ class Manifest implements Htmlable
     /**
      * Gets the manifest entry for the given name.
      */
-    public function getEntry(string $entry): ?ManifestEntry
+    public function getEntry(string $entry): ManifestEntry
     {
         return $this->entries->get(
             $entry,
-            fn () => throw new \Exception("${entry} does not exist in the manifest. Make sure you added an entry point in the Vite configuration.")
+            fn () => throw new NoSuchEntrypointException($entry)
         );
     }
 
     /**
      * Gets every entry.
-     *
-     * @return Collection<ManifestEntry>
      */
     public function getEntries(): Collection
     {
@@ -62,7 +63,7 @@ class Manifest implements Htmlable
         $path ??= \public_path(\config('vite.build_path') . '/' . self::MANIFEST_FILE_NAME);
 
         if (! \file_exists($path)) {
-            throw new \LogicException(\sprintf('The manifest could not be found. Did you run the build command? Tried: %s', $path));
+            throw new ManifestNotFound($path);
         }
 
         return $path;
