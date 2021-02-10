@@ -164,6 +164,20 @@ export default createViteConfiguration()
   .withOutput("public/dist")
 ```
 
+Lastly, if you need more flexibility, you can use the `merge` method to provide an actual Vite configuration: 
+
+```ts
+// vite.config.ts
+import { createViteConfiguration } from "laravel-vite";
+
+export default createViteConfiguration()
+  .withEntry("resources/js/app.js")
+  .merge({
+    // This is a Vite configuration you would put in `defineConfig`
+    // It is deeply merged with `withEntry`, `withStaticAssets` and `withOutput`
+  })
+```
+
 In most cases, you don't need to update your Vite configuration, except for adding entry points. When you do change it, make sure you update the `config/vite.php` configuration file accordingly.
 
 ## Package configuration
