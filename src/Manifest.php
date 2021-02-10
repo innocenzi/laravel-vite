@@ -4,8 +4,6 @@ namespace Innocenzi\Vite;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\HtmlString;
 
 class Manifest implements Htmlable
 {
@@ -13,18 +11,6 @@ class Manifest implements Htmlable
 
     protected Collection $rawEntries;
     protected Collection $entries;
-
-    public function __construct(string $path = null)
-    {
-        $this->rawEntries = Collection::make(\json_decode(\file_get_contents($this->getManifestPath($path)), true));
-        $this->entries = $this->rawEntries
-            ->map(fn (array $value) => ManifestEntry::fromArray($value))
-            ->filter(fn (ManifestEntry $entry) => $entry->isEntry);
-
-        if (App::environment('local')) {
-            $this->entries->prepend(ManifestEntry::client(), 'client');
-        }
-    }
 
     /**
      * Reads the manifest file and returns its representation.
@@ -35,24 +21,27 @@ class Manifest implements Htmlable
     }
 
     /**
-     * Gets the script tag for the client module.
+     * Creates a Manifest instance.
+     *
+     * @param string $path Absolute path to the manifest
      */
-    public function getClientScript(): string
+    public function __construct(string $path = null)
     {
-        return \sprintf('<script type="module" src="%s/@vite/client"></script>', \config('vite.hmr_url'));
+        $this->rawEntries = Collection::make(\json_decode(\file_get_contents($this->getManifestPath($path)), true));
+        $this->entries = $this->rawEntries
+            ->map(fn (array $value) => ManifestEntry::fromArray($value))
+            ->filter(fn (ManifestEntry $entry) => $entry->isEntry);
     }
 
     /**
      * Gets the manifest entry for the given name.
      */
-    public function getEntry(string $name): ManifestEntry | Htmlable
+    public function getEntry(string $entry): ?ManifestEntry
     {
-        // TODO: clean up
-        return tap(new HtmlString($this->entries->get($name, '')), function (HtmlString $entry) use ($name) {
-            if ($entry->isEmpty() && $name !== 'client') {
-                throw new \Exception("Entry point '${name}' does not exist.");
-            }
-        });
+        return $this->entries->get(
+            $entry,
+            fn () => throw new \Exception("${entry} does not exist in the manifest. Make sure you added an entry point in the Vite configuration.")
+        );
     }
 
     /**
@@ -64,17 +53,16 @@ class Manifest implements Htmlable
     {
         return $this->entries;
     }
-    
+
     /**
      * Gets the path to the manifest file.
      */
     protected function getManifestPath(string $path = null): string
     {
-        $path ??= \config('vite.build_path') . '/' . self::MANIFEST_FILE_NAME;
-        $path = \realpath($path);
+        $path ??= \public_path(\config('vite.build_path') . '/' . self::MANIFEST_FILE_NAME);
 
         if (! \file_exists($path)) {
-            throw new \LogicException(\sprintf('%s not found (looked for %s).', self::MANIFEST_FILE_NAME, $path));
+            throw new \LogicException(\sprintf('The manifest could not be found. Did you run the build command? Tried: %s', $path));
         }
 
         return $path;
