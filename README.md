@@ -33,7 +33,9 @@
 
 ### On a fresh project
 
-A [preset](https://usepreset.dev) is available to perform the installation. It will remove Laravel Mix, install this package and scaffold Vite into your Laravel application. 
+> **Narrator**: the preset is not actually available yet. Soon™.
+
+~~A [preset](https://usepreset.dev) is available to perform the installation. It will remove Laravel Mix, install this package and scaffold Vite into your Laravel application.~~
 
 ```bash
 $ npx apply innocenzi/laravel-vite
