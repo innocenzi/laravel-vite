@@ -1,6 +1,6 @@
 {
 	"name": "laravel-vite",
-	"version": "0.0.1-dev.4",
+	"version": "0.0.1-dev.5",
 	"author": "Enzo Innocenzi",
 	"license": "MIT",
 	"main": "dist/index.js",
@@ -28,6 +28,7 @@
 	},
 	"dependencies": {
 		"deepmerge": "^4.2.2",
-		"execa": "^5.0.0"
+		"execa": "^5.0.0",
+		"fast-glob": "^3.2.5"
 	}
 }

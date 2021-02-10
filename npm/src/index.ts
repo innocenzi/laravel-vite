@@ -1,6 +1,7 @@
 import { UserConfig } from "vite";
 import deepmerge from "deepmerge";
 import execa from "execa";
+import fs from "fast-glob";
 
 export class ViteConfiguration {
 	public publicDir: string;
@@ -27,6 +28,23 @@ export class ViteConfiguration {
 				https: protocol === "https",
 				port: port ? Number(port) : 3000,
 			};
+		}
+
+		if (config?.entrypoints) {
+			const directories = !Array.isArray(config?.entrypoints)
+				? [config?.entrypoints]
+				: config?.entrypoints;
+
+			const matches = fs.sync(
+				directories.map((directory) => `${directory}/*`),
+				{
+					onlyFiles: true,
+					globstar: false,
+					dot: false,
+				}
+			);
+
+			(this.build.rollupOptions!.input! as string[]).push(...matches);
 		}
 	}
 
@@ -93,6 +111,7 @@ export class ViteConfiguration {
 interface PhpConfiguration {
 	build_path: string;
 	dev_url: string;
+	entrypoints: false | string | string[];
 }
 
 /**

@@ -4,7 +4,10 @@ namespace Innocenzi\Vite;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
+use Symfony\Component\Finder\SplFileInfo;
 
 class Vite
 {
@@ -38,6 +41,23 @@ class Vite
             return $this->manifest->getEntry($entry);
         }
 
-        return new HtmlString(\sprintf('<script type="module" src="%s/%s"></script>', \config('vite.dev_url'), $entry));
+        // Try to find a file in the entry points that corresponds to
+        // this entry, to avoid having to specify the entire path
+        /** @var SplFileInfo $file */
+        $file = collect(\config('vite.entrypoints'))
+            ->map(fn ($directory) => \base_path($directory))
+            ->filter(fn ($directory) => File::isDirectory($directory))
+            ->map(fn ($directory) => File::files($directory))
+            ->flatten()
+            ->first(fn (SplFileInfo $file) => Str::contains($file->getFilename(), $entry));
+
+        // Converts the file into a path that can be
+        // understood by Vite
+        $file = Str::of($file?->getPathname())
+            ->replace(\base_path(), '')
+            ->replace('\\', '/')
+            ->ltrim('/');
+
+        return new HtmlString(\sprintf('<script type="module" src="%s/%s"></script>', \config('vite.dev_url'), $file->isEmpty() ? $entry : $file));
     }
 }

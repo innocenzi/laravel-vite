@@ -19,4 +19,18 @@ return [
     | This is used to generate the script tags when developing.
     */
     'dev_url' => 'http://localhost:3000',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Entrypoints
+    |--------------------------------------------------------------------------
+    | The files in the configured directories will be considered
+    | entry points and will not be required in the configuration file.
+    | To disable the feature, set to false.
+    */
+    'entrypoints' => [
+        'resources/js',
+        'resources/css',
+        'resources/scripts',
+    ],
 ];
