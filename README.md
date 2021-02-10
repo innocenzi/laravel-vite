@@ -57,7 +57,7 @@ $ composer require innocenzi/laravel-vite
 **2.** (Optional) Add the `laravel-vite` NPM package.
 
 ```bash
-$ yarn add innocenzi/laravel-vite --dev
+$ yarn add laravel-vite --dev
 ```
 
 The purpose of this package is to slightly simplify the Vite configuration file for its usage with Laravel.
