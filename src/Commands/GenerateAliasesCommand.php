@@ -41,7 +41,7 @@ class GenerateAliasesCommand extends Command
                 'baseUrl' => '.',
             ],
             'include' => ['resources/**/*'],
-        ], JSON_PRETTY_PRINT));
+        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
     protected function writeAliases(): void
@@ -51,7 +51,7 @@ class GenerateAliasesCommand extends Command
             ->mapWithKeys(fn ($value, $key) => ["${key}/*" => ["${value}/*"]])
             ->toArray();
 
-        File::put($this->getTsConfigPath(), \json_encode($tsconfig, JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES));
+        File::put($this->getTsConfigPath(), \json_encode($tsconfig, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
     protected function getTsConfigPath(): string
