@@ -12,6 +12,8 @@
 */
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Innocenzi\Vite\Vite;
 
 uses(Innocenzi\Vite\Tests\TestCase::class)->in('Unit');
@@ -34,4 +36,19 @@ function set_env(string $env): void
 function get_vite(string $manifest = 'manifest.json'): Vite
 {
     return new Vite(__DIR__ . "/Unit/manifests/${manifest}");
+}
+
+/**
+ * Creates a sandbox in which the base path is updated.
+ */
+function sandbox(callable $callback, string $base = __DIR__): string
+{
+    return tap($base . '/' . Str::random(), function (string $directory) use ($callback) {
+        $initialBasePath = base_path();
+        App::setBasePath($directory);
+        File::makeDirectory($directory);
+        $callback($directory);
+        File::deleteDirectory($directory);
+        App::setBasePath($initialBasePath);
+    });
 }

@@ -33,4 +33,15 @@ return [
         'resources/css',
         'resources/scripts',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Aliases
+    |--------------------------------------------------------------------------
+    | These aliases will be added to the Vite configuration and used
+    | to generate a proper tsconfig.json file.
+    */
+    'aliases' => [
+        '@' => 'resources',
+    ],
 ];

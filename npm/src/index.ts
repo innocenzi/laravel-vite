@@ -22,9 +22,16 @@ export class ViteConfiguration {
 				input: [],
 			},
 		};
-		this.alias = {
-			"@": path.join(process.cwd(), "resources"),
-		};
+
+		if (config?.aliases) {
+			this.alias = Object.fromEntries(
+				Object.entries(config.aliases).map(([alias, directory]) => {
+					return [alias, path.join(process.cwd(), directory)];
+				})
+			);
+
+			generateAliases();
+		}
 
 		if (config?.dev_url) {
 			const [protocol, host, port] = config.dev_url.split(":");
@@ -117,6 +124,26 @@ interface PhpConfiguration {
 	build_path: string;
 	dev_url: string;
 	entrypoints: false | string | string[];
+	aliases: Record<string, string>;
+}
+
+/**
+ * Calls an artisan command.
+ */
+function callArtisan(...params: string[]): string {
+	return execa.sync("php", ["artisan", ...params])?.stdout;
+}
+
+/**
+ * Regenerates the tsconfig.json file with aliases.
+ */
+function generateAliases() {
+	try {
+		callArtisan("vite:aliases");
+	} catch (error) {
+		console.warn("Could not regenerate tsconfig.json.");
+		console.error(error);
+	}
 }
 
 /**
@@ -124,8 +151,7 @@ interface PhpConfiguration {
  */
 function getConfigurationFromArtisan(): PhpConfiguration | undefined {
 	try {
-		const { stdout } = execa.sync("php", ["artisan", "vite:config"]);
-		return JSON.parse(stdout) as PhpConfiguration;
+		return JSON.parse(callArtisan("vite:config")) as PhpConfiguration;
 	} catch (error) {
 		console.warn("Could not read configuration from PHP.");
 		console.error(error);
