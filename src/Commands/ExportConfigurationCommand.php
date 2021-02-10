@@ -4,7 +4,7 @@ namespace Innocenzi\Vite\Commands;
 
 use Illuminate\Console\Command;
 
-class ViteConfigurationCommand extends Command
+class ExportConfigurationCommand extends Command
 {
     public $signature = 'vite:config';
     public $description = 'Prints the Vite configuration.';
@@ -12,6 +12,6 @@ class ViteConfigurationCommand extends Command
 
     public function handle()
     {
-        echo json_encode(\config('vite'));
+        $this->output->write(json_encode(\config('vite')));
     }
 }

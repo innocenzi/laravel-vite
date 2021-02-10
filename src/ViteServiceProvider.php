@@ -3,7 +3,7 @@
 namespace Innocenzi\Vite;
 
 use Illuminate\Support\Facades\Blade;
-use Innocenzi\Vite\Commands\ViteConfigurationCommand;
+use Innocenzi\Vite\Commands\ExportConfigurationCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -14,7 +14,7 @@ class ViteServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-vite')
             ->hasConfigFile()
-            ->hasCommand(ViteConfigurationCommand::class);
+            ->hasCommand(ExportConfigurationCommand::class);
     }
 
     public function registeringPackage()

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\App;
 use Innocenzi\Vite\Vite;
 
 uses(Innocenzi\Vite\Tests\TestCase::class)->in('Unit');
+uses(Innocenzi\Vite\Tests\TestCase::class)->in('Features');
 
 /*
 |--------------------------------------------------------------------------

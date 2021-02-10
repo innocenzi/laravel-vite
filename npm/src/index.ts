@@ -1,6 +1,7 @@
 import { UserConfig } from "vite";
 import deepmerge from "deepmerge";
 import execa from "execa";
+import path from "path";
 import fs from "fast-glob";
 
 export class ViteConfiguration {
@@ -8,6 +9,7 @@ export class ViteConfiguration {
 	public build: UserConfig["build"];
 	public server: UserConfig["server"];
 	public plugins: UserConfig["plugins"];
+	public alias: UserConfig["alias"];
 
 	constructor(config?: PhpConfiguration) {
 		this.publicDir = "resources/static";
@@ -19,6 +21,9 @@ export class ViteConfiguration {
 			rollupOptions: {
 				input: [],
 			},
+		};
+		this.alias = {
+			"@": path.join(process.cwd(), "resources"),
 		};
 
 		if (config?.dev_url) {
