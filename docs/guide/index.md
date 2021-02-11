@@ -14,7 +14,13 @@ editLink: true
 
 ### Via preset
 
-> To be added.
+Use the following command:
+
+```bash
+npx apply laravel:vite
+```
+
+> If you're on a Mac, you may need to use the `--ignore-existing` flag.
 
 ### Manually
 
