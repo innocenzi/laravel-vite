@@ -1,0 +1,11 @@
+{
+	"private": true,
+	"scripts": {
+		"docs:dev": "vitepress dev",
+		"docs:build": "vitepress build",
+		"docs:serve": "vitepress serve"
+	},
+	"devDependencies": {
+		"vitepress": "^0.12.0"
+	}
+}
