@@ -1,0 +1,16 @@
+:root {
+	--c-brand: #d24339;
+}
+
+.nav-bar .logo {
+	height: 30px;
+	margin-right: 2px;
+}
+
+.home {
+	min-height: calc(100vh - var(--header-height));
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}

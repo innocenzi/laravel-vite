@@ -21,7 +21,7 @@ class ManifestEntry implements Htmlable, Stringable
      */
     public static function fromArray(array $manifestEntry): ManifestEntry
     {
-        $entry = new ManifestEntry;
+        $entry = new ManifestEntry();
         $entry->src = $manifestEntry['src'];
         $entry->file = $manifestEntry['file'] ?? '';
         $entry->isEntry = $manifestEntry['isEntry'] ?? false;
@@ -33,30 +33,10 @@ class ManifestEntry implements Htmlable, Stringable
     }
 
     /**
-     * Gets the client manifest entry.
-     *
-     * @return ManifestEntry
-     */
-    public static function client(): ManifestEntry
-    {
-        return ManifestEntry::fromArray([
-            'src' => '@vite/client',
-        ]);
-    }
-
-    /**
      * Gets the script tag for this entry.
      */
     public function getScriptTag(): string
     {
-        if (App::environment('local')) {
-            return sprintf(
-                '<script type="module" src="%s/%s"></script>',
-                \config('vite.hmr_url'),
-                $this->src
-            );
-        }
-
         return sprintf('<script src="%s"></script>', $this->asset($this->file));
     }
 
@@ -70,8 +50,6 @@ class ManifestEntry implements Htmlable, Stringable
 
     /**
      * Gets every appliacable tag.
-     *
-     * @return Collection
      */
     public function getTags(): Collection
     {
@@ -86,7 +64,7 @@ class ManifestEntry implements Htmlable, Stringable
      */
     protected function asset(string $path): string
     {
-        return sprintf('/%s/%s', \config('vite.assets_path'), $path);
+        return sprintf('/%s/%s', \config('vite.build_path'), $path);
     }
 
     /**
