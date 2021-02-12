@@ -8,15 +8,20 @@ beforeEach(function () {
 
 it('creates directives', function () {
     expect(test()->directives)
-        ->toHaveKeys(['vite', 'entry']);
+        ->toHaveKeys(['vite', 'client']);
 });
 
-it('generates the client script from the directive', function () {
+it('generates a call to vite_tags() from the @vite directive when there is no parameters', function () {
     expect(test()->directives['vite']())
-        ->toBe('<?php echo vite_client() ?>');
+        ->toBe('<?php echo vite_tags() ?>');
 });
 
-it('generates an script from the directive', function () {
+it('generates a call to vite_entry() from the @vite directive when there is a parameter', function () {
     expect(test()->directives['vite']('resources/ts/main.ts'))
         ->toBe('<?php echo vite_entry(e(resources/ts/main.ts)); ?>');
+});
+
+it('generates a call to vite_client() from the @client directive', function () {
+    expect(test()->directives['client']())
+        ->toBe('<?php echo vite_client(); ?>');
 });

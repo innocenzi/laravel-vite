@@ -18,8 +18,8 @@ it('does not generate the client script in a production environment', function (
 
 it('generates an entry script in a local environment', function () {
     set_env('local');
-    expect(get_vite()->getEntry('some/path/scrip.ts'))
-        ->toEqual('<script type="module" src="http://localhost:3000/some/path/scrip.ts"></script>');
+    expect(get_vite()->getEntry('some/path/script.ts'))
+        ->toEqual('<script type="module" src="http://localhost:3000/some/path/script.ts"></script>');
 });
 
 it('throws when generating a non-existing entry script in a production environment', function () {
@@ -45,4 +45,23 @@ it('finds an entrypoint by its name when its directory is registered in the conf
     App::setBasePath(__DIR__);
     expect(get_vite('with_css.json')->getEntry('entry.ts'))
         ->toEqual('<script type="module" src="http://localhost:3000/scripts/entry.ts"></script>');
+});
+
+it('finds every entrypoints and generates their tags along with the client in a development environment', function () {
+    set_env('local');
+    Config::set('vite.entrypoints', 'scripts');
+    App::setBasePath(__DIR__);
+    expect(get_vite()->getClientAndEntrypointTags())
+        ->toEqual(implode('', [
+            '<script type="module" src="http://localhost:3000/@vite/client"></script>',
+            '<script type="module" src="http://localhost:3000/scripts/entry.ts"></script>',
+        ]));
+});
+
+it('does not generate client script tag in production environment', function () {
+    set_env('production');
+    Config::set('vite.entrypoints', 'scripts');
+    App::setBasePath(__DIR__);
+    expect(get_vite()->getClientAndEntrypointTags())
+        ->toEqual('<script src="/build/app.83b2e884.js"></script>');
 });

@@ -3,6 +3,7 @@
 namespace Innocenzi\Vite;
 
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\HtmlString;
@@ -35,29 +36,61 @@ class Vite
     /**
      * Gets the given entry.
      */
-    public function getEntry(string $entry): Htmlable
+    public function getEntry(string $name): Htmlable
     {
         if (! App::environment('local')) {
-            return $this->manifest->getEntry($entry);
+            return $this->manifest->getEntry($name);
         }
 
-        // Try to find a file in the entry points that corresponds to
-        // this entry, to avoid having to specify the entire path
-        /** @var SplFileInfo $file */
-        $file = collect(\config('vite.entrypoints'))
+        return $this->getEntries()->first(fn (Htmlable $entry) => Str::contains($entry->toHtml(), $name))
+            ?? $this->createDevelopmentScriptTag($name);
+    }
+
+    /**
+     * Gets every registered or automatic entry point.
+     */
+    public function getEntries(): Collection
+    {
+        if (! App::environment('local')) {
+            return $this->manifest->getEntries();
+        }
+
+        return collect(\config('vite.entrypoints', []))
             ->map(fn ($directory) => \base_path($directory))
             ->filter(fn ($directory) => File::isDirectory($directory))
-            ->map(fn ($directory) => File::files($directory))
-            ->flatten()
-            ->first(fn (SplFileInfo $file) => Str::contains($file->getFilename(), $entry));
+            ->flatMap(fn ($directory) => File::files($directory))
+            ->map(fn (SplFileInfo $file) => $this->createDevelopmentScriptTag(
+                Str::of($file->getPathname())
+                    ->replace(\base_path(), '')
+                    ->replace('\\', '/')
+                    ->ltrim('/')
+            ));
+    }
 
-        // Converts the file into a path that can be
-        // understood by Vite
-        $file = Str::of($file?->getPathname())
-            ->replace(\base_path(), '')
-            ->replace('\\', '/')
-            ->ltrim('/');
+    /**
+     * Gets the script tags for the Vite client and the entrypoints.
+     */
+    public function getClientAndEntrypointTags(): Htmlable
+    {
+        $entries = collect();
 
-        return new HtmlString(\sprintf('<script type="module" src="%s/%s"></script>', \config('vite.dev_url'), $file->isEmpty() ? $entry : $file));
+        if (App::environment('local')) {
+            $entries->push($this->getClientScript());
+        }
+
+        return new HtmlString(
+            $entries->merge($this->getEntries())
+                ->map(fn (Htmlable $entry) => $entry->toHtml())
+                ->join('')
+        );
+    }
+
+    protected function createDevelopmentScriptTag(string $path): Htmlable
+    {
+        return new HtmlString(sprintf(
+            '<script type="module" src="%s/%s"></script>',
+            \config('vite.dev_url'),
+            $path
+        ));
     }
 }
