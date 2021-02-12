@@ -87,9 +87,11 @@ class Vite
 
     protected function createDevelopmentScriptTag(string $path): Htmlable
     {
+        // I suspect ASSET_URL should be takin into account here.
+        // If you find out it does, feel free to open an issue.
         return new HtmlString(sprintf(
-            '<script type="module" src="%s/%s"></script>',
-            \config('vite.dev_url'),
+            '<script type="module" src="%s%s"></script>',
+            Str::finish(\config('vite.dev_url'), '/'),
             $path
         ));
     }
