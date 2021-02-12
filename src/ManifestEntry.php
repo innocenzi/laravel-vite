@@ -64,7 +64,7 @@ class ManifestEntry implements Htmlable, Stringable
      */
     protected function asset(string $path): string
     {
-        return sprintf('/%s/%s', \config('vite.build_path'), $path);
+        return asset(sprintf('/%s/%s', config('vite.build_path'), $path));
     }
 
     /**

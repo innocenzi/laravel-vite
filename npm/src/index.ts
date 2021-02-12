@@ -3,15 +3,20 @@ import deepmerge from "deepmerge";
 import execa from "execa";
 import path from "path";
 import fs from "fast-glob";
+import chalk from 'chalk';
+import dotenv from 'dotenv';
 
 export class ViteConfiguration {
 	public publicDir: string;
 	public build: UserConfig["build"];
 	public server: UserConfig["server"];
 	public plugins: UserConfig["plugins"];
-	public alias: UserConfig["alias"];
+	public base: UserConfig["base"];
+	public resolve: UserConfig["resolve"];
 
 	constructor(config?: PhpConfiguration) {
+		dotenv.config();
+		this.base = process.env.ASSET_URL ?? '/';
 		this.publicDir = "resources/static";
 		this.build = {
 			manifest: true,
@@ -24,11 +29,13 @@ export class ViteConfiguration {
 		};
 
 		if (config?.aliases) {
-			this.alias = Object.fromEntries(
-				Object.entries(config.aliases).map(([alias, directory]) => {
-					return [alias, path.join(process.cwd(), directory)];
-				})
-			);
+			this.resolve = {
+				alias: Object.fromEntries(
+					Object.entries(config.aliases).map(([alias, directory]) => {
+						return [alias, path.join(process.cwd(), directory)];
+					})
+				)
+			};
 
 			generateAliases();
 		}
@@ -109,9 +116,13 @@ export class ViteConfiguration {
 	 * Merges in the given Vite configuration.
 	 */
 	public merge(config: UserConfig): this {
-		const result = deepmerge(this, config);
+		const result: UserConfig = deepmerge(this, config);
 
 		for (const [key, value] of Object.entries(result)) {
+			if (key === 'base') {
+				console.warn(chalk.yellow.bold('(!) "base" option should not be used with Laravel Vite. Use the "ASSET_URL" environment variable instead.'));
+			}
+
 			// @ts-expect-error
 			this[key] = value;
 		}
