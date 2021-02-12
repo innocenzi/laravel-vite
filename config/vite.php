@@ -30,7 +30,6 @@ return [
     */
     'entrypoints' => [
         'resources/js',
-        'resources/css',
         'resources/scripts',
     ],
 
