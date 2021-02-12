@@ -1,10 +1,27 @@
-import { UserConfig } from "vite";
+import { Plugin, UserConfig } from "vite";
 import deepmerge from "deepmerge";
 import execa from "execa";
 import path from "path";
 import fs from "fast-glob";
 import chalk from 'chalk';
 import dotenv from 'dotenv';
+
+/**
+ * A plugin enabling HMR for Blade files.
+ */
+export const laravel = (): Plugin => ({
+	name: 'vite:laravel',
+	handleHotUpdate({ file, server }) {
+		// This might need more granular control. Maybe a configuration
+		// option. Feel free to open an issue or a PR.
+		if (file.endsWith('.blade.php')) {
+			server.ws.send({
+				type: 'full-reload',
+				path: '*'
+			});
+		}
+	}
+})
 
 export class ViteConfiguration {
 	public publicDir: string;
@@ -27,6 +44,10 @@ export class ViteConfiguration {
 				input: [],
 			},
 		};
+
+		this.plugins = [
+			laravel()
+		];
 
 		if (config?.aliases) {
 			this.resolve = {
@@ -178,3 +199,5 @@ function getConfigurationFromArtisan(): PhpConfiguration | undefined {
 export function createViteConfiguration() {
 	return new ViteConfiguration(getConfigurationFromArtisan());
 }
+
+export default laravel;
