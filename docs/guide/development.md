@@ -1,8 +1,8 @@
 ---
-title: Configuration
+title: Development
 editLink: true
 ---
 
-# Configuration
+# Development
 
 > To be added.

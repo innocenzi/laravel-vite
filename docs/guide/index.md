@@ -5,71 +5,64 @@ editLink: true
 
 # Getting started
 
-## Compatibility
-
-- This package requires PHP version 8.0.0 or higher.
-- [Vite](htts://vitejs.dev) requires [Node](https://nodejs.org/en/) version 12.0.0 or higher.
-
 ## Installation
 
-### Via preset
+### Using the preset
 
-Use the following command:
+This is the recommended and the easiest approach. The [preset](https://github.com/laravel-presets/vite) can be applied with a single command, without prior installation.
+
+To use it, run the following command at the root of your project:
 
 ```bash
 npx apply laravel:vite
 ```
 
-> If you're on a Mac, you may need to use the `--ignore-existing` flag.
+:::tip Dependencies
+The preset may take a while to be applied, because it will update your dependencies. If you'd rather update them manually, you may use the `--no-install` flag.
+:::
+
+:::warning Note for Mac users
+You will likely get an error because `apply` is a valid command on your system. You need to either install `apply` globally with `npm i -g apply`, or use the `--ignore-existing` flag.
+:::
+
+#### Preset's steps
+
+- Delete `resources/js` and create `resources/scripts`
+- Delete `webpack.mix.js` and remove the dependency to `laravel-mix`
+- Add development dependencies on `vite` and `laravel-vite` and update `package.json`'s scripts
+- Add a dependency on [`innocenzi/laravel-vite`](https://github.com/innocenzi/laravel-vite)
+- Creates a `vite.config.ts` configuration file
+- Add a call to the `@vite` directive in `welcome.blade.php`
 
 ### Manually
 
-First, require the package:
+If you'd rather install Vite manually, you can follow these steps.
+
+First, you need to remove Laravel Mix. You can do that by deleting `webpack.mix.js` and removing the dependency on `laravel-mix`. Then, you need to require both the PHP and the Node packages.
 
 ```bash
-$ composer require innocenzi/laravel-vite
+# Remove Mix
+rm webpack.mix.js
+yarn remove laravel-mix
+
+# Require the packages
+composer require innocenzi/laravel-vite
+yarn add vite laravel-vite --dev
 ```
 
-Then, install the NPM packages:
-
-```bash
-$ yarn add vite laravel-vite --dev
-```
-
-Create a `vite.config.ts` file at the root of your project, with the following content:
+Vite is configured via a `vite.config.ts` file at the root of your project. Laravel Vite intervenes at this step to integrate with Laravel. For more information about that, read the [configuration documentation](/guide/configuration).
 
 ```ts
 // vite.config.ts
-import { createViteConfiguration } from "laravel-vite";
-
-export default createViteConfiguration();
+export { default } from "laravel-vite";
 ```
 
-Edit your `package.json` file to add these scripts:
+Finally, edit your `package.json` file's `scripts` property:
 
 ```json
-{
-	"scripts": {
-		"dev": "vite",
-		"build": "vite build",
-		"serve": "vite preview"
-	}
+"scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "serve": "vite preview"
 }
 ```
-
-Lastly, if Laravel Mix is installed, you can get rid of it. Remove `webpack.mix.js` and the dependency on `laravel-mix`.
-
-## Usage
-
-In your Blade files, add the `@vite` directive to include the Vite client and enable hot module replacement.
-Add a `@vite` directive for each entry point.
-
-For instance, if you have:
-
-```
-/resources
-  /scripts
-    /main.ts
-```
-
-You can use `@vite('main')`. If the script is not in one of the entrypoint directories, you'll need to enter the full path: `@vite('resources/js/app.js')`.

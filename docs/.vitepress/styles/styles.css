@@ -14,3 +14,12 @@
 	align-items: center;
 	justify-content: center;
 }
+
+.custom-block.warning {
+	background-color: rgba(255, 229, 100, 0.15);
+	border-color: #ffd766;
+}
+
+.custom-block.warning .custom-block-title {
+	color: #866f00;
+}
