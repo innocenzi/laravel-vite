@@ -200,4 +200,4 @@ export function createViteConfiguration() {
 	return new ViteConfiguration(getConfigurationFromArtisan());
 }
 
-export default laravel;
+export default createViteConfiguration();

@@ -1,6 +1,6 @@
 {
 	"name": "laravel-vite",
-	"version": "0.0.1-dev.7",
+	"version": "0.0.1-dev.8",
 	"author": "Enzo Innocenzi",
 	"license": "MIT",
 	"main": "dist/index.js",
