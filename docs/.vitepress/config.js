@@ -49,17 +49,19 @@ module.exports = {
 		editLinkText: 'Suggest changes to this page',
 		nav: [
 			{ text: 'Guide', link: '/guide/' },
-			{ text: 'Configuration', link: '/configuration/' },
+			{ text: 'Preset', link: 'https://github.com/laravel-presets/vite' },
 			{ text: 'Vite', link: 'https://vitejs.dev/' },
 		],
 		sidebar: {
-			'/configuration/': 'auto',
 			'/': [
 				{
 					text: 'Guide',
 					children: [
 						{ text: 'Introduction', link: '/guide/introduction' },
 						{ text: 'Getting started', link: '/guide/' },
+						{ text: 'Development', link: '/guide/development' },
+						{ text: 'Building for production', link: '/guide/production' },
+						{ text: 'Configuration', link: '/guide/configuration' },
 					],
 				},
 			],

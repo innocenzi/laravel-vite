@@ -1,3 +1,0 @@
-## Configuration
-
-> To be added.
