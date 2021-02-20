@@ -1,5 +1,7 @@
 :root {
 	--c-brand: #d24339;
+	--c-brand-light: #ef584e;
+	--c-divider: #ffffff1f;
 }
 
 .nav-bar .logo {
