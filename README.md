@@ -28,9 +28,7 @@
 <br />
 
 <div align="center">
-  This package is still in development.
-  <br />
-  It aims to integrate <a href="https://vitejs.dev">Vite</a> with the Laravel framework as seemlessly as possible.
+  This project aims to integrate <a href="https://vitejs.dev">Vite</a> with the Laravel framework as seemlessly as possible.
   <br />
   <a href="https://laravel-vite.netlify.app">Documentation</a>
 </div>
