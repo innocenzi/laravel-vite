@@ -20,7 +20,7 @@ yarn dev # npm run dev
 
 By default, scripts in `resources/scripts` are considered entrypoints, and will be included in Vite's configuration. To include them in your Blade files, you can use the [`@vite` directive](#directives).
 
-You can update the entrypoint directories in the [configuration](/guide/configuration).
+You can update the entrypoint directories in the [configuration](/guide/configuration#entrypoints).
 
 ## Directives
 
@@ -73,7 +73,7 @@ This directive includes the client script. It is not needed if you used `@vite` 
 
 ## Import aliases
 
-For convenience, the `@` alias is configured to point to the `resources` directory. This can be edited in the [`configuration`](/guide/configuration).
+For convenience, the `@` alias is configured to point to the `resources` directory. This can be edited in the [configuration](/guide/configuration#aliases).
 
 ```ts
 // resources/scripts/main.ts
