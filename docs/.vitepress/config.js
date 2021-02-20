@@ -61,6 +61,7 @@ module.exports = {
 						{ text: 'Getting started', link: '/guide/' },
 						{ text: 'Development', link: '/guide/development' },
 						{ text: 'Building for production', link: '/guide/production' },
+						{ text: 'Configuration', link: '/guide/configuration' },
 					],
 				},
 			],
