@@ -25,13 +25,13 @@ The preset may take a while to be applied, because it will update your dependenc
 You will likely get an error because `apply` is a valid command on your system. You need to either install `apply` globally with `npm i -g apply`, or use the `--ignore-existing` flag.
 :::
 
-#### Preset's steps
+The preset will:
 
 - Delete `resources/js` and create `resources/scripts`
 - Delete `webpack.mix.js` and remove the dependency to `laravel-mix`
 - Add development dependencies on `vite` and `laravel-vite` and update `package.json`'s scripts
 - Add a dependency on [`innocenzi/laravel-vite`](https://github.com/innocenzi/laravel-vite)
-- Creates a `vite.config.ts` configuration file
+- Create a `vite.config.ts` configuration file
 - Add a call to the `@vite` directive in `welcome.blade.php`
 
 ### Manually
