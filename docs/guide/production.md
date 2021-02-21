@@ -7,7 +7,7 @@ editLink: true
 
 ## Building for production
 
-Running the `build` script will generate production-ready assets through Vite. Their linking is handled by the [directives](/guides/development#directives), so no further action is required.
+Running the `build` script will generate production-ready assets through Vite. Their linking is handled by the [directives](/guides/development#directives), so no further action is required besides setting your `APP_ENV` to something else than `local`.
 
 By default, assets are built in `public/build`. If you used Laravel Mix, you may be used to have them generated in `public` directly. With Vite, this isn't directly possible since the build directory is emptied. I believe this restriction is great, as having the assets in their own directory makes it easier to work with them.
 
