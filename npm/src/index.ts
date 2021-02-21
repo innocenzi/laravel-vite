@@ -6,11 +6,13 @@ import fs from 'fast-glob'
 import chalk from 'chalk'
 import dotenv from 'dotenv'
 
+type VitePlugin = Plugin | ((...params: any[]) => Plugin)
+
 interface PhpConfiguration {
-	build_path: string
-	dev_url: string
-	entrypoints: false | string | string[]
-	aliases: Record<string, string>
+	build_path?: string
+	dev_url?: string
+	entrypoints?: false | string | string[]
+	aliases?: Record<string, string>
 }
 
 /**
@@ -38,14 +40,14 @@ export class ViteConfiguration {
 	public base: UserConfig['base']
 	public resolve: UserConfig['resolve']
 
-	constructor(config?: PhpConfiguration) {
+	constructor(config: UserConfig = {}, artisan: PhpConfiguration = {}) {
 		dotenv.config()
 		this.base = process.env.ASSET_URL ?? '/'
 		this.publicDir = 'resources/static'
 		this.build = {
 			manifest: true,
-			outDir: config?.build_path
-				? `public/${config.build_path}`
+			outDir: artisan?.build_path
+				? `public/${artisan.build_path}`
 				: 'public/build',
 			rollupOptions: {
 				input: [],
@@ -56,10 +58,10 @@ export class ViteConfiguration {
 			laravel(),
 		]
 
-		if (config?.aliases) {
+		if (artisan?.aliases) {
 			this.resolve = {
 				alias: Object.fromEntries(
-					Object.entries(config.aliases).map(([alias, directory]) => {
+					Object.entries(artisan.aliases).map(([alias, directory]) => {
 						return [alias, path.join(process.cwd(), directory)]
 					}),
 				),
@@ -68,8 +70,8 @@ export class ViteConfiguration {
 			generateAliases()
 		}
 
-		if (config?.dev_url) {
-			const [protocol, host, port] = config.dev_url.split(':')
+		if (artisan?.dev_url) {
+			const [protocol, host, port] = artisan.dev_url.split(':')
 			this.server = {
 				host: host.substr(2),
 				https: protocol === 'https',
@@ -77,10 +79,10 @@ export class ViteConfiguration {
 			}
 		}
 
-		if (config?.entrypoints) {
-			const directories = !Array.isArray(config?.entrypoints)
-				? [config?.entrypoints]
-				: config?.entrypoints
+		if (artisan?.entrypoints) {
+			const directories = !Array.isArray(artisan.entrypoints)
+				? [artisan.entrypoints]
+				: artisan.entrypoints
 
 			const matches = fs.sync(
 				directories.map(directory => `${directory}/*`),
@@ -93,6 +95,8 @@ export class ViteConfiguration {
 
 			(this.build.rollupOptions!.input! as string[]).push(...matches)
 		}
+
+		this.merge(config)
 	}
 
 	/**
@@ -117,7 +121,7 @@ export class ViteConfiguration {
 	 * Adds an entry point.
 	 *
 	 * @example
-	 * export default createViteConfiguration()
+	 * export default defineConfig()
 	 *	.withEntry("resources/js/app.js")
 	 */
 	public withEntry(...entries: string[]): this {
@@ -133,11 +137,43 @@ export class ViteConfiguration {
 	 * Adds entry points.
 	 *
 	 * @example
-	 * export default createViteConfiguration()
+	 * export default defineConfig()
 	 *	.withEntries("resources/js/app.js", "resources/js/admin.js")
 	 */
 	public withEntries(...entries: string[]): this {
 		return this.withEntry(...entries)
+	}
+
+	/**
+	 * Adds the given Vite plugin.
+	 *
+	 * @example
+	 * import vue from "@vitejs/plugin-vue"
+	 *
+	 * export default defineConfig()
+	 *	.withPlugin(vue)
+	 */
+	public withPlugin(plugin: VitePlugin): this {
+		if (typeof plugin === 'function')
+			plugin = plugin()
+
+		this.plugins!.push(plugin)
+		return this
+	}
+
+	/**
+	 * Adds the given Vite plugins.
+	 *
+	 * @example
+	 * import vue from "@vitejs/plugin-vue"
+	 * import components from "vite-plugin-components"
+	 *
+	 * export default defineConfig()
+	 *	.withPlugins(vue, components)
+	 */
+	public withPlugins(...plugins: VitePlugin[]): this {
+		plugins.forEach(plugin => this.withPlugin(plugin))
+		return this
 	}
 
 	/**
@@ -146,10 +182,10 @@ export class ViteConfiguration {
 	public merge(config: UserConfig): this {
 		const result: UserConfig = deepmerge(this, config)
 
-		for (const [key, value] of Object.entries(result)) {
-			if (key === 'base')
-				console.warn(chalk.yellow.bold('(!) "base" option should not be used with Laravel Vite. Use the "ASSET_URL" environment variable instead.'))
+		if (Reflect.has(config, 'base'))
+			console.warn(chalk.yellow.bold('(!) "base" option should not be used with Laravel Vite. Use the "ASSET_URL" environment variable instead.'))
 
+		for (const [key, value] of Object.entries(result)) {
 			// @ts-expect-error
 			this[key] = value
 		}
@@ -195,10 +231,21 @@ function getConfigurationFromArtisan(): PhpConfiguration | undefined {
  * Creates a Vite configuration object, simplified for use with
  * Laravel.
  *
- * @see https://github.com/innocenzi/laravel-vite
+ * @deprecated Use `defineConfig` instead
  */
 export function createViteConfiguration() {
-	return new ViteConfiguration(getConfigurationFromArtisan())
+	return defineConfig()
 }
 
-export default createViteConfiguration()
+/**
+ * Creates a Vite configuration object, simplified for use with
+ * Laravel.
+ *
+ * @see https://github.com/innocenzi/laravel-vite
+ */
+export function defineConfig(config: UserConfig = {}) {
+	const artisan = getConfigurationFromArtisan()
+	return new ViteConfiguration(config, artisan)
+}
+
+export default defineConfig()
