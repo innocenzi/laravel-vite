@@ -59,6 +59,7 @@ class Vite
             ->map(fn ($directory) => \base_path($directory))
             ->filter(fn ($directory) => File::isDirectory($directory))
             ->flatMap(fn ($directory) => File::files($directory))
+            ->filter(fn (SplFileInfo $file) => ! Str::endsWith($file->getFilename(), '.d.ts', ))
             ->map(fn (SplFileInfo $file) => $this->createDevelopmentScriptTag(
                 Str::of($file->getPathname())
                     ->replace(\base_path(), '')
