@@ -1,6 +1,6 @@
 {
 	"name": "laravel-vite",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"author": "Enzo Innocenzi",
 	"license": "MIT",
 	"main": "dist/index.js",
@@ -26,7 +26,7 @@
 		"eslint": "^7.20.0",
 		"tsup": "^3.7.0",
 		"typescript": "^4.1.4",
-		"vite": "^2.0.0-beta.69"
+		"vite": "^2.0.1"
 	},
 	"dependencies": {
 		"chalk": "^4.1.0",

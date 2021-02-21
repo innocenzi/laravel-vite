@@ -22,7 +22,7 @@ class ManifestEntry implements Htmlable, Stringable
     public static function fromArray(array $manifestEntry): ManifestEntry
     {
         $entry = new ManifestEntry();
-        $entry->src = $manifestEntry['src'];
+        $entry->src = $manifestEntry['src'] ?? '';
         $entry->file = $manifestEntry['file'] ?? '';
         $entry->isEntry = $manifestEntry['isEntry'] ?? false;
         $entry->isDynamicEntry = $manifestEntry['isDynamicEntry'] ?? false;

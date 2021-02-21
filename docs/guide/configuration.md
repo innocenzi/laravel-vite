@@ -45,3 +45,64 @@ It is recommended to only use `resources/scripts`, unless you have specific requ
 This option defines aliases that will be added to Vite's configuration. Additionally, in order to support Visual Studio Code, starting the development server while having aliases will update the `tsconfig.json` file (or create one if it does not exist) with the configured aliases.
 
 Note that you can manually generate or update this file with the `vite:aliases` Artisan command.
+
+## Vite configuration file
+
+While most of the configuration can be done within `config/vite.php`, if you need more flexibility, you will need to update `vite.config.ts`.
+
+If you used the preset or following the [installation instructions](/guide#installation), it should look like the following:
+
+```ts
+// vite.config.ts
+export { default } from "laravel-vite";
+```
+
+This is a shortcut that you can keep if you don't need configuration. Otherwise, you need to import the `defineConfig` object and export it as `default` manually, so you can chain methods on it:
+
+```ts
+// vite.config.ts
+import { defineConfig } from "laravel-vite";
+
+export default defineConfig();
+```
+
+This is a small wrapper around Vite's configuration that adds a few convenience methods, such as `withEntry` to add an entrypoint or `withOutput` to change the build directory. These two options are taken care of by Laravel Vite, so you don't need to define them manually.
+
+### Adding plugins
+
+You may call `withPlugin` or `withPlugins` with the plugin as a parameter.
+
+<!-- prettier-ignore -->
+```ts
+// vite.config.ts
+import { defineConfig } from "laravel-vite";
+import vue from "@vitejs/plugin-vue";
+import components from "vite-plugin-components";
+
+export default defineConfig()
+  .withPlugins(vue, components);
+```
+
+:::tip
+If you don't call the plugin method, it will be done by `withPlugin`, which is why the example above uses `vue` instead of `vue()`.
+If you need to pass a configuration object, use the latter.
+:::
+
+### Other Vite options
+
+You may pass a Vite configuration object to `defineConfig`, like you would if you imported it from `vite`.
+
+<!-- prettier-ignore -->
+```ts
+// vite.config.ts
+import { defineConfig } from "laravel-vite";
+
+export default defineConfig({
+  // Any valid Vite configuration option
+  server: {
+    open: true
+  }
+})
+```
+
+This will deeply merge the given configuration object, so you don't need to worry about overriding existing entrypoints or plugins this way.
