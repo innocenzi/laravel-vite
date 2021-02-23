@@ -41,7 +41,7 @@ class Manifest implements Htmlable, Stringable
      */
     public function getEntry(string $entry): ManifestEntry
     {
-        if ($this->entries->has($entry)) {
+        if (! $this->entries->has($entry)) {
             throw new NoSuchEntrypointException($entry);
         }
 
