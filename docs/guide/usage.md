@@ -1,9 +1,9 @@
 ---
-title: Development
+title: Usage
 editLink: true
 ---
 
-# Development
+# Usage
 
 ## Development server
 
@@ -16,11 +16,11 @@ yarn dev # npm run dev
 
 [Hot Module Replacement](https://vitejs.dev/guide/features.html#hot-module-replacement) is enabled: editing a Blade file will trigger a full-page refresh, but editing assets which Vite understand, such as Vue single-file components or JavaSript files, will trigger partial reloads.
 
-## Automatic entrypoints
+## Entrypoints
 
 By default, scripts in `resources/scripts` are considered entrypoints, and will be included in Vite's configuration. To include them in your Blade files, you can use the [`@vite` directive](#directives).
 
-You can update the entrypoint directories in the [configuration](/guide/configuration#entrypoints).
+You can update entrypoints in the [configuration](/guide/configuration#entrypoints).
 
 ## Directives
 
