@@ -39,12 +39,20 @@ it('generates scripts and css from an entry point in a production environment', 
         ->toEqual('<script type="module" src="http://localhost/build/app.83b2e884.js"></script><link rel="stylesheet" href="http://localhost/build/app.e33dabbf.css" />');
 });
 
-it('finds an entrypoint by its name when its directory is registered in the configuration', function () {
+it('finds an entrypoint by its name when its directory is registered in the configuration in a local environment', function () {
     set_env('local');
     Config::set('vite.entrypoints', 'scripts');
     App::setBasePath(__DIR__);
-    expect(get_vite('with_css.json')->getEntry('entry.ts'))
+    expect(get_vite('entry.json')->getEntry('entry.ts'))
         ->toEqual('<script type="module" src="http://localhost:3000/scripts/entry.ts"></script>');
+});
+
+it('finds an entrypoint by its name when its directory is registered in the configuration in a production environment', function () {
+    set_env('production');
+    Config::set('vite.entrypoints', 'scripts');
+    App::setBasePath(__DIR__);
+    expect(get_vite('entry.json')->getEntry('entry.ts'))
+        ->toEqual('<script type="module" src="http://localhost/build/entry.2615a355.js"></script>');
 });
 
 it('finds every entrypoints and generates their tags along with the client in a development environment', function () {

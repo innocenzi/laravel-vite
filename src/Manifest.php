@@ -4,6 +4,7 @@ namespace Innocenzi\Vite;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Innocenzi\Vite\Exceptions\ManifestNotFound;
 use Innocenzi\Vite\Exceptions\NoSuchEntrypointException;
 use Stringable;
@@ -39,13 +40,13 @@ class Manifest implements Htmlable, Stringable
     /**
      * Gets the manifest entry for the given name.
      */
-    public function getEntry(string $entry): ManifestEntry
+    public function getEntry(string $name): ManifestEntry
     {
-        if (! $this->entries->has($entry)) {
-            throw new NoSuchEntrypointException($entry);
+        if (! $entry = $this->entries->first(fn (ManifestEntry $entry) => Str::contains($entry->src, $name))) {
+            throw new NoSuchEntrypointException($name);
         }
 
-        return $this->entries->get($entry);
+        return $entry;
     }
 
     /**
