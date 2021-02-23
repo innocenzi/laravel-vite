@@ -2,7 +2,6 @@ import path from 'path'
 import { Plugin, UserConfig } from 'vite'
 import deepmerge from 'deepmerge'
 import execa from 'execa'
-import fs from 'fast-glob'
 import chalk from 'chalk'
 import dotenv from 'dotenv'
 
@@ -79,22 +78,8 @@ export class ViteConfiguration {
 			}
 		}
 
-		if (artisan?.entrypoints) {
-			const directories = !Array.isArray(artisan.entrypoints)
-				? [artisan.entrypoints]
-				: artisan.entrypoints
-
-			const matches = fs.sync(
-				directories.map(directory => `${directory}/*`),
-				{
-					onlyFiles: true,
-					globstar: false,
-					dot: false,
-				},
-			);
-
-			(this.build.rollupOptions!.input! as string[]).push(...matches)
-		}
+		if (artisan?.entrypoints)
+			(this.build.rollupOptions!.input! as string[]).push(...artisan.entrypoints)
 
 		this.merge(config)
 	}

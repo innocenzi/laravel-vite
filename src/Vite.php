@@ -66,6 +66,20 @@ class Vite
             return $this->getManifest()->getEntries();
         }
 
+        return $this->findEntrypoints()
+            ->map(fn (\SplFileInfo $file) => $this->createDevelopmentScriptTag(
+                Str::of($file->getPathname())
+                    ->replace(\base_path(), '')
+                    ->replace('\\', '/')
+                    ->ltrim('/')
+            ));
+    }
+
+    /**
+     * Finds entrypoints from the configuration.
+     */
+    public function findEntrypoints(): Collection
+    {
         $paths = collect(\config('vite.entrypoints', []))
             ->map(fn ($directory) => \base_path($directory));
 
@@ -74,13 +88,7 @@ class Vite
             ->merge($paths->filter(fn ($directory) => File::isFile($directory))->map(fn (string $path) => new \SplFileInfo($path)))
             ->unique(fn (\SplFileInfo $file) => $file->getPathname())
             ->filter(fn (\SplFileInfo $file) => ! collect(config('vite.ignore_patterns'))
-            ->some(fn ($pattern) => preg_match($pattern, $file->getFilename())))
-            ->map(fn (\SplFileInfo $file) => $this->createDevelopmentScriptTag(
-                Str::of($file->getPathname())
-                    ->replace(\base_path(), '')
-                    ->replace('\\', '/')
-                    ->ltrim('/')
-            ));
+            ->some(fn ($pattern) => preg_match($pattern, $file->getFilename())));
     }
 
     /**
