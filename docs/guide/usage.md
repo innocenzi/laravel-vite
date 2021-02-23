@@ -38,9 +38,12 @@ Laravel Vite includes a few directives that handles linking assets in developmen
 
 	<title>Laravel</title>
 	@vite
-	<!-- Will generate:
-	<script type="module" src="http://localhost:3000/@vite/client"></script>
-	<script type="module" src="http://localhost:3000/resources/scripts/app.ts"></script>
+	<!--
+  In development:
+    <script type="module" src="http://localhost:3000/@vite/client"></script>
+    <script type="module" src="http://localhost:3000/resources/scripts/app.ts"></script>
+  In production:
+    <script type="module" src="http://laravel.local/build/assets/app.66e83946.js"></script>
 	-->
 </head>
 ```
@@ -57,10 +60,14 @@ Laravel Vite includes a few directives that handles linking assets in developmen
 	@client
 	@vite('main')
 	@vite('resources/js/some-script.js')
-	<!-- Will generate:
-	<script type="module" src="http://localhost:3000/@vite/client"></script>
-	<script type="module" src="http://localhost:3000/resources/scripts/main.ts"></script>
-	<script type="module" src="http://localhost:3000/resources/js/some-script.js"></script>
+	<!-- 
+  In development:
+    <script type="module" src="http://localhost:3000/@vite/client"></script>
+    <script type="module" src="http://localhost:3000/resources/scripts/main.ts"></script>
+    <script type="module" src="http://localhost:3000/resources/js/some-script.js"></script>
+  In production:
+    <script type="module" src="http://laravel.local/build/assets/main.66e83946.js"></script>
+    <script type="module" src="http://laravel.local/build/assets/some-script.6d3515d2.js"></script>
 	-->
 </head>
 ```
