@@ -43,7 +43,9 @@ class Manifest implements Htmlable, Stringable
     {
         return $this->entries->get(
             $entry,
-            fn () => throw new NoSuchEntrypointException($entry)
+            function () use ($entry) {
+                throw new NoSuchEntrypointException($entry);
+            }
         );
     }
 
