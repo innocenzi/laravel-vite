@@ -41,7 +41,29 @@ class Vite
             return new HtmlString();
         }
 
-        return $this->getEntry('@vite/client');
+        return $this->createDevelopmentScriptTag('@vite/client');
+    }
+
+    /**
+     * Gets the script tag for React's refresh runtime.
+     */
+    public function getReactRefreshRuntimeScript(): Htmlable
+    {
+        if (! $this->isDevelopmentServerRunning()) {
+            return new HtmlString();
+        }
+
+        $script = <<<HTML
+        <script type="module">
+            import RefreshRuntime from "http://localhost:3000/@react-refresh"
+            RefreshRuntime.injectIntoGlobalHook(window) 
+            window.\$RefreshReg$ = () => {}
+            window.\$RefreshSig$ = () => (type) => type
+            window.__vite_plugin_react_preamble_installed__ = true
+        </script>
+        HTML;
+
+        return new HtmlString($script);
     }
 
     /**
