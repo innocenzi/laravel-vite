@@ -22,6 +22,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Ping timeout
+    |--------------------------------------------------------------------------
+    | The maximum duration, in seconds, that the ping to the development
+    | server should take while trying to determine whether to use the
+    | manifest or the server in a local environment.
+    */
+    'ping_timeout' => .1,
+
+    /*
+    |--------------------------------------------------------------------------
     | Entrypoints
     |--------------------------------------------------------------------------
     | The files in the configured directories will be considered

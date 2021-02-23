@@ -5,18 +5,15 @@ use Illuminate\Routing\RouteCollection;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Http;
 use Innocenzi\Vite\Exceptions\NoSuchEntrypointException;
+
+beforeEach(fn () => Http::fake(['/@vite/client' => Http::response()]));
 
 it('generates the client script in a local environment', function () {
     set_env('local');
     expect(get_vite()->getClientScript())
         ->toEqual('<script type="module" src="http://localhost:3000/@vite/client"></script>');
-});
-
-it('does not generate the client script in a production environment', function () {
-    set_env('producton');
-    expect(get_vite()->getClientScript())
-        ->toEqual('');
 });
 
 it('generates an entry script in a local environment', function () {

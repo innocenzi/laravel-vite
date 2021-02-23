@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Symfony\Component\Finder\SplFileInfo;
@@ -13,12 +14,23 @@ use Symfony\Component\Finder\SplFileInfo;
 class Vite
 {
     protected ?Manifest $manifest;
+    protected ?string $manifestPath;
+    protected ?bool $isDevelopmentServerRunning;
 
-    public function __construct(string $manifest = null)
+    /**
+     * Creates a new Vite instance.
+     */
+    public function __construct(string $manifestPath = null)
     {
-        if (! App::environment('local')) {
-            $this->manifest = Manifest::read($manifest);
-        }
+        $this->manifestPath = $manifestPath;
+    }
+
+    /**
+     * Returns the manifest, reading it from the disk if necessary.
+     */
+    public function getManifest(): ?Manifest
+    {
+        return $this->manifest ??= Manifest::read($this->manifestPath);
     }
 
     /**
@@ -26,7 +38,7 @@ class Vite
      */
     public function getClientScript(): Htmlable
     {
-        if (! App::environment('local')) {
+        if (! $this->isDevelopmentServerRunning()) {
             return new HtmlString();
         }
 
@@ -34,12 +46,12 @@ class Vite
     }
 
     /**
-     * Gets the given entry.
+     * Gets an entry from the given name.
      */
     public function getEntry(string $name): Htmlable
     {
-        if (! App::environment('local')) {
-            return $this->manifest->getEntry($name);
+        if ($this->shouldUseManifest()) {
+            return $this->getManifest()->getEntry($name);
         }
 
         return $this->getEntries()->first(fn (Htmlable $entry) => Str::contains($entry->toHtml(), $name))
@@ -51,8 +63,8 @@ class Vite
      */
     public function getEntries(): Collection
     {
-        if (! App::environment('local')) {
-            return $this->manifest->getEntries();
+        if ($this->shouldUseManifest()) {
+            return $this->getManifest()->getEntries();
         }
 
         return collect(\config('vite.entrypoints', []))
@@ -75,7 +87,7 @@ class Vite
     {
         $entries = collect();
 
-        if (App::environment('local')) {
+        if (! $this->shouldUseManifest()) {
             $entries->push($this->getClientScript());
         }
 
@@ -84,6 +96,37 @@ class Vite
                 ->map(fn (Htmlable $entry) => $entry->toHtml())
                 ->join('')
         );
+    }
+
+    /**
+     * Checks if the manifest should be used to get an entry.
+     */
+    protected function shouldUseManifest(): bool
+    {
+        if (! App::environment('local')) {
+            return true;
+        }
+
+        if (! $this->isDevelopmentServerRunning()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if the development server is running.
+     */
+    public function isDevelopmentServerRunning(): bool
+    {
+        try {
+            return $this->isDevelopmentServerRunning ??= Http::withOptions([
+                'connect_timeout' => config('vite.ping_timeout'),
+            ])->get(config('vite.dev_url') . '/@vite/client')->successful();
+        } catch (\Throwable $th) {
+        }
+
+        return false;
     }
 
     protected function createDevelopmentScriptTag(string $path): Htmlable
