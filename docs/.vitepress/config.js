@@ -59,7 +59,7 @@ module.exports = {
 					children: [
 						{ text: 'Introduction', link: '/guide/introduction' },
 						{ text: 'Getting started', link: '/guide/' },
-						{ text: 'Development', link: '/guide/development' },
+						{ text: 'Usage', link: '/guide/usage' },
 						{ text: 'Building for production', link: '/guide/production' },
 						{ text: 'Configuration', link: '/guide/configuration' },
 					],

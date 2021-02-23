@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
-use Symfony\Component\Finder\SplFileInfo;
 
 class Vite
 {
@@ -67,12 +66,16 @@ class Vite
             return $this->getManifest()->getEntries();
         }
 
-        return collect(\config('vite.entrypoints', []))
-            ->map(fn ($directory) => \base_path($directory))
-            ->filter(fn ($directory) => File::isDirectory($directory))
+        $paths = collect(\config('vite.entrypoints', []))
+            ->map(fn ($directory) => \base_path($directory));
+
+        return $paths->filter(fn ($directory) => File::isDirectory($directory))
             ->flatMap(fn ($directory) => File::files($directory))
-            ->filter(fn (SplFileInfo $file) => ! Str::endsWith($file->getFilename(), '.d.ts', ))
-            ->map(fn (SplFileInfo $file) => $this->createDevelopmentScriptTag(
+            ->merge($paths->filter(fn ($directory) => File::isFile($directory))->map(fn (string $path) => new \SplFileInfo($path)))
+            ->unique(fn (\SplFileInfo $file) => $file->getPathname())
+            ->filter(fn (\SplFileInfo $file) => ! collect(config('vite.ignore_patterns'))
+            ->some(fn ($pattern) => preg_match($pattern, $file->getFilename())))
+            ->map(fn (\SplFileInfo $file) => $this->createDevelopmentScriptTag(
                 Str::of($file->getPathname())
                     ->replace(\base_path(), '')
                     ->replace('\\', '/')

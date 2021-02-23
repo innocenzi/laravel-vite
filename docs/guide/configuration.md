@@ -32,9 +32,11 @@ When using Vite in development, assets must link to the development server. This
 ### `entrypoints`
 
 - **Default**: `[ 'resources/scripts', 'resources/js' ]`
-- **Type**: `string[]` or `false`
+- **Type**: `string`, `string[]` or `false`
 
-This option determines the automatic entrypoints. Scripts in this directory will be automatically added to Vite's configuration and injected to your Blade files through the [`@vite` directive](/guide/development#vite). You can disable this feature by setting the option to `false`.
+This option determines the paths to the entrypoints. It should be a list paths to directories or files. Each script will be added to Vite's configuration and will have a corresponding tag generated through the [`@vite` directive](/guide/development#vite).
+
+You can disable this feature by setting the option to `false`.
 
 It is recommended to only use `resources/scripts`, unless you have specific requirements.
 

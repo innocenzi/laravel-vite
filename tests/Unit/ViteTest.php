@@ -58,9 +58,21 @@ it('finds every entrypoints and generates their tags along with the client in a 
         ]));
 });
 
-it('ignores d.ts files in automatic entrypoints directories', function () {
+it('finds a specific entrypoint by path from the configuration', function () {
+    set_env('local');
+    Config::set('vite.entrypoints', 'scripts-dts/entry.ts');
+    App::setBasePath(__DIR__);
+    expect(get_vite()->getClientAndEntrypointTags())
+        ->toEqual(implode('', [
+            '<script type="module" src="http://localhost:3000/@vite/client"></script>',
+            '<script type="module" src="http://localhost:3000/scripts-dts/entry.ts"></script>',
+        ]));
+});
+
+it('filters out entrypoints from the configuration', function () {
     set_env('local');
     Config::set('vite.entrypoints', 'scripts-dts');
+    Config::set('vite.ignore_pattern', '');
     App::setBasePath(__DIR__);
     expect(get_vite()->getClientAndEntrypointTags())
         ->toEqual(implode('', [
