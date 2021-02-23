@@ -4,7 +4,6 @@ namespace Innocenzi\Vite;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\App;
 use Stringable;
 
 class ManifestEntry implements Htmlable, Stringable
@@ -55,7 +54,6 @@ class ManifestEntry implements Htmlable, Stringable
     {
         return Collection::make()
             ->push($this->getScriptTag())
-            ->when(! App::environment('local'))
             ->merge($this->getStyleTags());
     }
 
