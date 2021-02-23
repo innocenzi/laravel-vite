@@ -37,7 +37,7 @@ class ManifestEntry implements Htmlable, Stringable
      */
     public function getScriptTag(): string
     {
-        return sprintf('<script src="%s"></script>', $this->asset($this->file));
+        return sprintf('<script type="module" src="%s"></script>', $this->asset($this->file));
     }
 
     /**
