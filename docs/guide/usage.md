@@ -78,6 +78,10 @@ Note that in order to enable Hot Module Replacement, you need to include the cli
 
 This directive includes the client script. It is not needed if you used `@vite` without parameters, but it is needed otherwise.
 
+### `@react`
+
+This directive includes React's refresh runtime. It is not needed if you don't use React, and it must be added **before** `@vite` or `@client`.
+
 ## Import aliases
 
 For convenience, the `@` alias is configured to point to the `resources` directory. This can be edited in the [configuration](/guide/configuration#aliases).

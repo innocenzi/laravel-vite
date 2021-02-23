@@ -25,3 +25,8 @@ it('generates a call to vite_client() from the @client directive', function () {
     expect(test()->directives['client']())
         ->toBe('<?php echo vite_client(); ?>');
 });
+
+it('generates a call to vite_react_refresh_runtime() from the @react directive', function () {
+    expect(test()->directives['react']())
+        ->toBe('<?php echo vite_react_refresh_runtime(); ?>');
+});

@@ -34,5 +34,9 @@ class ViteServiceProvider extends PackageServiceProvider
         Blade::directive('client', function () {
             return '<?php echo vite_client(); ?>';
         });
+
+        Blade::directive('react', function () {
+            return '<?php echo vite_react_refresh_runtime(); ?>';
+        });
     }
 }
