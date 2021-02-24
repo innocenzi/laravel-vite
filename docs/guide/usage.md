@@ -5,7 +5,7 @@ editLink: true
 
 # Usage
 
-## Development server
+## Development
 
 Make sure your dependencies are installed, and run the `dev` script. It will start Vite's development server.
 
@@ -15,6 +15,8 @@ yarn dev # npm run dev
 ```
 
 [Hot Module Replacement](https://vitejs.dev/guide/features.html#hot-module-replacement) is enabled: editing a Blade file will trigger a full-page refresh, but editing assets which Vite understand, such as Vue single-file components or JavaSript files, will trigger partial reloads.
+
+If you are working locally and the development server is not working, Laravel Vite will try to read the manifest instead.
 
 ## Entrypoints
 
