@@ -80,7 +80,7 @@ This directive includes the client script. It is not needed if you used `@vite` 
 
 ### `@react`
 
-This directive includes React's refresh runtime. It is not needed if you don't use React, and it must be added **before** `@vite` or `@client`.
+This directive includes [React's refresh runtime](https://vitejs.dev/guide/backend-integration.html#backend-integration). It is not needed if you don't use React, and it must be added **before** `@vite` or `@client`.
 
 ## Import aliases
 
