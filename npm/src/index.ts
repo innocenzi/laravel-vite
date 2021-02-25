@@ -44,13 +44,18 @@ export class ViteConfiguration {
 		dotenv.config()
 
 		// Sets the base directory.
-		this.base = process.env.ASSET_URL ?? '/'
+		this.base = process.env.ASSET_URL ?? ''
+
+		// Makes sure the base ends with a slash.
+		if (!this.base.endsWith('/'))
+			this.base += '/'
 
 		// In production, we want to append the build_path. It is not needed in development,
 		// since assets are served from the development server's root, but we're writing
 		// generated assets in public/build_path, so build_path needs to be referenced.
 		if (process.env.NODE_ENV?.startsWith('prod') || process.env.APP_ENV !== 'local') {
 			this.base += artisan.build_path ?? ''
+
 			if (!this.base.endsWith('/'))
 				this.base += '/'
 		}
