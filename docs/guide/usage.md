@@ -41,11 +41,11 @@ Laravel Vite includes a few directives that handles linking assets in developmen
 	<title>Laravel</title>
 	@vite
 	<!--
-  In development:
-    <script type="module" src="http://localhost:3000/@vite/client"></script>
-    <script type="module" src="http://localhost:3000/resources/scripts/app.ts"></script>
-  In production:
-    <script type="module" src="http://laravel.local/build/assets/app.66e83946.js"></script>
+	In development:
+		<script type="module" src="http://localhost:3000/@vite/client"></script>
+		<script type="module" src="http://localhost:3000/resources/scripts/app.ts"></script>
+	In production:
+		<script type="module" src="http://laravel.local/build/assets/app.66e83946.js"></script>
 	-->
 </head>
 ```
@@ -63,13 +63,13 @@ Laravel Vite includes a few directives that handles linking assets in developmen
 	@vite('main')
 	@vite('resources/js/some-script.js')
 	<!-- 
-  In development:
-    <script type="module" src="http://localhost:3000/@vite/client"></script>
-    <script type="module" src="http://localhost:3000/resources/scripts/main.ts"></script>
-    <script type="module" src="http://localhost:3000/resources/js/some-script.js"></script>
-  In production:
-    <script type="module" src="http://laravel.local/build/assets/main.66e83946.js"></script>
-    <script type="module" src="http://laravel.local/build/assets/some-script.6d3515d2.js"></script>
+	In development:
+		<script type="module" src="http://localhost:3000/@vite/client"></script>
+		<script type="module" src="http://localhost:3000/resources/scripts/main.ts"></script>
+		<script type="module" src="http://localhost:3000/resources/js/some-script.js"></script>
+	In production:
+		<script type="module" src="http://laravel.local/build/assets/main.66e83946.js"></script>
+		<script type="module" src="http://laravel.local/build/assets/some-script.6d3515d2.js"></script>
 	-->
 </head>
 ```
@@ -105,3 +105,25 @@ Additionally, you can manually generate or update this file with the `vite:alias
 ```bash
 php artisan vite:aliases
 ```
+
+## Assets
+
+Files stored in `resources/static` are served by Vite as if they were in the `public` directory. You can generate a path to an asset using `vite_asset()`. For instance, assuming you have a `cat.png` file in `resources/static/images`:
+
+```html
+<img src="{{ vite_asset('images/cat.png') }}" alt="A cute cat" />
+<!-- 
+In development:
+	<img src="http://localhost:3000/images/cat.png" alt="A cute cat" />
+In production:
+	<img src="https://your-site.dev/build/images/cat.png " alt="A cute cat" />
+-->
+```
+
+:::warning
+This works well when using Blade, but **there is currently an unsolved issue when referencing assets in files processed by Vite**, such as a Vue or CSS file. In development, URLs will not be properly rewritten.
+
+That issue is tracked here: https://github.com/vitejs/vite/issues/2196.
+:::
+
+If you want to use a directory other than `resources/static`, you can change the [`public_directory` option](/guide/configuration#public-directory).
