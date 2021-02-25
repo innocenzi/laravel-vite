@@ -15,6 +15,6 @@ You can change the build path in the [configuration](/guide/configuration), but 
 
 ## `ASSET_URL` environment variable
 
-Laravel's default `asset` helper makes use of the `ASSET_URL` environment variable to generate an asset link. This is particularly useful if assets are stored in a cloud-based storage such as S3, which is the case with [Laravel Vapor](https://docs.vapor.build/1.0/projects/deployments.html#assets).
+Both this package's [`vite_asset`](/guide/usage#assets) and Laravel's default `asset` helpers make use of the `ASSET_URL` environment variable to generate an asset link.
 
-The Vite NPM helper takes the `ASSET_URL` environment variable into account and injects it in Vite's `base` configuration option in order to properly link the assets in production.
+This is particularly useful if assets are stored in a cloud-based storage such as S3, which is the case with [Laravel Vapor](https://docs.vapor.build/1.0/projects/deployments.html#assets).
