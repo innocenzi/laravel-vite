@@ -47,3 +47,13 @@ if (! function_exists('vite_tags')) {
         return app()->make(Innocenzi\Vite\Vite::class)->getClientAndEntrypointTags();
     }
 }
+
+if (! function_exists('vite_asset')) {
+    /**
+     * Gets a valid URL for the given asset.
+     */
+    function vite_asset(string $path)
+    {
+        return app()->make(Innocenzi\Vite\Vite::class)->getAssetUrl($path);
+    }
+}
