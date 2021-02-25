@@ -84,6 +84,18 @@ This directive includes the client script. It is not needed if you used `@vite` 
 
 This directive includes [React's refresh runtime](https://vitejs.dev/guide/backend-integration.html#backend-integration). It is not needed if you don't use React, and it must be added **before** `@vite` or `@client`.
 
+## Helpers
+
+In case you need to reference tags manually, a few global helpers are available.
+
+| Directive                  | Equivalent helper              | Description                                                        |
+| -------------------------- | ------------------------------ | ------------------------------------------------------------------ |
+| `@vite` without parameters | `vite_tags()`                  | Generate tags for the Vite client and every configured entrypoint. |
+| `@vite` with parameters    | `vite_entry(string $entry)`    | Generate tags that include the given entry.                        |
+| `@client`                  | `vite_client()`                | Generate a script tag that includes the Vite client.               |
+| `@react`                   | `vite_react_refresh_runtime()` | Generate a script tag that includes the React Refresh runtime.     |
+| N/A                        | `vite_asset()`                 | Generate an [asset path](/guide/usage#static-assets).              |
+
 ## Import aliases
 
 For convenience, the `@` alias is configured to point to the `resources` directory. This can be edited in the [configuration](/guide/configuration#aliases).
