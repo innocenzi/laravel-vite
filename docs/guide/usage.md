@@ -106,7 +106,7 @@ Additionally, you can manually generate or update this file with the `vite:alias
 php artisan vite:aliases
 ```
 
-## Assets
+## Static assets
 
 Files stored in `resources/static` are served by Vite as if they were in the `public` directory. You can generate a path to an asset using `vite_asset()`. For instance, assuming you have a `cat.png` file in `resources/static/images`:
 
@@ -120,10 +120,10 @@ In production:
 -->
 ```
 
-:::warning
-This works well when using Blade, but **there is currently an unsolved issue when referencing assets in files processed by Vite**, such as a Vue or CSS file. In development, URLs will not be properly rewritten.
-
-That issue is tracked here: https://github.com/vitejs/vite/issues/2196.
-:::
-
 If you want to use a directory other than `resources/static`, you can change the [`public_directory` option](/guide/configuration#public-directory).
+
+## Vite-processed assets
+
+There is currently [an unsolved issue when referencing assets in files processed by Vite](https://github.com/vitejs/vite/issues/2196), such as a Vue or CSS file. **In development, URLs will not be properly rewritten**.
+
+Additionally, there is currently no way to get the path of a Vite-processed asset (eg. an image that was imported in a Vue SFC) from the back-end, since the manifest does not reference the original file path. In most cases, this should not be an issue, as this is not a common use case.
