@@ -12,6 +12,7 @@ interface PhpConfiguration {
 	dev_url?: string
 	entrypoints?: false | string | string[]
 	aliases?: Record<string, string>
+	public_directory?: string
 }
 
 /**
@@ -42,7 +43,7 @@ export class ViteConfiguration {
 	constructor(config: UserConfig = {}, artisan: PhpConfiguration = {}) {
 		dotenv.config()
 		this.base = process.env.ASSET_URL ?? '/'
-		this.publicDir = 'resources/static'
+		this.publicDir = artisan.public_directory ?? 'resources/static'
 		this.build = {
 			manifest: true,
 			outDir: artisan?.build_path
