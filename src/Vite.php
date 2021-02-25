@@ -162,6 +162,9 @@ class Vite
         return false;
     }
 
+    /**
+     * Creates the script tag for including the development server.
+     */
     protected function createDevelopmentScriptTag(string $path): Htmlable
     {
         // I suspect ASSET_URL should be takin into account here.
@@ -171,5 +174,17 @@ class Vite
             Str::finish(\config('vite.dev_url'), '/'),
             $path
         ));
+    }
+
+    /**
+     * Gets a valid URL for the given asset. During development, the returned URL will be relative to the development server.
+     */
+    public function getAssetUrl(string $path): string
+    {
+        if ($this->shouldUseManifest()) {
+            return asset(sprintf('/%s/%s', config('vite.build_path'), $path));
+        }
+
+        return sprintf('%s/%s', config('vite.dev_url'), $path);
     }
 }
