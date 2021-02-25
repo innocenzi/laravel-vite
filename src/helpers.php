@@ -14,7 +14,7 @@ if (! function_exists('vite_client')) {
 
 if (! function_exists('vite_react_refresh_runtime')) {
     /**
-     * Get the HTML script tag that includes the Vite client.
+     * Get the HTML script tag that includes the React Refresh runtime.
      *
      * @return string
      */
