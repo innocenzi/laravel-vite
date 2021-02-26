@@ -110,7 +110,7 @@ import '@/css/app.css';
 @tailwind utilities;
 ```
 
-In order to support Visual Studio Code, the development server will generate a `tsconfig.json` file (or update the existing one) with the configured aliases. Updating them will required a proper server restart.
+In order to support Visual Studio Code, the development server will generate a `tsconfig.json` file (or update the existing one) with the configured aliases. Updating them will require a proper server restart.
 
 Additionally, you can manually generate or update this file with the `vite:aliases` Artisan command.
 
