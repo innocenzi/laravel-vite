@@ -10,7 +10,7 @@ editLink: true
 The configuration file can be published thanks to the following command:
 
 ```bash
-php artisan vendor:publish --tag=laravel-vite-config
+php artisan vendor:publish --tag=vite-config
 ```
 
 ## Options
