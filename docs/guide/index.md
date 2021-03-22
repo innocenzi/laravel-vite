@@ -22,7 +22,7 @@ The preset may take a while to be applied, because it will update your dependenc
 Additionally, it defaults to installing Vue 3. If you don't want that, you may use the `--no-vue` flag.
 
 :::warning Note for Mac users
-You will likely get an error because `apply` is a valid command on your system. You need to either install `apply` globally with `npm i -g apply`, or use the `--ignore-existing` flag.
+You will likely get an error because `apply` is NOT a valid command on your system. You need to either install `apply` globally with `npm i -g apply`, or use the `--ignore-existing` flag.
 :::
 
 The preset will:
