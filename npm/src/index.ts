@@ -63,9 +63,10 @@ export class ViteConfiguration {
 		this.publicDir = artisan.public_directory ?? 'resources/static'
 		this.build = {
 			manifest: true,
+			emptyOutDir: false,
 			outDir: artisan?.build_path
 				? `public/${artisan.build_path}`
-				: 'public/build',
+				: 'public',
 			rollupOptions: {
 				input: [],
 			},
