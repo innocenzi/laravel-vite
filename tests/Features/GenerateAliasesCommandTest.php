@@ -17,6 +17,7 @@ it('generates a tsconfig.json file with the updated aliases', function () {
 
         expect(json_decode(File::get($tsconfigPath), true)['compilerOptions'])
             ->toMatchArray([
+                'baseUrl' => '.',
                 'paths' => [
                     '@/*' => ['resources/*'],
                     '@scripts/*' => ['resources/scripts/*'],
