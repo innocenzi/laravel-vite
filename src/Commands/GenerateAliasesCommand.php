@@ -49,6 +49,7 @@ class GenerateAliasesCommand extends Command
         $tsconfig['compilerOptions']['baseUrl'] = '.';
         $tsconfig['compilerOptions']['paths'] = collect(\config('vite.aliases'))
             ->mapWithKeys(fn ($value, $key) => ["${key}/*" => ["${value}/*"]])
+            ->mergeRecursive($tsconfig['compilerOptions']['paths'] ?? [])
             ->toArray();
 
         File::put($this->getTsConfigPath(), \json_encode($tsconfig, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
