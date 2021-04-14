@@ -38,7 +38,6 @@ class GenerateAliasesCommand extends Command
                 'esModuleInterop' => true,
                 'lib' => ['esnext', 'dom'],
                 'types' => ['vite/client'],
-                'baseUrl' => '.',
             ],
             'include' => ['resources/**/*'],
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
@@ -47,8 +46,10 @@ class GenerateAliasesCommand extends Command
     protected function writeAliases(): void
     {
         $tsconfig = json_decode(File::get($this->getTsConfigPath()), true);
+        $tsconfig['compilerOptions']['baseUrl'] = '.';
         $tsconfig['compilerOptions']['paths'] = collect(\config('vite.aliases'))
             ->mapWithKeys(fn ($value, $key) => ["${key}/*" => ["${value}/*"]])
+            ->merge($tsconfig['compilerOptions']['paths'] ?? [])
             ->toArray();
 
         File::put($this->getTsConfigPath(), \json_encode($tsconfig, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
