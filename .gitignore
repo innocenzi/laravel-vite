@@ -7,3 +7,4 @@ coverage
 phpunit.xml
 psalm.xml
 vendor
+tests/__sandbox__

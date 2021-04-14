@@ -43,10 +43,10 @@ function get_vite(string $manifest = 'manifest.json'): Vite
  */
 function sandbox(callable $callback, string $base = __DIR__): string
 {
-    return tap($base . '/' . Str::random(), function (string $directory) use ($callback) {
+    return tap($base . '/__sandbox__/' . Str::random(), function (string $directory) use ($callback) {
         $initialBasePath = base_path();
         App::setBasePath($directory);
-        File::makeDirectory($directory);
+        File::makeDirectory($directory, 0755, true);
         $callback($directory);
         File::deleteDirectory($directory);
         App::setBasePath($initialBasePath);
