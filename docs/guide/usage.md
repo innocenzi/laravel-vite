@@ -18,6 +18,8 @@ yarn dev # npm run dev
 
 If you are working locally and the development server is not working, Laravel Vite will try to read the manifest instead.
 
+Note that **the development server** only serves assets, not your application. To access your application, you have to use a server, like Laravel Valet or `php artisan serve`.
+
 ## Entrypoints
 
 By default, scripts in `resources/scripts` are considered entrypoints, and will be included in Vite's configuration. To include them in your Blade files, you can use the [`@vite` directive](#directives).
