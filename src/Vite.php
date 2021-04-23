@@ -140,6 +140,10 @@ class Vite
             return true;
         }
 
+        if (null === config('vite.ping_timeout')) {
+            return false;
+        }
+
         if (! $this->isDevelopmentServerRunning()) {
             return true;
         }

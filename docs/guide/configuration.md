@@ -74,6 +74,8 @@ When using Vite in development, assets must link to the development server. This
 
 This defines the maximum duration, in seconds, that the ping to the development server should take while trying to determine whether to use the manifest or the server in a local environment.
 
+Setting this value to `null` will disable the check.
+
 ## Vite configuration file
 
 While most of the configuration can be done within `config/vite.php`, if you need more flexibility, you will need to update `vite.config.ts`.
