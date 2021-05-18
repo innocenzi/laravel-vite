@@ -30,7 +30,7 @@ const head = [
 
 if (production) {
 	// @ts-ignore
-	head.push(['script', { src: 'https://unpkg.com/thesemetrics@latest', async: '' }])
+	head.push(['script', { src: 'https://plausible.io/js/plausible.js', 'data-domain': 'laravel-vite.innocenzi.dev', async: '', defer: '' }])
 }
 
 /**
