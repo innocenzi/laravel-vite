@@ -23,7 +23,7 @@
   </a>
   <br />
   <br />
-  <pre align="center">composer require innocenzi/laravel-vite</pre>
+<pre>&nbsp;<div align="center">composer require innocenzi/laravel-vite</div>&nbsp;</pre>
 </p>
 <br />
 
