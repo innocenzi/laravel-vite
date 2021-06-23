@@ -247,8 +247,7 @@ export function createViteConfiguration() {
  * @see https://github.com/innocenzi/laravel-vite
  */
 export function defineConfig(config: UserConfig = {}, artisan?: PhpConfiguration) {
-	artisan = artisan ?? getConfigurationFromArtisan()
-	return new ViteConfiguration(config, artisan)
+	return new ViteConfiguration(config, artisan ?? getConfigurationFromArtisan())
 }
 
 export default defineConfig()
