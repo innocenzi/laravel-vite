@@ -1,8 +1,3 @@
 {
-	"extends": "@antfu/eslint-config-ts",
-	"rules": {
-		"no-tabs": "off",
-		"indent": "off",
-		"@typescript-eslint/indent": ["error", "tab"]
-	}
+	"extends": "@innocenzi/eslint-config"
 }

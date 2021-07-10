@@ -47,8 +47,9 @@ export class ViteConfiguration {
 		this.base = process.env.ASSET_URL ?? ''
 
 		// Makes sure the base ends with a slash.
-		if (!this.base.endsWith('/'))
+		if (!this.base.endsWith('/')) {
 			this.base += '/'
+		}
 
 		// In production, we want to append the build_path. It is not needed in development,
 		// since assets are served from the development server's root, but we're writing
@@ -56,8 +57,9 @@ export class ViteConfiguration {
 		if (process.env.NODE_ENV?.startsWith('prod') || process.env.APP_ENV !== 'local') {
 			this.base += artisan.build_path ?? ''
 
-			if (!this.base.endsWith('/'))
+			if (!this.base.endsWith('/')) {
 				this.base += '/'
+			}
 		}
 
 		this.publicDir = artisan.public_directory ?? 'resources/static'
@@ -99,8 +101,9 @@ export class ViteConfiguration {
 				},
 			}
 
-			if (artisan?.entrypoints)
+			if (artisan?.entrypoints) {
 				(this.build.rollupOptions!.input! as string[]).push(...artisan.entrypoints)
+			}
 
 			this.merge(config)
 		}
@@ -112,6 +115,7 @@ export class ViteConfiguration {
 	 */
 	public withStaticAssets(publicDir: string): this {
 		this.publicDir = publicDir
+
 		return this
 	}
 
@@ -121,6 +125,7 @@ export class ViteConfiguration {
 	 */
 	public withOutput(outDir: string): this {
 		this.build!.outDir = outDir
+
 		return this
 	}
 
@@ -161,10 +166,12 @@ export class ViteConfiguration {
 	 *	.withPlugin(vue)
 	 */
 	public withPlugin(plugin: VitePlugin): this {
-		if (typeof plugin === 'function')
+		if (typeof plugin === 'function') {
 			plugin = plugin()
+		}
 
 		this.plugins!.push(plugin)
+
 		return this
 	}
 
@@ -179,7 +186,8 @@ export class ViteConfiguration {
 	 *	.withPlugins(vue, components)
 	 */
 	public withPlugins(...plugins: VitePlugin[]): this {
-		plugins.forEach(plugin => this.withPlugin(plugin))
+		plugins.forEach((plugin) => this.withPlugin(plugin))
+
 		return this
 	}
 
@@ -189,8 +197,9 @@ export class ViteConfiguration {
 	public merge(config: UserConfig): this {
 		const result: UserConfig = deepmerge(this, config)
 
-		if (Reflect.has(config, 'base'))
+		if (Reflect.has(config, 'base')) {
 			console.warn(chalk.yellow.bold('(!) "base" option should not be used with Laravel Vite. Use the "ASSET_URL" environment variable instead.'))
+		}
 
 		for (const [key, value] of Object.entries(result)) {
 			// @ts-expect-error
@@ -214,8 +223,7 @@ function callArtisan(...params: string[]): string {
 function generateAliases() {
 	try {
 		callArtisan('vite:aliases')
-	}
-	catch (error) {
+	} catch (error) {
 		console.warn('Could not regenerate tsconfig.json.')
 		console.error(error)
 	}
@@ -227,8 +235,7 @@ function generateAliases() {
 function getConfigurationFromArtisan(): PhpConfiguration | undefined {
 	try {
 		return JSON.parse(callArtisan('vite:config')) as PhpConfiguration
-	}
-	catch (error) {
+	} catch (error) {
 		console.warn('Could not read configuration from PHP.')
 		console.error(error)
 	}
