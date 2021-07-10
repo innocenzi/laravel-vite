@@ -12,7 +12,7 @@ class GenerateAliasesCommand extends Command
 
     public function handle()
     {
-        if (false === \config('vite.aliases')) {
+        if (false === config('vite.aliases')) {
             return;
         }
 
@@ -40,23 +40,23 @@ class GenerateAliasesCommand extends Command
                 'types' => ['vite/client'],
             ],
             'include' => ['resources/**/*'],
-        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        ], \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES));
     }
 
     protected function writeAliases(): void
     {
-        $tsconfig = json_decode(File::get($this->getTsConfigPath()), true);
+        $tsconfig = \json_decode(File::get($this->getTsConfigPath()), true);
         $tsconfig['compilerOptions']['baseUrl'] = '.';
-        $tsconfig['compilerOptions']['paths'] = collect(\config('vite.aliases'))
+        $tsconfig['compilerOptions']['paths'] = collect(config('vite.aliases'))
             ->mapWithKeys(fn ($value, $key) => ["${key}/*" => ["${value}/*"]])
             ->merge($tsconfig['compilerOptions']['paths'] ?? [])
             ->toArray();
 
-        File::put($this->getTsConfigPath(), \json_encode($tsconfig, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        File::put($this->getTsConfigPath(), \json_encode($tsconfig, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES));
     }
 
     protected function getTsConfigPath(): string
     {
-        return \base_path('tsconfig.json');
+        return base_path('tsconfig.json');
     }
 }

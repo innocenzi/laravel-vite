@@ -36,7 +36,7 @@ class ManifestEntry implements Htmlable, Stringable
      */
     public function getScriptTag(): string
     {
-        return sprintf('<script type="module" src="%s"></script>', $this->asset($this->file));
+        return \sprintf('<script type="module" src="%s"></script>', $this->asset($this->file));
     }
 
     /**
@@ -44,7 +44,7 @@ class ManifestEntry implements Htmlable, Stringable
      */
     public function getStyleTags(): Collection
     {
-        return $this->css->map(fn (string $path) => sprintf('<link rel="stylesheet" href="%s" />', $this->asset($path)));
+        return $this->css->map(fn (string $path) => \sprintf('<link rel="stylesheet" href="%s" />', $this->asset($path)));
     }
 
     /**
@@ -62,7 +62,7 @@ class ManifestEntry implements Htmlable, Stringable
      */
     protected function asset(string $path): string
     {
-        return asset(sprintf('/%s/%s', config('vite.build_path'), $path));
+        return asset(\sprintf('/%s/%s', config('vite.build_path'), $path));
     }
 
     /**

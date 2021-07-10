@@ -91,7 +91,7 @@ class Vite
         return $this->findEntrypoints()
             ->map(fn (\SplFileInfo $file) => $this->createDevelopmentScriptTag(
                 Str::of($file->getPathname())
-                    ->replace(\base_path(), '')
+                    ->replace(base_path(), '')
                     ->replace('\\', '/')
                     ->ltrim('/')
             ));
@@ -102,15 +102,15 @@ class Vite
      */
     public function findEntrypoints(): Collection
     {
-        $paths = collect(\config('vite.entrypoints', []))
-            ->map(fn ($directory) => \base_path($directory));
+        $paths = collect(config('vite.entrypoints', []))
+            ->map(fn ($directory) => base_path($directory));
 
         return $paths->filter(fn ($directory) => File::isDirectory($directory))
             ->flatMap(fn ($directory) => File::files($directory))
             ->merge($paths->filter(fn ($directory) => File::isFile($directory))->map(fn (string $path) => new \SplFileInfo($path)))
             ->unique(fn (\SplFileInfo $file) => $file->getPathname())
             ->filter(fn (\SplFileInfo $file) => ! collect(config('vite.ignore_patterns'))
-            ->some(fn ($pattern) => preg_match($pattern, $file->getFilename())));
+            ->some(fn ($pattern) => \preg_match($pattern, $file->getFilename())));
     }
 
     /**
@@ -140,7 +140,7 @@ class Vite
             return true;
         }
 
-        if (! is_numeric(config('vite.ping_timeout'))) {
+        if (! \is_numeric(config('vite.ping_timeout'))) {
             return false;
         }
 
@@ -174,9 +174,9 @@ class Vite
     {
         // I suspect ASSET_URL should be takin into account here.
         // If you find out it does, feel free to open an issue.
-        return new HtmlString(sprintf(
+        return new HtmlString(\sprintf(
             '<script type="module" src="%s%s"></script>',
-            Str::finish(\config('vite.dev_url'), '/'),
+            Str::finish(config('vite.dev_url'), '/'),
             $path
         ));
     }
@@ -187,9 +187,9 @@ class Vite
     public function getAssetUrl(string $path): string
     {
         if ($this->shouldUseManifest()) {
-            return asset(sprintf('/%s/%s', config('vite.build_path'), $path));
+            return asset(\sprintf('/%s/%s', config('vite.build_path'), $path));
         }
 
-        return sprintf('%s/%s', config('vite.dev_url'), $path);
+        return \sprintf('%s/%s', config('vite.dev_url'), $path);
     }
 }

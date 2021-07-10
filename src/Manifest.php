@@ -62,7 +62,7 @@ class Manifest implements Htmlable, Stringable
      */
     protected function getManifestPath(string $path = null): string
     {
-        $path ??= \public_path(\config('vite.build_path') . '/' . self::MANIFEST_FILE_NAME);
+        $path ??= public_path(config('vite.build_path') . '/' . self::MANIFEST_FILE_NAME);
 
         if (! \file_exists($path)) {
             throw new ManifestNotFound($path);

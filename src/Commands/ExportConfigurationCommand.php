@@ -21,12 +21,12 @@ class ExportConfigurationCommand extends Command
     {
         $entrypoints = app(Vite::class)->findEntrypoints()
             ->map(fn (\SplFileInfo $file) => Str::of($file->getPathname())
-            ->replace(\base_path(), '')
+            ->replace(base_path(), '')
             ->replace('\\', '/')
             ->ltrim('/'))
             ->values();
 
-        return json_encode(array_merge(config('vite'), [
+        return \json_encode(\array_merge(config('vite'), [
             'entrypoints' => $entrypoints,
         ]));
     }

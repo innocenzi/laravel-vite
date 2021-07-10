@@ -46,7 +46,7 @@ it('merges path aliases with existing ones', function () {
             '@scripts' => 'resources/scripts',
         ]);
 
-        File::put($tsconfigPath, \json_encode([
+        File::put($tsconfigPath, json_encode([
             'compilerOptions' => [
                 'paths' => ['@test/*' => ['test/*']],
             ],
