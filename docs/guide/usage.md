@@ -16,9 +16,11 @@ yarn dev # npm run dev
 
 [Hot Module Replacement](https://vitejs.dev/guide/features.html#hot-module-replacement) is enabled: editing a Blade file will trigger a full-page refresh, but editing assets which Vite understand, such as Vue single-file components or JavaScript files, will trigger partial reloads.
 
-If you are working locally and the development server is not working, Laravel Vite will try to read the manifest instead.
+If you are working locally and the development server is not started, Laravel Vite will try to read the manifest instead. If your environment doesn't allow Laravel Vite to ping the development server, you can disable that feature by setting [`ping_timeout`](./configuration#ping-timeout) to `null`.
 
-Note that **the development server** only serves assets, not your application. To access your application, you have to use a server, like Laravel Valet or `php artisan serve`.
+::: tip Development URL
+Note that the development server only serves assets, **not your application**. To access your application, you have to use a server, like Laravel Valet or `php artisan serve`.
+:::
 
 ## Entrypoints
 
