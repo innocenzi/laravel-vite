@@ -45,6 +45,10 @@ module.exports = {
 		logo: '/favicon.svg',
 		docsDir: 'docs',
 		docsBranch: 'main',
+		// algolia: {
+		// 	apiKey: 'b05916662f78f588ffa32ef6ab46f5ad',
+		// 	indexName: 'laravel-vite-docs',
+		// },
 		editLinks: true,
 		editLinkText: 'Suggest changes to this page',
 		nav: [
@@ -58,7 +62,7 @@ module.exports = {
 					text: 'Guide',
 					children: [
 						{ text: 'Introduction', link: '/guide/introduction' },
-						{ text: 'Getting started', link: '/guide/' },
+						{ text: 'Installation', link: '/guide/' },
 						{ text: 'Usage', link: '/guide/usage' },
 						{ text: 'Building for production', link: '/guide/production' },
 						{ text: 'Configuration', link: '/guide/configuration' },

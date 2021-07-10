@@ -1,13 +1,11 @@
 ---
-title: Getting started
+title: Installation
 editLink: true
 ---
 
-# Getting started
+# Installation
 
-## Installation
-
-### Using the preset
+## Using the preset
 
 This is the recommended and the easiest approach. The [preset](https://github.com/laravel-presets/vite) can be applied with a single command, without prior installation.
 
@@ -32,9 +30,9 @@ The preset will:
 - Add development dependencies on `vite` and `laravel-vite` and update `package.json`'s scripts
 - Add a dependency on [`innocenzi/laravel-vite`](https://github.com/innocenzi/laravel-vite)
 - Create a `vite.config.ts` configuration file
-- Add a call to the `@vite` directive in `welcome.blade.php`
+- Add a call to the [`@vite`](./usage#vite) directive in `welcome.blade.php`
 
-### Manually
+## Manually
 
 If you'd rather install Vite manually, you can follow these steps.
 
@@ -54,10 +52,18 @@ Vite is configured via a `vite.config.ts` file at the root of your project. Lara
 
 ```ts
 // vite.config.ts
-export { default } from "laravel-vite";
+import { defineConfig } from 'laravel-vite'
+import vue from '@vitejs/plugin-vue'
+
+export default defineConfig()
+	.withPlugin(vue)
+	.merge({
+		// Your own Vite options
+	})
+
 ```
 
-Finally, edit your `package.json` file's `scripts` property:
+Edit your `package.json` file's `scripts` property:
 
 ```json
 "scripts": {
@@ -66,3 +72,5 @@ Finally, edit your `package.json` file's `scripts` property:
   "serve": "vite preview"
 }
 ```
+
+Finally, add the [`@vite`](./usage#vite) directive to your Blade files.
