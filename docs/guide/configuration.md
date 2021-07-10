@@ -20,7 +20,7 @@ php artisan vendor:publish --tag=vite-config
 - **Default**: `[ 'resources/scripts', 'resources/js' ]`
 - **Type**: `string`, `string[]` or `false`
 
-This option determines the paths to the entrypoints. It should be a list paths to directories or files. Each script will be added to Vite's configuration and will have a corresponding tag generated through the [`@vite` directive](/guide/usage#vite).
+This option determines the paths to the entrypoints. It should be a list paths to directories or files. Each script will be added to Vite's configuration and will have a corresponding tag generated through the [`@vite` directive](./usage#vite).
 
 You can disable this feature by setting the option to `false`.
 
@@ -80,7 +80,7 @@ Setting this value to `null` will disable the check.
 
 While most of the configuration can be done within `config/vite.php`, if you need more flexibility, you will need to update `vite.config.ts`.
 
-If you used the preset or following the [installation instructions](/guide#installation), it should look like the following:
+If you used the preset or following the [installation instructions](./index#installation), it should look like the following:
 
 ```ts
 // vite.config.ts
