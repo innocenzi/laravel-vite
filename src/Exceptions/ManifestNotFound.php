@@ -12,6 +12,6 @@ class ManifestNotFound extends \Exception
             ? 'Did you start the development server?'
             : 'Did you run the build command?';
 
-        $this->message = \sprintf('The manifest could not be found. %s Tried: %s', $hint, $path);
+        $this->message = sprintf('The manifest could not be found. %s Tried: %s', $hint, $path);
     }
 }

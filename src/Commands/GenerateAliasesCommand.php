@@ -26,7 +26,7 @@ class GenerateAliasesCommand extends Command
 
     protected function createTsConfig(): void
     {
-        File::put($this->getTsConfigPath(), \json_encode([
+        File::put($this->getTsConfigPath(), json_encode([
             'compilerOptions' => [
                 'target' => 'esnext',
                 'module' => 'esnext',
@@ -45,14 +45,14 @@ class GenerateAliasesCommand extends Command
 
     protected function writeAliases(): void
     {
-        $tsconfig = \json_decode(File::get($this->getTsConfigPath()), true);
+        $tsconfig = json_decode(File::get($this->getTsConfigPath()), true);
         $tsconfig['compilerOptions']['baseUrl'] = '.';
         $tsconfig['compilerOptions']['paths'] = collect(config('vite.aliases'))
             ->mapWithKeys(fn ($value, $key) => ["${key}/*" => ["${value}/*"]])
             ->merge($tsconfig['compilerOptions']['paths'] ?? [])
             ->toArray();
 
-        File::put($this->getTsConfigPath(), \json_encode($tsconfig, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES));
+        File::put($this->getTsConfigPath(), json_encode($tsconfig, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES));
     }
 
     protected function getTsConfigPath(): string

@@ -26,7 +26,7 @@ class ExportConfigurationCommand extends Command
             ->ltrim('/'))
             ->values();
 
-        return \json_encode(\array_merge(config('vite'), [
+        return json_encode(array_merge(config('vite'), [
             'entrypoints' => $entrypoints,
         ]));
     }

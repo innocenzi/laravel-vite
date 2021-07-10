@@ -28,7 +28,7 @@ class ViteServiceProvider extends PackageServiceProvider
                 return '<?php echo vite_tags() ?>';
             }
 
-            return \sprintf('<?php echo vite_entry(e(%s)); ?>', $entryName);
+            return sprintf('<?php echo vite_entry(e(%s)); ?>', $entryName);
         });
 
         Blade::directive('client', function () {

@@ -31,7 +31,7 @@ class Manifest implements Htmlable, Stringable
      */
     public function __construct(string $path = null)
     {
-        $this->rawEntries = Collection::make(\json_decode(\file_get_contents($this->getManifestPath($path)), true));
+        $this->rawEntries = Collection::make(json_decode(file_get_contents($this->getManifestPath($path)), true));
         $this->entries = $this->rawEntries
             ->map(fn (array $value) => ManifestEntry::fromArray($value))
             ->filter(fn (ManifestEntry $entry) => $entry->isEntry);
@@ -64,7 +64,7 @@ class Manifest implements Htmlable, Stringable
     {
         $path ??= public_path(config('vite.build_path') . '/' . self::MANIFEST_FILE_NAME);
 
-        if (! \file_exists($path)) {
+        if (! file_exists($path)) {
             throw new ManifestNotFound($path);
         }
 
