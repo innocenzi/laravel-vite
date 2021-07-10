@@ -60,7 +60,6 @@ export default defineConfig()
 	.merge({
 		// Your own Vite options
 	})
-
 ```
 
 Edit your `package.json` file's `scripts` property:

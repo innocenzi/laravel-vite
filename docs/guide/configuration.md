@@ -83,20 +83,17 @@ While most of the configuration can be done within `config/vite.php`, if you nee
 If you used the preset or following the [installation instructions](./index#installation), it should look like the following:
 
 ```ts
-// vite.config.ts
-export { default } from "laravel-vite";
+import { defineConfig } from 'laravel-vite'
+import vue from '@vitejs/plugin-vue'
+
+export default defineConfig()
+	.withPlugin(vue)
+	.merge({
+		// Your own Vite options
+	})
 ```
 
-This is a shortcut that you can keep if you don't need configuration. Otherwise, you need to import the `defineConfig` object and export it as `default` manually, so you can chain methods on it:
-
-```ts
-// vite.config.ts
-import { defineConfig } from "laravel-vite";
-
-export default defineConfig();
-```
-
-This is a small wrapper around Vite's configuration that adds a few convenience methods, such as `withEntry` to add an entrypoint or `withOutput` to change the build directory. These two options are taken care of by Laravel Vite, so you don't need to define them manually.
+Note that `defineConfig` is imported from `laravel-vite`. This is a small wrapper around Vite's configuration that adds a few convenience methods, such as `withEntry` to add an entrypoint or `withOutput` to change the build directory. These two options are taken care of by Laravel Vite, so you don't need to define them manually.
 
 ### Adding plugins
 
@@ -117,6 +114,19 @@ export default defineConfig()
 If you don't call the plugin method, it will be done by `withPlugin`, which is why the example above uses `vue` instead of `vue()`.
 If you need to pass a configuration object, use the latter.
 :::
+
+### SSL certificates
+
+If you are on Windows using [Laragon](https://laragon.com) (which is highly recommended on Windows for non-Docker and non-WSL environments), you can use `withLaragonCertificates` to pass Laragon's certificates to the development server. 
+
+```ts
+import { defineConfig } from 'laravel-vite'
+
+export default defineConfig()
+	.withLaragonCertificates()
+```
+
+If Laragon is not installed in its default installation directory, `C:/laragon`, you can pass its installation path as the first parameter of `withLaragonCertificates`.
 
 ### Other Vite options
 
