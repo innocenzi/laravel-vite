@@ -159,6 +159,7 @@ class Vite
         try {
             return $this->isDevelopmentServerRunning ??= Http::withOptions([
                 'connect_timeout' => config('vite.ping_timeout'),
+                'verify' => false,
             ])->get(config('vite.dev_url') . '/@vite/client')->successful();
         } catch (\Throwable $th) {
         }
