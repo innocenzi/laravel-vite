@@ -110,6 +110,46 @@ export class ViteConfiguration {
 	}
 
 	/**
+	 * Configures the development server to use Laragon's SSL certificates.
+	 */
+	public withLaragonCertificates(path?: string): this {
+		path ??= 'C:\\laragon'
+
+		if (path.endsWith('\\')) {
+			path = path.slice(0, -1)
+		}
+
+		this.merge({
+			server: {
+				https: {
+					maxVersion: 'TLSv1.2',
+					key: `${path}\\etc\\ssl\\laragon.key`,
+					cert: `${path}\\etc\\ssl\\laragon.crt`,
+				},
+			},
+		})
+
+		return this
+	}
+
+	/**
+	 * Configures the development server to use the certificates at the given paths.
+	 */
+	public withCertificates(key: string, cert: string): this {
+		this.merge({
+			server: {
+				https: {
+					maxVersion: 'TLSv1.2',
+					key,
+					cert,
+				},
+			},
+		})
+
+		return this
+	}
+
+	/**
 	 * Defines the directory which contains static assets.
 	 * Defaults to resources/static.
 	 */
