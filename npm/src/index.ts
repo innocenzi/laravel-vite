@@ -93,13 +93,17 @@ export class ViteConfiguration {
 				host: host.substr(2),
 				https: protocol === 'https',
 				port: port ? Number(port) : 3000,
+				hmr: {
+					host: host.substr(2),
+					port: Number(port) || 3000,
+				},
 			}
+
+			if (artisan?.entrypoints)
+				(this.build.rollupOptions!.input! as string[]).push(...artisan.entrypoints)
+
+			this.merge(config)
 		}
-
-		if (artisan?.entrypoints)
-			(this.build.rollupOptions!.input! as string[]).push(...artisan.entrypoints)
-
-		this.merge(config)
 	}
 
 	/**
