@@ -117,6 +117,21 @@ If you need to pass a configuration object, use the latter.
 
 ### SSL certificates
 
+If your local environment is using the `https` protocol, you'll need to configure Vite's development server to use your SSL certificates. You can do this using `withCertificates`. The parameters are the paths to the `.key` and the `.crt` files, respectively.
+
+#### Laravel Valet
+
+If you use Laravel Valet, you can use `withValetCertificates`. The domain name will be determined from your `APP_URL` environment variable, but you can override it by passing it as the first parameter of the method.
+
+```ts
+import { defineConfig } from 'laravel-vite'
+
+export default defineConfig()
+	.withValetCertificates('my-app.test')
+```
+
+#### Laragon
+
 If you are on Windows using [Laragon](https://laragon.com) (which is highly recommended on Windows for non-Docker and non-WSL environments), you can use `withLaragonCertificates` to pass Laragon's certificates to the development server. 
 
 ```ts

@@ -1,4 +1,5 @@
 import path from 'path'
+import { homedir } from 'os'
 import { Plugin, UserConfig } from 'vite'
 import deepmerge from 'deepmerge'
 import execa from 'execa'
@@ -110,6 +111,22 @@ export class ViteConfiguration {
 	}
 
 	/**
+	 * Configures the development server to use Valet's SSL certificates.
+	 */
+	public withValetCertificates(domain?: string): this {
+		const home = homedir()
+		domain ??= process.env.APP_URL?.replace(/^https?:\/\//, '')
+
+		if (!domain) {
+			console.warn('No domain specificed. Certificates will not be applied.')
+
+			return this
+		}
+
+		return this.withCertificates(`${home}/.valet/Certificates/${domain}.key`, `${home}/.valet/Certificates/${domain}.crt`)
+	}
+
+	/**
 	 * Configures the development server to use Laragon's SSL certificates.
 	 */
 	public withLaragonCertificates(path?: string): this {
@@ -119,24 +136,14 @@ export class ViteConfiguration {
 			path = path.slice(0, -1)
 		}
 
-		this.merge({
-			server: {
-				https: {
-					maxVersion: 'TLSv1.2',
-					key: `${path}\\etc\\ssl\\laragon.key`,
-					cert: `${path}\\etc\\ssl\\laragon.crt`,
-				},
-			},
-		})
-
-		return this
+		return this.withCertificates(`${path}\\etc\\ssl\\laragon.key`, `${path}\\etc\\ssl\\laragon.crt`)
 	}
 
 	/**
 	 * Configures the development server to use the certificates at the given paths.
 	 */
 	public withCertificates(key: string, cert: string): this {
-		this.merge({
+		return this.merge({
 			server: {
 				https: {
 					maxVersion: 'TLSv1.2',
@@ -145,8 +152,6 @@ export class ViteConfiguration {
 				},
 			},
 		})
-
-		return this
 	}
 
 	/**
