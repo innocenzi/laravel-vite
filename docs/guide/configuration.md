@@ -121,13 +121,13 @@ If your local environment is using the `https` protocol, you'll need to configur
 
 #### Laravel Valet
 
-If you use Laravel Valet, you can use `withValetCertificates`. The domain name will be determined from your `APP_URL` environment variable, but you can override it by passing it as the first parameter of the method.
+If you use Laravel Valet, you can use `withValetCertificates`. The domain name will be determined from your `APP_URL` environment variable, but you can override it by passing it as the `domain` property of the first parameter of the method.
 
 ```ts
 import { defineConfig } from 'laravel-vite'
 
 export default defineConfig()
-	.withValetCertificates('my-app.test')
+	.withValetCertificates({ domain: 'my-app.test' })
 ```
 
 #### Laragon

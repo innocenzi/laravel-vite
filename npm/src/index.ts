@@ -113,8 +113,9 @@ export class ViteConfiguration {
 	/**
 	 * Configures the development server to use Valet's SSL certificates.
 	 */
-	public withValetCertificates(domain?: string): this {
+	public withValetCertificates({ domain, path }: { domain?: string; path?: string }): this {
 		const home = homedir()
+		path ??= '/.config/valet/Certificates/'
 		domain ??= process.env.APP_URL?.replace(/^https?:\/\//, '')
 
 		if (!domain) {
@@ -123,7 +124,11 @@ export class ViteConfiguration {
 			return this
 		}
 
-		return this.withCertificates(`${home}/.valet/Certificates/${domain}.key`, `${home}/.valet/Certificates/${domain}.crt`)
+		if (!path.endsWith('/')) {
+			path = `${path}/`
+		}
+
+		return this.withCertificates(`${home}${path}${domain}.key`, `${home}${path}${domain}.crt`)
 	}
 
 	/**
