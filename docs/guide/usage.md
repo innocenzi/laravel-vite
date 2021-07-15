@@ -22,6 +22,12 @@ If you are working locally and the development server is not started, Laravel Vi
 Note that the development server only serves assets, **not your application**. To access your application, you have to use a server, like Laravel Valet or `php artisan serve`.
 :::
 
+## Automatic development server discovery
+
+When developing locally, Laravel Vite will try to ping your development server in order to determine if it should use it or should use the manifest. This is handy when you want to visit your application without having the development server running because you already have a manifest generated.
+
+While convenient, this feature can break in environments where the back-end can't directly ping the development server. In order to disable it, you can set `ping_timeout` in `config/vite.php` to `false`.
+
 ## Entrypoints
 
 By default, scripts in `resources/scripts` are considered entrypoints, and will be included in Vite's configuration. To include them in your Blade files, you can use the [`@vite` directive](#directives).
