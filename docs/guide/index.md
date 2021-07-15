@@ -15,9 +15,7 @@ To use it, run the following command at the root of your project:
 npx apply laravel:vite
 ```
 
-The preset may take a while to be applied, because it will update your dependencies. If you'd rather update them manually, you may use the `--no-install` flag.
-
-Additionally, it defaults to installing Vue 3. If you don't want that, you may use the `--no-vue` flag.
+The preset defaults to installing Vue 3. If you don't want that, you may use the `--no-vue` flag.
 
 :::warning Note for Mac users
 You will likely get an error because `apply` is a valid command on your system. You need to either install `apply` globally with `npm i -g apply`, or use the `--ignore-existing` flag.
