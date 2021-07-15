@@ -123,7 +123,7 @@ export class ViteConfiguration {
 			return this
 		}
 
-		return this.withCertificates(`${home}/.valet/Certificates/${domain}.key`, `${home}/.valet/Certificates/${domain}.crt`)
+		return this.withCertificates(`${home}/.config/valet/Certificates/${domain}.key`, `${home}/.config/valet/Certificates/${domain}.crt`)
 	}
 
 	/**
