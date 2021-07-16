@@ -23,7 +23,7 @@ Setting up `https` locally requires a few settings. The development server must 
 
 - Ensure Vite knows about your SSL certificates (see [`withCertificates`](./configuration#ssl-certificates)).
 - Ensure `dev_url` in `config/vite.php` is using the `https` protocol.
-- Visit `https://localhost:3000` (or whatever your `dev_url` is set to) to manually approve the self-signed certificate.
+- Manually visit `https://localhost:3000` (or whatever your `dev_url` is set to) in your browser to approve the self-signed certificate.
 
 ## Imported assets don't load in the local environment
 
