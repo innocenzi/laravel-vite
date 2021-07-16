@@ -119,7 +119,7 @@ export class ViteConfiguration {
 		domain ??= process.env.APP_URL?.replace(/^https?:\/\//, '')
 
 		if (!domain) {
-			console.warn('No domain specificed. Certificates will not be applied.')
+			console.warn('No domain specified. Certificates will not be applied.')
 
 			return this
 		}
