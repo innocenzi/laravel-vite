@@ -1,5 +1,6 @@
 import path from 'path'
 import { homedir } from 'os'
+import { Plugin as PostCSSPlugin } from 'postcss'
 import { Plugin, UserConfig } from 'vite'
 import deepmerge from 'deepmerge'
 import execa from 'execa'
@@ -154,6 +155,19 @@ export class ViteConfiguration {
 					maxVersion: 'TLSv1.2',
 					key,
 					cert,
+				},
+			},
+		})
+	}
+
+	/**
+	 * Configures PostCSS with the given plugins.
+	 */
+	public withPostCSS(plugins: PostCSSPlugin[] = []): this {
+		return this.merge({
+			css: {
+				postcss: {
+					plugins,
 				},
 			},
 		})

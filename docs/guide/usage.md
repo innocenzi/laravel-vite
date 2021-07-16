@@ -162,3 +162,34 @@ Route::fallback(function (string $path) {
 ```
 
 Additionally, there is currently no way to get the path of a Vite-processed asset (eg. an image that was imported in a Vue SFC) from the back-end, since the manifest does not reference the original file path. In most cases, this should not be an issue, as this is not a common use case.
+
+## PostCSS and Tailwind CSS
+
+If a PostCSS configuration file is present, Vite understands it out of the box, so you don't need to take action. It is also possible to directly feed a list of plugin to Vite inside `vite.config.ts`: 
+
+```ts
+import { defineConfig } from 'laravel-vite'
+import vue from '@vitejs/plugin-vue'
+import tailwind from 'tailwindcss'
+import autoprefixer from 'autoprefixer'
+
+export default defineConfig()
+	.withPlugin(vue)
+	.withPostCSS([
+		tailwind,
+		autoprefixer
+	])
+```
+
+If you are using Tailwind CSS and JIT, don't forget to setup `purge` to locate your template files: 
+
+```js
+// tailwind.config.js
+module.exports = {
+	mode: 'jit',
+	purge: [
+		'./resources/**/*.blade.php',
+		'./resources/**/*.{js,ts,vue}',
+	],
+  // ...
+```
