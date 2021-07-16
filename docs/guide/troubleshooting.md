@@ -25,6 +25,11 @@ Setting up `https` locally requires a few settings. The development server must 
 - Ensure `dev_url` in `config/vite.php` is using the `https` protocol.
 - Manually visit `https://localhost:3000` (or whatever your `dev_url` is set to) in your browser to approve the self-signed certificate.
 
+## The page is refreshing in a loop
+
+This is due to the client's websocket not being able to connect to the development server, most likely because of improperly configured SSL. 
+See [Local `https` doesn't work](#local-https-does-t-work).
+
 ## Imported assets don't load in the local environment
 
 This is a known issue caused by Vite stripping the hostname of the base URL when developping locally. A workaround would be to add a fallback route: 
