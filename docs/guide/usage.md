@@ -193,3 +193,10 @@ module.exports = {
 	],
   // ...
 ```
+
+Last, you may import Tailwind's CSS export instead of creating your own CSS file: 
+
+```ts
+// main.ts
+import 'tailwindcss/tailwind.css'
+```
