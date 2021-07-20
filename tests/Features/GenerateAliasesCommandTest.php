@@ -67,7 +67,7 @@ it('merges path aliases with existing ones', function () {
     });
 });
 
-it('throws an error if the tsconfig is malformated', function () {
+it('throws an error if the tsconfig is malformatted', function () {
     sandbox(function () {
         $tsconfigPath = base_path('tsconfig.json');
 
