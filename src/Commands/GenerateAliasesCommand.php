@@ -46,6 +46,11 @@ class GenerateAliasesCommand extends Command
     protected function writeAliases(): void
     {
         $tsconfig = json_decode(File::get($this->getTsConfigPath()), true);
+
+        if (! $tsconfig) {
+            throw new \RuntimeException('Unable to parse the tsconfig.json file.');
+        }
+
         $tsconfig['compilerOptions']['baseUrl'] = '.';
         $tsconfig['compilerOptions']['paths'] = collect(config('vite.aliases'))
             ->mapWithKeys(fn ($value, $key) => ["${key}/*" => ["${value}/*"]])

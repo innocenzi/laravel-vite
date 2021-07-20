@@ -66,3 +66,20 @@ it('merges path aliases with existing ones', function () {
             ]);
     });
 });
+
+it('throws an error if the tsconfig is malformated', function () {
+    sandbox(function () {
+        $tsconfigPath = base_path('tsconfig.json');
+
+        // This JSON has a trailing comma
+        File::put($tsconfigPath, <<<JSON
+        {
+            "compilerOptions": {
+                "baseUrl": ".",
+            }
+        }
+        JSON);
+
+        test()->artisan('vite:aliases');
+    });
+})->throws(RuntimeException::class);
