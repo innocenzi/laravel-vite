@@ -94,6 +94,13 @@ This option defines the regular expression used to find assets. The default one 
 
 This option defines the string used to replace the regular expression matches with. It will be prefixed by the [`development URL`](#dev-url).
 
+### `commands`
+
+- **Default**: `['vite:aliases']`
+- **Type**: `array`
+
+This option defines the list of artisan commands that will be executed when the development server is starting. Note that if a command fails, the server will just stop. 
+
 ## Vite configuration file
 
 While most of the configuration can be done within `config/vite.php`, if you need more flexibility, you will need to update `vite.config.ts`.

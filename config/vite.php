@@ -81,4 +81,16 @@ return [
         'find_regex' => '/\/resources\/(.*)\.(svg|jp?g|png|webp)/',
         'replace_with' => '/resources/$1.$2',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Commands
+    |--------------------------------------------------------------------------
+    | Defines the list of artisan commands that will be executed when
+    | the development server starts.
+    */
+    'commands' => [
+        'vite:aliases',
+        // 'typescript:generate'
+    ],
 ];

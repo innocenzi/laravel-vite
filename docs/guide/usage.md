@@ -120,13 +120,15 @@ import '@/css/app.css';
 @tailwind utilities;
 ```
 
-In order to support Visual Studio Code, the development server will generate a `tsconfig.json` file (or update the existing one) with the configured aliases. Updating them will require a proper server restart.
+In order to support Visual Studio Code, by default, the development server will generate a `tsconfig.json` file (or update the existing one) with the configured aliases. Updating them will require a proper server restart.
 
-Additionally, you can manually generate or update this file with the `vite:aliases` Artisan command.
+You can manually generate or update this file with the `vite:aliases` Artisan command.
 
 ```bash
 php artisan vite:aliases
 ```
+
+If you want to keep registering the aliases but not regenerate the `tsconfig.json` file, you can remove `vite:aliases` from the [`commands`](./configuration#commands) option.
 
 ## Static assets
 

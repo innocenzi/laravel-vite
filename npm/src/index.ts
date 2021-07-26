@@ -19,6 +19,7 @@ interface PhpConfiguration {
 		find_regex?: string
 		replace_with?: string
 	}
+	commands?: string[]
 }
 
 const debug = makeDebugger('vite:laravel')
@@ -117,7 +118,6 @@ export class ViteConfiguration {
 			}
 
 			debug('Registered aliases:', this.resolve.alias)
-			generateAliases()
 		}
 
 		if (artisan?.dev_url) {
@@ -153,6 +153,14 @@ export class ViteConfiguration {
 			}
 
 			this.merge(config)
+		}
+
+		// Run commands
+		if (artisan?.commands) {
+			for (const command of artisan.commands) {
+				debug('Running:', command)
+				debug(callArtisan(command))
+			}
 		}
 	}
 
@@ -327,7 +335,7 @@ export class ViteConfiguration {
 function generateAliases() {
 	try {
 		debug('Calling vite:aliases')
-		artisan('vite:aliases')
+		callArtisan('vite:aliases')
 	} catch (error) {
 		console.warn('Could not regenerate tsconfig.json.')
 		console.error(error)
@@ -339,7 +347,7 @@ function generateAliases() {
  */
 function getConfigurationFromArtisan(): PhpConfiguration | undefined {
 	try {
-		return JSON.parse(artisan('vite:config')) as PhpConfiguration
+		return JSON.parse(callArtisan('vite:config')) as PhpConfiguration
 	} catch (error) {
 		console.warn('Could not read configuration from PHP.')
 		console.error(error)
@@ -349,7 +357,7 @@ function getConfigurationFromArtisan(): PhpConfiguration | undefined {
 /**
  * Calls an artisan command.
  */
-export function artisan(...params: string[]): string {
+export function callArtisan(...params: string[]): string {
 	return execa.sync('php', ['artisan', ...params])?.stdout
 }
 
