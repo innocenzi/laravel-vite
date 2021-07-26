@@ -76,6 +76,24 @@ This defines the maximum duration, in seconds, that the ping to the development 
 
 Setting this value to `null` will disable the check.
 
+### `asset_plugin` 
+
+This option enables a workaround for the [Vite-processed assets issue](./usage#vite-processed-assets) by injecting a plugin to the development server. This plugin replaces, via a regular expression, invalid URLs to assets with a valid one. 
+
+#### `find_regex`
+
+- **Default**: `/\/resources\/(.*)\.(svg|jp?g|png|webp)/`
+- **Type**: `string`
+
+This option defines the regular expression used to find assets. The default one handles every image files in the `resources` directory.
+
+#### `replace_with` 
+
+- **Default**: `/resources/$1.$2`
+- **Type**: `string`
+
+This option defines the string used to replace the regular expression matches with. It will be prefixed by the [`development URL`](#dev-url).
+
 ## Vite configuration file
 
 While most of the configuration can be done within `config/vite.php`, if you need more flexibility, you will need to update `vite.config.ts`.

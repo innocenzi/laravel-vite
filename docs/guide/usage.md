@@ -146,9 +146,11 @@ If you want to use a directory other than `resources/static`, you can change the
 
 ## Vite-processed assets
 
-There is currently [an unsolved issue when referencing assets in files processed by Vite](https://github.com/vitejs/vite/issues/2196), such as a Vue or CSS file. **In development, URLs will not be properly rewritten**.
+There is currently [an unsolved issue when referencing assets in files processed by Vite](https://github.com/vitejs/vite/issues/2196), such as a Vue or CSS file.
 
-An easy but dirty (and slow) workaround would be to add a fallback route: 
+A way around this issue is to [automatically replace all asset URLs in the code](https://nystudio107.com/blog/using-vite-js-next-generation-frontend-tooling-with-craft-cms#vite-processed-assets) with a Vite plugin. This is done automatically by Laravel Vite, but if you want to disable this behavior, you can set the [`asset_plugin`](./configuration#asset-plugin) configuration option to `false`.
+
+An other workaround, dirtier and slower, would be to add a fallback route: 
 
 ```php
 // Workaround for https://github.com/vitejs/vite/issues/2196
