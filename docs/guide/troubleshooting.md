@@ -32,7 +32,9 @@ See [Local `https` doesn't work](#local-https-does-t-work).
 
 ## Imported assets don't load in the local environment
 
-This is a known issue caused by Vite stripping the hostname of the base URL when developping locally. A workaround would be to add a fallback route: 
+This is a known issue caused by Vite stripping the hostname of the base URL when developping locally. A workaround is enabled by default, you can read more about it [in the usage documenation](./usage#vite-processed-assets).
+
+While this fix works in most cases, you may still encounter issues. In this case, you can either tweak the [regular expression](./configuration#asset-plugin), or disable it and use a fallback route to act as an other workaround:
 
 ```php
 // Workaround for https://github.com/vitejs/vite/issues/2196
@@ -45,5 +47,3 @@ Route::fallback(function (string $path) {
 });
 
 ```
-
-You can see more [here](./usage#vite-processed-assets). 
