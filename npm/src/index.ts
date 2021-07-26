@@ -330,19 +330,6 @@ export class ViteConfiguration {
 }
 
 /**
- * Regenerates the tsconfig.json file with aliases.
- */
-function generateAliases() {
-	try {
-		debug('Calling vite:aliases')
-		callArtisan('vite:aliases')
-	} catch (error) {
-		console.warn('Could not regenerate tsconfig.json.')
-		console.error(error)
-	}
-}
-
-/**
  * Gets the configuration from this package's artisan command.
  */
 function getConfigurationFromArtisan(): PhpConfiguration | undefined {
