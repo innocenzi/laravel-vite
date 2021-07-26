@@ -6,32 +6,52 @@ import deepmerge from 'deepmerge'
 import execa from 'execa'
 import chalk from 'chalk'
 import dotenv from 'dotenv'
+import makeDebugger from 'debug'
 
 type VitePlugin = Plugin | ((...params: any[]) => Plugin)
-
 interface PhpConfiguration {
 	build_path?: string
 	dev_url?: string
 	entrypoints?: false | string | string[]
 	aliases?: Record<string, string>
 	public_directory?: string
+	asset_plugin?: {
+		find_regex?: string
+		replace_with?: string
+	}
 }
+
+const debug = makeDebugger('vite:laravel')
 
 /**
  * A plugin enabling HMR for Blade files.
  */
-export const laravel = (): Plugin => ({
-	name: 'vite:laravel',
+export const bladeReload = (): Plugin => ({
+	name: 'vite:laravel:blade',
 	handleHotUpdate({ file, server }) {
 		// This might need more granular control. Maybe a configuration
 		// option. Feel free to open an issue or a PR.
-		if (file.endsWith('.blade.php')) {
+		if (file.endsWith('.blade.php') || file.endsWith('vite.php')) {
 			server.ws.send({
 				type: 'full-reload',
 				path: '*',
 			})
 		}
 	},
+})
+
+/**
+ * A plugin fixing Vite-related asset issues.
+ * @see https://github.com/innocenzi/laravel-vite/issues/31
+ */
+export const staticAssetFixer = (regex: RegExp, replaceWith: string): Plugin => ({
+	name: 'static-asset-fixer',
+	enforce: 'post',
+	apply: 'serve',
+	transform: (code) => ({
+		code: code.replace(regex, replaceWith),
+		map: null,
+	}),
 })
 
 export class ViteConfiguration {
@@ -44,6 +64,9 @@ export class ViteConfiguration {
 
 	constructor(config: UserConfig = {}, artisan: PhpConfiguration = {}) {
 		dotenv.config()
+		debug('Loaded configuration with dotenv')
+
+		const isLocal = ['dev', 'local'].includes(process.env.APP_ENV?.toLowerCase() ?? '')
 
 		// Sets the base directory.
 		this.base = process.env.ASSET_URL ?? ''
@@ -56,7 +79,7 @@ export class ViteConfiguration {
 		// In production, we want to append the build_path. It is not needed in development,
 		// since assets are served from the development server's root, but we're writing
 		// generated assets in public/build_path, so build_path needs to be referenced.
-		if (process.env.NODE_ENV?.startsWith('prod') || process.env.APP_ENV !== 'local') {
+		if (!isLocal) {
 			this.base += artisan.build_path ?? ''
 
 			if (!this.base.endsWith('/')) {
@@ -64,6 +87,9 @@ export class ViteConfiguration {
 			}
 		}
 
+		debug('Set base URL:', this.base)
+
+		this.plugins = []
 		this.publicDir = artisan.public_directory ?? 'resources/static'
 		this.build = {
 			manifest: true,
@@ -75,10 +101,12 @@ export class ViteConfiguration {
 			},
 		}
 
-		this.plugins = [
-			laravel(),
-		]
+		debug('Set build configuration:', this.build)
 
+		// Adds the blade reload plugin.
+		this.plugins.push(bladeReload())
+
+		// Registers aliases.
 		if (artisan?.aliases) {
 			this.resolve = {
 				alias: Object.fromEntries(
@@ -88,11 +116,14 @@ export class ViteConfiguration {
 				),
 			}
 
+			debug('Registered aliases:', this.resolve.alias)
 			generateAliases()
 		}
 
 		if (artisan?.dev_url) {
 			const [protocol, host, port] = artisan.dev_url.split(':')
+
+			// Configures the development server and HMR
 			this.server = {
 				host: host.substr(2),
 				https: protocol === 'https',
@@ -103,8 +134,22 @@ export class ViteConfiguration {
 				},
 			}
 
+			debug('Configured server:', this.server)
+
+			// Pushes entrypoints as build inputs
 			if (artisan?.entrypoints) {
 				(this.build.rollupOptions!.input! as string[]).push(...artisan.entrypoints)
+			}
+
+			debug('Configured entrypoints:', this.build.rollupOptions!.input!)
+
+			// Fixes the asset loading in development
+			if (artisan?.asset_plugin?.find_regex && artisan?.asset_plugin?.replace_with) {
+				const regex = new RegExp(artisan?.asset_plugin?.find_regex, 'g')
+				const replace = artisan.dev_url + artisan?.asset_plugin?.replace_with
+
+				this.plugins.push(staticAssetFixer(regex, replace))
+				debug('Registered asset-fixing plugin:', { regex, replace })
 			}
 
 			this.merge(config)
@@ -270,15 +315,10 @@ export class ViteConfiguration {
 			this[key] = value
 		}
 
+		debug('Merged configuration', config)
+
 		return this
 	}
-}
-
-/**
- * Calls an artisan command.
- */
-function callArtisan(...params: string[]): string {
-	return execa.sync('php', ['artisan', ...params])?.stdout
 }
 
 /**
@@ -286,7 +326,8 @@ function callArtisan(...params: string[]): string {
  */
 function generateAliases() {
 	try {
-		callArtisan('vite:aliases')
+		debug('Calling vite:aliases')
+		artisan('vite:aliases')
 	} catch (error) {
 		console.warn('Could not regenerate tsconfig.json.')
 		console.error(error)
@@ -298,11 +339,18 @@ function generateAliases() {
  */
 function getConfigurationFromArtisan(): PhpConfiguration | undefined {
 	try {
-		return JSON.parse(callArtisan('vite:config')) as PhpConfiguration
+		return JSON.parse(artisan('vite:config')) as PhpConfiguration
 	} catch (error) {
 		console.warn('Could not read configuration from PHP.')
 		console.error(error)
 	}
+}
+
+/**
+ * Calls an artisan command.
+ */
+export function artisan(...params: string[]): string {
+	return execa.sync('php', ['artisan', ...params])?.stdout
 }
 
 /**
@@ -325,4 +373,4 @@ export function defineConfig(config: UserConfig = {}, artisan?: PhpConfiguration
 	return new ViteConfiguration(config, artisan ?? getConfigurationFromArtisan())
 }
 
-export default defineConfig()
+export default defineConfig
