@@ -67,8 +67,6 @@ export class ViteConfiguration {
 		dotenv.config()
 		debug('Loaded configuration with dotenv')
 
-		const isLocal = ['dev', 'local'].includes(process.env.APP_ENV?.toLowerCase() ?? '')
-
 		// Sets the base directory.
 		this.base = process.env.ASSET_URL ?? ''
 
@@ -80,7 +78,8 @@ export class ViteConfiguration {
 		// In production, we want to append the build_path. It is not needed in development,
 		// since assets are served from the development server's root, but we're writing
 		// generated assets in public/build_path, so build_path needs to be referenced.
-		if (!isLocal) {
+		if (process.env.NODE_ENV?.startsWith('prod') || process.env.APP_ENV !== 'local') {
+			debug('Running in production, adding build path to base')
 			this.base += artisan.build_path ?? ''
 
 			if (!this.base.endsWith('/')) {
