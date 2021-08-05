@@ -53,10 +53,12 @@ class Vite
             return new HtmlString();
         }
 
+        $url = config('vite.dev_url');
+
         $script = <<<HTML
         <script type="module">
-            import RefreshRuntime from "http://localhost:3000/@react-refresh"
-            RefreshRuntime.injectIntoGlobalHook(window) 
+            import RefreshRuntime from "{$url}/@react-refresh"
+            RefreshRuntime.injectIntoGlobalHook(window)
             window.\$RefreshReg$ = () => {}
             window.\$RefreshSig$ = () => (type) => type
             window.__vite_plugin_react_preamble_installed__ = true
