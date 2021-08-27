@@ -2,6 +2,7 @@
 
 namespace Innocenzi\Vite;
 
+use Illuminate\View\Compilers\BladeCompiler;
 use Innocenzi\Vite\Commands\ExportConfigurationCommand;
 use Innocenzi\Vite\Commands\GenerateAliasesCommand;
 use Spatie\LaravelPackageTools\Package;
@@ -22,7 +23,7 @@ class ViteServiceProvider extends PackageServiceProvider
     {
         $this->app->singleton(Vite::class, fn () => new Vite());
 
-        $this->app->afterResolving('blade.compiler', function ($compiler) {
+        $this->app->afterResolving('blade.compiler', function (BladeCompiler $compiler) {
             $compiler->directive('vite', function ($entryName = null) {
                 if (! $entryName) {
                     return '<?php echo vite_tags() ?>';
