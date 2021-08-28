@@ -19,7 +19,7 @@ class ViteServiceProvider extends PackageServiceProvider
             ->hasCommand(GenerateAliasesCommand::class);
     }
 
-    public function bootingPackage()
+    public function registeringPackage()
     {
         $this->app->singleton(Vite::class, fn () => new Vite());
 
