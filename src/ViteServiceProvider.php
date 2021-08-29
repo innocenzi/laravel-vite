@@ -2,7 +2,7 @@
 
 namespace Innocenzi\Vite;
 
-use Illuminate\View\Compilers\BladeCompiler;
+use Illuminate\Support\Facades\Blade;
 use Innocenzi\Vite\Commands\ExportConfigurationCommand;
 use Innocenzi\Vite\Commands\GenerateAliasesCommand;
 use Spatie\LaravelPackageTools\Package;
@@ -19,26 +19,24 @@ class ViteServiceProvider extends PackageServiceProvider
             ->hasCommand(GenerateAliasesCommand::class);
     }
 
-    public function bootingPackage()
+    public function registeringPackage()
     {
         $this->app->singleton(Vite::class, fn () => new Vite());
 
-        $this->app->afterResolving('blade.compiler', function (BladeCompiler $compiler) {
-            $compiler->directive('vite', function ($entryName = null) {
-                if (! $entryName) {
-                    return '<?php echo vite_tags() ?>';
-                }
+        Blade::directive('vite', function ($entryName = null) {
+            if (! $entryName) {
+                return '<?php echo vite_tags() ?>';
+            }
 
-                return sprintf('<?php echo vite_entry(e(%s)); ?>', $entryName);
-            });
+            return sprintf('<?php echo vite_entry(e(%s)); ?>', $entryName);
+        });
 
-            $compiler->directive('client', function () {
-                return '<?php echo vite_client(); ?>';
-            });
+        Blade::directive('client', function () {
+            return '<?php echo vite_client(); ?>';
+        });
 
-            $compiler->directive('react', function () {
-                return '<?php echo vite_react_refresh_runtime(); ?>';
-            });
+        Blade::directive('react', function () {
+            return '<?php echo vite_react_refresh_runtime(); ?>';
         });
     }
 }
