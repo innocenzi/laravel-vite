@@ -71,3 +71,14 @@ Edit your `package.json` file's `scripts` property:
 ```
 
 Finally, add the [`@vite`](./usage#vite) directive to your Blade files.
+
+Sometimes the @vite directive does not work, this is usually because of the Laravel config files.
+You can clear them by issuing:
+
+```bash
+php artisan cache:clear
+php artisan config:clear
+php artisan view:clear
+```
+
+# Installation
