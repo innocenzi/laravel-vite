@@ -15,7 +15,7 @@ Laravel Vite is a project that aims to integrate [Vite](https://vitejs.dev) as m
 
 ## Traditional approach
 
-Laravel comes with [Laravel Mix](https://laravel-mix.com), an abstraction of Webpack. It is a well-known and battle-tested bundler, but Vite takes a different approach to improve the experience of front-end development. You can learn the details on [its documentation](https://vitejs.dev/guide/introduction.html#the-problem).
+Laravel comes with [Laravel Mix](https://laravel-mix.com), an abstraction of Webpack. It is a well-known and battle-tested bundler, but Vite takes a different approach to improve the experience of front-end development. You can learn the details on [its documentation](https://vitejs.dev/guide/why.html#the-problems).
 
 That means that Laravel Vite is **a replacement for Laravel Mix**.
 
