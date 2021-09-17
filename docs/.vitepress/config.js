@@ -45,10 +45,10 @@ module.exports = {
 		logo: '/favicon.svg',
 		docsDir: 'docs',
 		docsBranch: 'main',
-		// algolia: {
-		// 	apiKey: 'b05916662f78f588ffa32ef6ab46f5ad',
-		// 	indexName: 'laravel-vite-docs',
-		// },
+		algolia: {
+			apiKey: '64097e0c86334e38e09448baf030c4f9',
+			indexName: 'laravel-vite',
+		},
 		editLinks: true,
 		editLinkText: 'Suggest changes to this page',
 		nav: [
