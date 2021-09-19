@@ -26,7 +26,8 @@ class Vite
     }
 
     /**
-     * Enables the work around Vite assets
+     * Adds a fallback route to redirect asset requests to Vite's development server.
+     * @see https://laravel-vite.innocenzi.dev/guide/troubleshooting.html#imported-assets-don-t-load-in-the-local-environment
      */
     public static function redirectAssets(): void
     {
