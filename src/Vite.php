@@ -159,10 +159,14 @@ class Vite
     public function isDevelopmentServerRunning(): bool
     {
         try {
-            return $this->isDevelopmentServerRunning ??= Http::withOptions([
-                'connect_timeout' => config('vite.ping_timeout'),
-                'verify' => false,
-            ])->get(config('vite.dev_url') . '/@vite/client')->successful();
+            ['host' => $hostname, 'port' => $port] = parse_url(config('vite.ping_url', config('vite.dev_url')));
+            $connection = @fsockopen($hostname, $port, $errno, $errstr, config('vite.ping_timeout'));
+
+            if (\is_resource($connection)) {
+                fclose($connection);
+
+                return true;
+            }
         } catch (\Throwable $th) {
         }
 
