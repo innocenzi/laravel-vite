@@ -69,30 +69,19 @@ When using Vite in development, assets must link to the development server. This
 
 ### `ping_timeout`
 
-- **Default**: `0.1`
+- **Default**: `10`
 - **Type**: `number`
 
 This defines the maximum duration, in seconds, that the ping to the development server should take while trying to determine whether to use the manifest or the server in a local environment.
 
-Setting this value to `null` will disable the check.
+Setting this value to `null` or `false` will disable the check.
 
-### `asset_plugin` 
+### `ping_url`
 
-This option enables a workaround for the [Vite-processed assets issue](./usage#vite-processed-assets) by injecting a plugin to the development server. This plugin replaces, via a regular expression, invalid URLs to assets with a valid one. 
-
-#### `find_regex`
-
-- **Default**: `/\/resources\/(.*)\.(svg|jp?g|png|webp)/`
+- **Default**: `null`
 - **Type**: `string`
 
-This option defines the regular expression used to find assets. The default one handles every image files in the `resources` directory.
-
-#### `replace_with` 
-
-- **Default**: `/resources/$1.$2`
-- **Type**: `string`
-
-This option defines the string used to replace the regular expression matches with. It will be prefixed by the [`development URL`](#dev-url).
+This defines the URL to which Laravel Vite will perform a ping when ensuring that the development server is started. If falsy, `dev_url` will be used.
 
 ### `commands`
 
