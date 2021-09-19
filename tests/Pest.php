@@ -69,7 +69,7 @@ function sandbox(callable $callback, string $base = __DIR__): string
  */
 function start_dev_server(): void
 {
-    if (this()->server?->isRunning()) {
+    if (optional(this()->server)->isRunning()) {
         return;
     }
 
@@ -90,7 +90,9 @@ function start_dev_server(): void
  */
 function stop_dev_server(): void
 {
-    this()->server?->stop();
+    if (optional(this()->server)->isRunning()) {
+        this()->server->stop();
+    }
 }
 
 /**
