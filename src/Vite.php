@@ -174,7 +174,7 @@ class Vite
     public function isDevelopmentServerRunning(): bool
     {
         try {
-            ['host' => $hostname, 'port' => $port] = parse_url(config('vite.ping_url', config('vite.dev_url')));
+            ['host' => $hostname, 'port' => $port] = parse_url(config('vite.ping_url') ?? config('vite.dev_url'));
             $connection = @fsockopen($hostname, $port, $errno, $errstr, config('vite.ping_timeout'));
 
             if (\is_resource($connection)) {
