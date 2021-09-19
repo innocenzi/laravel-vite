@@ -32,18 +32,27 @@ See [Local `https` doesn't work](#local-https-does-t-work).
 
 ## Imported assets don't load in the local environment
 
-This is a known issue caused by Vite stripping the hostname of the base URL when developping locally. A workaround is enabled by default, you can read more about it [in the usage documenation](./usage#vite-processed-assets).
+This is a known issue caused by Vite stripping the hostname of the base URL when developping locally. A way around this issue is to [automatically replace all asset URLs in the code](https://nystudio107.com/blog/using-vite-js-next-generation-frontend-tooling-with-craft-cms#vite-processed-assets) with a Vite plugin.
 
-While this fix works in most cases, you may still encounter issues. In this case, you can either tweak the [regular expression](./configuration#asset-plugin), or disable it and use a fallback route to act as an other workaround:
+While this fix works in most cases, you may still encounter cases where it fails. In this case use a fallback route to act as an other workaround:
+
+```php
+// AppServiceProvider.php
+public function register()
+{
+    Vite::redirectAssets();
+}
+```
+
+This method simply registers the following route when the environment is set to `local`:
 
 ```php
 // Workaround for https://github.com/vitejs/vite/issues/2196
-Route::fallback(function (string $path) {
-    if (! App::environment('local') || ! str_starts_with($path, 'resources')) {
+Route::get('/resources/{path}', function (string $path) {
+    if (! App::environment('local')) {
         throw new NotFoundHttpException();
     }
 
-    return Redirect::to(config('vite.dev_url') . '/' . $path);
-});
-
+    return Redirect::to(config('vite.dev_url') . '/resources/' . $path);
+})->where('path', '.*');
 ```

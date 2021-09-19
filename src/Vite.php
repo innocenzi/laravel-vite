@@ -6,7 +6,8 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
@@ -22,6 +23,20 @@ class Vite
     public function __construct(string $manifestPath = null)
     {
         $this->manifestPath = $manifestPath;
+    }
+
+    /**
+     * Enables the work around Vite assets
+     */
+    public static function redirectAssets(): void
+    {
+        if (! App::environment('local')) {
+            return;
+        }
+
+        Route::get('/resources/{path}', function (string $path) {
+            return Redirect::to(config('vite.dev_url') . '/resources/' . $path);
+        })->where('path', '.*');
     }
 
     /**
@@ -159,10 +174,14 @@ class Vite
     public function isDevelopmentServerRunning(): bool
     {
         try {
-            return $this->isDevelopmentServerRunning ??= Http::withOptions([
-                'connect_timeout' => config('vite.ping_timeout'),
-                'verify' => false,
-            ])->get(config('vite.dev_url') . '/@vite/client')->successful();
+            ['host' => $hostname, 'port' => $port] = parse_url(config('vite.ping_url') ?? config('vite.dev_url'));
+            $connection = @fsockopen($hostname, $port, $errno, $errstr, config('vite.ping_timeout'));
+
+            if (\is_resource($connection)) {
+                fclose($connection);
+
+                return true;
+            }
         } catch (\Throwable $th) {
         }
 

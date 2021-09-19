@@ -150,20 +150,9 @@ If you want to use a directory other than `resources/static`, you can change the
 
 There is currently [an unsolved issue when referencing assets in files processed by Vite](https://github.com/vitejs/vite/issues/2196), such as a Vue or CSS file.
 
-A way around this issue is to [automatically replace all asset URLs in the code](https://nystudio107.com/blog/using-vite-js-next-generation-frontend-tooling-with-craft-cms#vite-processed-assets) with a Vite plugin. This is done automatically by Laravel Vite, but if you want to disable this behavior, you can set the [`asset_plugin`](./configuration#asset-plugin) configuration option to `false`.
+A way around this issue is to [automatically replace all asset URLs in the code](https://nystudio107.com/blog/using-vite-js-next-generation-frontend-tooling-with-craft-cms#vite-processed-assets) with a Vite plugin.
 
-An other workaround, dirtier and slower, would be to add a fallback route: 
-
-```php
-// Workaround for https://github.com/vitejs/vite/issues/2196
-Route::fallback(function (string $path) {
-    if (! App::environment('local') || ! str_starts_with($path, 'resources')) {
-        throw new NotFoundHttpException();
-    }
-
-    return Redirect::to(config('vite.dev_url') . '/' . $path);
-});
-```
+An other workaround would be to add a fallback route. This can be done by Laravel Vite by calling `Vite::redirectAssets()` in a service provider. Read more in the [troubleshooting](./troubleshooting) section.
 
 Additionally, there is currently no way to get the path of a Vite-processed asset (eg. an image that was imported in a Vue SFC) from the back-end, since the manifest does not reference the original file path. In most cases, this should not be an issue, as this is not a common use case.
 

@@ -41,13 +41,14 @@ return [
     |--------------------------------------------------------------------------
     | Ping timeout
     |--------------------------------------------------------------------------
-    | The maximum duration, in seconds, that the ping to the development
-    | server should take while trying to determine whether to use the
+    | The maximum duration, in seconds, that the ping to `ping_url` or
+    | `dev_url` should take while trying to determine whether to use the
     | manifest or the server in a local environment. Using false will disable
     | the feature.
     | https://laravel-vite.innocenzi.dev/guide/configuration.html#ping-timeout
     */
-    'ping_timeout' => .1,
+    'ping_timeout' => 10,
+    'ping_url' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -67,20 +68,6 @@ return [
     | This is used to generate the script tags when developing.
     */
     'dev_url' => 'http://localhost:3000',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Inject asset-fixing plugin
-    |--------------------------------------------------------------------------
-    | Currently, Vite does not support loading assets from an URL other than
-    | the development server's URL. If this option is enabled, a plugin fixing
-    | this issue will be injected.
-    | See: https://github.com/innocenzi/laravel-vite/issues/31
-    */
-    'asset_plugin' => [
-        'find_regex' => '/\/resources\/(.*)\.(svg|jp?g|png|webp)/',
-        'replace_with' => '/resources/$1.$2',
-    ],
 
     /*
     |--------------------------------------------------------------------------
