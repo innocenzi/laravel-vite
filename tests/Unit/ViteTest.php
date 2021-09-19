@@ -5,10 +5,10 @@ use Illuminate\Routing\RouteCollection;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Http;
 use Innocenzi\Vite\Exceptions\NoSuchEntrypointException;
 
-beforeEach(fn () => Http::fake(['/@vite/client' => Http::response()]));
+beforeEach(fn () => start_dev_server());
+afterEach(fn () => stop_dev_server());
 
 it('generates the client script in a local environment', function () {
     set_env('local');

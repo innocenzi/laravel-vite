@@ -14,7 +14,10 @@
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Innocenzi\Vite\Tests\TestCase;
 use Innocenzi\Vite\Vite;
+use Pest\TestSuite;
+use Symfony\Component\Process\Process;
 
 uses(Innocenzi\Vite\Tests\TestCase::class)->in('Unit');
 uses(Innocenzi\Vite\Tests\TestCase::class)->in('Features');
@@ -24,6 +27,14 @@ uses(Innocenzi\Vite\Tests\TestCase::class)->in('Features');
 | Helpers
 |--------------------------------------------------------------------------
 */
+
+/**
+ * Gets the current test case.
+ */
+function this(): TestCase
+{
+    return TestSuite::getInstance()->test;
+}
 
 /**
  * Sets the environment.
@@ -51,4 +62,43 @@ function sandbox(callable $callback, string $base = __DIR__): string
         File::deleteDirectory($directory);
         App::setBasePath($initialBasePath);
     });
+}
+
+/**
+ * Starts the fake development server.
+ */
+function start_dev_server(): void
+{
+    if (this()->server?->isRunning()) {
+        return;
+    }
+
+    this()->server = new Process([
+        'php',
+        '-S',
+        'localhost:3000',
+        $directory = __DIR__ . '/Server',
+        $directory . '/index.php',
+    ]);
+
+    this()->server->start();
+    this()->server->waitUntil(fn ($_, $output) => str_contains($output, 'started'));
+}
+
+/**
+ * Stops the fake development server.
+ */
+function stop_dev_server(): void
+{
+    this()->server?->stop();
+}
+
+/**
+ * Calls the given callback after a fake development server has been started.
+ */
+function with_dev_server(callable $callback): void
+{
+    start_dev_server();
+    $callback();
+    stop_dev_server();
 }

@@ -25,7 +25,8 @@
 		"orchestra/testbench": "^6.0",
 		"pestphp/pest": "^1.0",
 		"phpunit/phpunit": "^9.3",
-		"spatie/laravel-ray": "^1.9"
+		"spatie/laravel-ray": "^1.9",
+		"symfony/process": "^5.3"
 	},
 	"autoload": {
 		"files": [
@@ -42,8 +43,7 @@
 		}
 	},
 	"scripts": {
-		"test": "vendor/bin/pest",
-		"test:windows": ".\\vendor\\bin\\pest"
+		"test": "pest"
 	},
 	"config": {
 		"sort-packages": true
