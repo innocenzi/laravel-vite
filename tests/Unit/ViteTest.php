@@ -6,6 +6,7 @@ use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Innocenzi\Vite\Exceptions\NoSuchEntrypointException;
+use Innocenzi\Vite\Vite;
 
 beforeEach(fn () => start_dev_server());
 afterEach(fn () => stop_dev_server());
@@ -118,4 +119,11 @@ it('generates an asset URL that takes ASSET_URL into account', function () {
     ));
 
     expect(vite_asset('image.png'))->toBe('https://cdn.random.url/build/image.png');
+});
+
+it('does not throw when there is no manifest but withoutManifest was called', function () {
+    Vite::withoutManifest();
+    set_env('testing');
+    expect(get_vite('unknown-manifest.json')->getClientAndEntrypointTags())
+        ->toEqual('<script type="module" src="http://localhost:3000/@vite/client"></script>');
 });
