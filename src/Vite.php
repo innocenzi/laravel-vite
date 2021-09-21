@@ -16,6 +16,7 @@ class Vite
     protected ?Manifest $manifest;
     protected ?string $manifestPath;
     protected ?bool $isDevelopmentServerRunning;
+    protected static ?bool $withoutManifest = false;
 
     /**
      * Creates a new Vite instance.
@@ -23,6 +24,22 @@ class Vite
     public function __construct(string $manifestPath = null)
     {
         $this->manifestPath = $manifestPath;
+    }
+
+    /**
+     * Configures Vite to not use the manifest.
+     */
+    public static function withoutManifest(): void
+    {
+        Vite::$withoutManifest = true;
+    }
+
+    /**
+     * Configures Vite to automatically determine if the manifest should be used.
+     */
+    public static function withManifest(): void
+    {
+        Vite::$withoutManifest = false;
     }
 
     /**
@@ -154,6 +171,10 @@ class Vite
      */
     protected function shouldUseManifest(): bool
     {
+        if (Vite::$withoutManifest === true) {
+            return false;
+        }
+
         if (! App::environment('local')) {
             return true;
         }
