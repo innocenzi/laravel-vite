@@ -129,7 +129,6 @@ export class ViteConfiguration {
 				port: port ? Number(port) : 3000,
 				hmr: {
 					host: host.substr(2),
-					port: Number(port) || 3000,
 				},
 			}
 
