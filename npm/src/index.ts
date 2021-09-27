@@ -63,7 +63,10 @@ export class ViteConfiguration {
 	public base: UserConfig['base']
 	public resolve: UserConfig['resolve']
 
-	constructor(config: UserConfig = {}, artisan: PhpConfiguration = {}) {
+	constructor(
+		config: (UserConfig | ((env: typeof process.env) => UserConfig)) = {},
+		artisan: PhpConfiguration = {},
+	) {
 		dotenv.config()
 		debug('Loaded configuration with dotenv')
 
@@ -322,7 +325,11 @@ export class ViteConfiguration {
 	/**
 	 * Merges in the given Vite configuration.
 	 */
-	public merge(config: UserConfig): this {
+	public merge(config: UserConfig | ((env: typeof process.env) => UserConfig)): this {
+		if (typeof config === 'function') {
+			config = config(process.env)
+		}
+
 		const result: UserConfig = deepmerge(this, config)
 
 		if (Reflect.has(config, 'base')) {
