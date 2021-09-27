@@ -4,7 +4,7 @@
 const production = process.env.NODE_ENV === 'production'
 const title = 'Laravel Vite'
 const description = 'Vite integration for the Laravel framework'
-const site = production ? 'https:/laravel-vite.netlify.app' : 'http://localhost:3000'
+const site = production ? 'https://laravel-vite.innocenzi.dev' : 'http://localhost:3000'
 const image = `${site}/banner.png`
 const head = [
 	// ['style', {}, 'img { border-radius: 10px }' + 'h1.title { margin-left: 0.5em }'],
