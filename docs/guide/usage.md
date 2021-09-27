@@ -146,16 +146,6 @@ In production:
 
 If you want to use a directory other than `resources/static`, you can change the [`public_directory` option](/guide/configuration#public-directory).
 
-## Vite-processed assets
-
-There is currently [an unsolved issue when referencing assets in files processed by Vite](https://github.com/vitejs/vite/issues/2196), such as a Vue or CSS file.
-
-A way around this issue is to [automatically replace all asset URLs in the code](https://nystudio107.com/blog/using-vite-js-next-generation-frontend-tooling-with-craft-cms#vite-processed-assets) with a Vite plugin.
-
-An other workaround would be to add a fallback route. This can be done by Laravel Vite by calling `Vite::redirectAssets()` in a service provider. Read more in the [troubleshooting](./troubleshooting) section.
-
-Additionally, there is currently no way to get the path of a Vite-processed asset (eg. an image that was imported in a Vue SFC) from the back-end, since the manifest does not reference the original file path. In most cases, this should not be an issue, as this is not a common use case.
-
 ## PostCSS and Tailwind CSS
 
 If a PostCSS configuration file is present, Vite understands it out of the box, so you don't need to take action. It is also possible to directly feed a list of plugin to Vite inside `vite.config.ts`: 

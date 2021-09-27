@@ -32,9 +32,9 @@ See [Local `https` doesn't work](#local-https-does-t-work).
 
 ## Imported assets don't load in the local environment
 
-This is a known issue caused by Vite stripping the hostname of the base URL when developping locally. A way around this issue is to [automatically replace all asset URLs in the code](https://nystudio107.com/blog/using-vite-js-next-generation-frontend-tooling-with-craft-cms#vite-processed-assets) with a Vite plugin.
+**Make sure you are using Vite v2.6.0+**. 
 
-While this fix works in most cases, you may still encounter cases where it fails. In this case use a fallback route to act as an other workaround:
+Before that, there was a known issue caused by Vite stripping the hostname of the base URL when developping locally. A way around this issue was to use a fallback route to redirect to the right URL:
 
 ```php
 // AppServiceProvider.php
@@ -56,3 +56,9 @@ Route::get('/resources/{path}', function (string $path) {
     return Redirect::to(config('vite.dev_url') . '/resources/' . $path);
 })->where('path', '.*');
 ```
+
+This method is deprecated and will be removed in a future version.
+
+## How do I get the path of a Vite -rocessed asset from the back-end?
+
+There is currently no way to get the path of a Vite-processed asset (eg. an image that was imported in a Vue SFC) from the back-end, since the manifest does not reference the original file path. In most cases, this should not be an issue, as this is not a common use case.
