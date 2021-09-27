@@ -131,7 +131,19 @@ If you need to pass a configuration object, use the latter.
 
 ### SSL certificates
 
-If your local environment is using the `https` protocol, you'll need to configure Vite's development server to use your SSL certificates. You can do this using `withCertificates`. The parameters are the paths to the `.key` and the `.crt` files, respectively.
+If your local environment is using the `https` protocol, you'll need to configure Vite's development server to use your SSL certificates. You can do this using `withCertificates`. The parameters are the paths to the `.key` and the `.crt` files, respectively. 
+
+#### Environment-specific certificates
+
+If you share your project between different environments, you can use pass a callback to `withCertificates` and return a tuple which contains the paths to the `.key` and the `.crt`: 
+
+```ts
+export default defineConfig()
+	.withCertificates((env) => ([
+		env.VITE_DEV_KEY,
+		env.VITE_DEV_CERT,
+	]))
+```
 
 #### Laravel Valet
 

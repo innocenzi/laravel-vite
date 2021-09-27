@@ -1,38 +1,43 @@
 {
-  "name": "laravel-vite",
-  "version": "0.0.16",
-  "author": "Enzo Innocenzi",
-  "license": "MIT",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/innocenzi/laravel-vite"
-  },
-  "homepage": "https://github.com/innocenzi/laravel-vite#readme",
-  "bugs": "https://github.com/innocenzi/laravel-vite/issues",
-  "scripts": {
-    "prepare": "npm run build",
-    "dev": "npm run build -- --watch",
-    "build": "tsup src/index.ts --dts --format cjs,esm"
-  },
-  "devDependencies": {
-    "@innocenzi/eslint-config": "^0.1.10",
-    "@types/debug": "^4.1.7",
-    "@types/node": "^16.3.1",
-    "eslint": "^7.30.0",
-    "tsup": "^4.12.5",
-    "typescript": "^4.3.5",
-    "vite": "^2.4.1"
-  },
-  "dependencies": {
-    "chalk": "^4.1.1",
-    "deepmerge": "^4.2.2",
-    "dotenv": "^10.0.0",
-    "execa": "^5.1.1"
-  }
+	"name": "laravel-vite",
+	"version": "0.0.17",
+	"author": "Enzo Innocenzi",
+	"license": "MIT",
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/innocenzi/laravel-vite"
+	},
+	"homepage": "https://github.com/innocenzi/laravel-vite#readme",
+	"bugs": "https://github.com/innocenzi/laravel-vite/issues",
+	"scripts": {
+		"prepare": "npm run build",
+		"dev": "npm run build -- --watch",
+		"build": "tsup src/index.ts --dts --format cjs,esm"
+	},
+	"devDependencies": {
+		"@innocenzi/eslint-config": "^0.3.1",
+		"@types/debug": "^4.1.7",
+		"@types/deepmerge": "^2.2.0",
+		"@types/execa": "^2.0.0",
+		"@types/node": "^16.10.1",
+		"eslint": "^7.32.0",
+		"rollup": "^2.57.0",
+		"tsup": "^5.2.1",
+		"typescript": "^4.4.3",
+		"vite": "^2.5.10"
+	},
+	"dependencies": {
+		"chalk": "^4.1.2",
+		"debug": "^4.3.2",
+		"deepmerge": "^4.2.2",
+		"dotenv": "^10.0.0",
+		"execa": "^5.1.1",
+		"postcss": "^8.3.8"
+	}
 }

@@ -200,12 +200,18 @@ export class ViteConfiguration {
 	/**
 	 * Configures the development server to use the certificates at the given paths.
 	 */
-	public withCertificates(key: string, cert: string): this {
+	public withCertificates(callback: (env: typeof process.env) => [string, string]): this
+	public withCertificates(key: string, cert: string): this
+	public withCertificates(callbackOrKey: string | ((env: typeof process.env) => [string, string]), cert?: string): this {
+		if (typeof callbackOrKey === 'function') {
+			[callbackOrKey, cert] = callbackOrKey(process.env)
+		}
+
 		return this.merge({
 			server: {
 				https: {
 					maxVersion: 'TLSv1.2',
-					key,
+					key: callbackOrKey as string,
 					cert,
 				},
 			},
