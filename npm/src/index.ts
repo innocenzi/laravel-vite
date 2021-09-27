@@ -200,9 +200,15 @@ export class ViteConfiguration {
 	/**
 	 * Configures the development server to use the certificates at the given paths.
 	 */
+	public withCertificates(): this
 	public withCertificates(callback: (env: typeof process.env) => [string, string]): this
 	public withCertificates(key: string, cert: string): this
-	public withCertificates(callbackOrKey: string | ((env: typeof process.env) => [string, string]), cert?: string): this {
+	public withCertificates(callbackOrKey?: string | ((env: typeof process.env) => [string, string]), cert?: string): this {
+		if (!callbackOrKey && !cert) {
+			callbackOrKey = process.env.VITE_DEV_KEY
+			cert = process.env.VITE_DEV_CERT
+		}
+
 		if (typeof callbackOrKey === 'function') {
 			[callbackOrKey, cert] = callbackOrKey(process.env)
 		}

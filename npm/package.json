@@ -1,6 +1,6 @@
 {
 	"name": "laravel-vite",
-	"version": "0.0.17",
+	"version": "0.0.18",
 	"author": "Enzo Innocenzi",
 	"license": "MIT",
 	"main": "dist/index.js",
@@ -37,7 +37,6 @@
 		"debug": "^4.3.2",
 		"deepmerge": "^4.2.2",
 		"dotenv": "^10.0.0",
-		"execa": "^5.1.1",
-		"postcss": "^8.3.8"
+		"execa": "^5.1.1"
 	}
 }

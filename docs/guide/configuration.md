@@ -145,6 +145,13 @@ export default defineConfig()
 	]))
 ```
 
+Alternatively, using `withCertificates` without argumentse will use the `VITE_DEV_KEY` and `VITE_DEV_CERT` environment variables by default: 
+
+```ts
+export default defineConfig()
+	.withCertificates()
+```
+
 #### Laravel Valet
 
 If you use Laravel Valet, you can use `withValetCertificates`. The domain name will be determined from your `APP_URL` environment variable, but you can override it by passing it as the `domain` property of the first parameter of the method.
