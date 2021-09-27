@@ -130,6 +130,8 @@ export class ViteConfiguration {
 				host: host.substr(2),
 				https: protocol === 'https',
 				port: port ? Number(port) : 3000,
+				// @ts-ignore
+				origin: `${protocol}:${host}:${port}`,
 				hmr: {
 					host: host.substr(2),
 					port: Number(port) || 3000,
