@@ -170,10 +170,10 @@ export class ViteConfiguration {
 	/**
 	 * Configures the development server to use Valet's SSL certificates.
 	 */
-	public withValetCertificates({ domain, path }: { domain?: string; path?: string }): this {
+	public withValetCertificates(options?: { domain?: string; path?: string }): this {
 		const home = homedir()
-		path ??= '/.config/valet/Certificates/'
-		domain ??= process.env.APP_URL?.replace(/^https?:\/\//, '')
+		let path = options?.path ?? '/.config/valet/Certificates/'
+		let domain = options?.domain ?? process.env.APP_URL?.replace(/^https?:\/\//, '')
 
 		if (!domain) {
 			console.warn('No domain specified. Certificates will not be applied.')
