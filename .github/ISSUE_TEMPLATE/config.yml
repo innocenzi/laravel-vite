@@ -4,7 +4,7 @@ contact_links:
     url: https://github.com/innocenzi/laravel-vite/discussions/new?category=q-a
     about: Ask the community for help
   - name: Request a feature
-    url: https://github.com/innocenzi/laravel-vite/issues/new?labels=enhancement
+    url: https://github.com/innocenzi/laravel-vite/discussions/new?category=ideas
     about: Share ideas for new features
   - name: Report a bug
     url: https://github.com/innocenzi/laravel-vite/issues/new
