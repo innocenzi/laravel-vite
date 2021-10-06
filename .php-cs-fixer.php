@@ -13,6 +13,7 @@ $finder = Symfony\Component\Finder\Finder::create()
 return (new PhpCsFixer\Config())
     ->setRules([
         '@PSR2' => true,
+        'ternary_operator_spaces' => true,
         'array_syntax' => ['syntax' => 'short'],
         'ordered_imports' => ['sort_algorithm' => 'alpha'],
         'no_unused_imports' => true,
@@ -25,17 +26,16 @@ return (new PhpCsFixer\Config())
         'not_operator_with_successor_space' => true,
         'trailing_comma_in_multiline' => true,
         'phpdoc_scalar' => true,
-        'no_whitespace_in_blank_line' => true,
         'unary_operator_spaces' => true,
         'binary_operator_spaces' => true,
         'logical_operators' => true,
-        'array_indentation' => true,
         'blank_line_before_statement' => [
             'statements' => ['break', 'continue', 'declare', 'return', 'throw', 'try'],
         ],
         'phpdoc_single_line_var_spacing' => true,
         'phpdoc_var_without_name' => true,
         'method_chaining_indentation' => true,
+        'array_indentation' => true,
         'class_attributes_separation' => [
             'elements' => [
                 'method' => 'one',
@@ -53,6 +53,7 @@ return (new PhpCsFixer\Config())
         'no_singleline_whitespace_before_semicolons' => true,
         'trim_array_spaces' => true,
         'whitespace_after_comma_in_array' => true,
+        'single_blank_line_before_namespace' => true,
         'no_extra_blank_lines' => [
             'tokens' => [
                 'case',
@@ -68,8 +69,6 @@ return (new PhpCsFixer\Config())
                 'use_trait',
             ],
         ],
-        'single_quote' => true,
-        'escape_implicit_backslashes' => true,
         'native_constant_invocation' => [
             'include' => ['@compiler_optimized'],
             'strict' => true,
