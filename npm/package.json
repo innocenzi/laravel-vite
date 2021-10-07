@@ -37,6 +37,7 @@
     "debug": "^4.3.2",
     "deepmerge": "^4.2.2",
     "dotenv": "^10.0.0",
+		"dotenv-expand": "^5.1.0",
     "execa": "^5.1.1"
   }
 }
