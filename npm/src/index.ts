@@ -6,6 +6,7 @@ import deepmerge from 'deepmerge'
 import execa from 'execa'
 import chalk from 'chalk'
 import dotenv from 'dotenv'
+import dotenvExpand from 'dotenv-expand'
 import makeDebugger from 'debug'
 
 type VitePlugin = Plugin | ((...params: any[]) => Plugin)
@@ -67,7 +68,7 @@ export class ViteConfiguration {
 		config: (UserConfig | ((env: typeof process.env) => UserConfig)) = {},
 		artisan: PhpConfiguration = {},
 	) {
-		dotenv.config()
+		dotenvExpand(dotenv.config())
 		debug('Loaded configuration with dotenv')
 
 		// Sets the base directory.
