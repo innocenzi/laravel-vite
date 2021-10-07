@@ -74,7 +74,7 @@ When using Vite in development, assets must link to the development server. This
 
 This defines the maximum duration, in seconds, that the ping to the development server should take while trying to determine whether to use the manifest or the server in a local environment.
 
-Setting this value to `null` or `false` will disable the check.
+Setting this value to `null` or `false` will disable the check, so the manifest won't be used at all in a local environment.
 
 ### `ping_url`
 
