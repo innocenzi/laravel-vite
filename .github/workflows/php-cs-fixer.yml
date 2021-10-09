@@ -1,6 +1,6 @@
 name: Check & fix styling
 
-on: [push]
+on: [pull_request]
 
 jobs:
   php-cs-fixer:
@@ -15,9 +15,4 @@ jobs:
       - name: Run PHP CS Fixer
         uses: docker://oskarstark/php-cs-fixer-ga
         with:
-          args: --config=.php-cs-fixer.php --allow-risky=yes
-
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "style: apply php-cs-fixer"
+          args: --config=.php-cs-fixer.php --diff --dry-run
