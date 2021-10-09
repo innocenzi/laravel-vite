@@ -27,11 +27,12 @@ class ManifestNotFound extends ViteException implements ProvidesSolution
         $baseCommand = collect([
             'pnpm-lock.yaml' => 'pnpm',
             'yarn.lock' => 'yarn',
-        ])->reduce(function ($_, $command, $lockFile) {
+        ])->reduce(function ($default, $command, $lockFile) {
             if (File::exists(base_path($lockFile))) {
                 return $command;
             }
-            return $_;
+
+            return $default;
         }, 'npm run');
 
         return App::environment('local')
