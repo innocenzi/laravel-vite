@@ -8,6 +8,7 @@ import chalk from 'chalk'
 import dotenv from 'dotenv'
 import dotenvExpand from 'dotenv-expand'
 import makeDebugger from 'debug'
+import { manifestPlugin } from './manifest-plugin'
 
 type VitePlugin = Plugin | ((...params: any[]) => Plugin)
 interface PhpConfiguration {
@@ -109,6 +110,9 @@ export class ViteConfiguration {
 
 		// Adds the blade reload plugin.
 		this.plugins.push(bladeReload())
+
+		// Adds the manifest patch plugin.
+		this.plugins.push(manifestPlugin())
 
 		// Registers aliases.
 		if (artisan?.aliases) {
