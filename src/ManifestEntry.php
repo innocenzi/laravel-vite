@@ -4,6 +4,7 @@ namespace Innocenzi\Vite;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Stringable;
 
 class ManifestEntry implements Htmlable, Stringable
@@ -32,11 +33,15 @@ class ManifestEntry implements Htmlable, Stringable
     }
 
     /**
-     * Gets the script tag for this entry.
+     * Gets the tag for this entry.
      */
-    public function getScriptTag(): string
+    public function getTag(): string
     {
-        return sprintf('<script type="module" src="%s"></script>', $this->asset($this->file));
+        if (Str::endsWith($this->file, '.css')) {
+            return sprintf('<link rel="stylesheet" href="%s" />', $this->asset($this->file));
+        } else {
+            return sprintf('<script type="module" src="%s"></script>', $this->asset($this->file));
+        }
     }
 
     /**
@@ -53,7 +58,7 @@ class ManifestEntry implements Htmlable, Stringable
     public function getTags(): Collection
     {
         return Collection::make()
-            ->push($this->getScriptTag())
+            ->push($this->getTag())
             ->merge($this->getStyleTags());
     }
 
