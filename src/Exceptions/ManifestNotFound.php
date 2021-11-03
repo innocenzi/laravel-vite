@@ -31,6 +31,7 @@ class ManifestNotFound extends ViteException implements ProvidesSolution
             if (File::exists(base_path($lockFile))) {
                 return $command;
             }
+
             return $_;
         }, 'npm run');
 
