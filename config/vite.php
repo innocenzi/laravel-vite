@@ -13,7 +13,10 @@ return [
         'resources/js',
         'resources/scripts',
     ],
-    'ignore_patterns' => ['/\\.d\\.ts$/'],
+    'ignore_patterns' => [
+        '/\\.d\\.ts$/',
+        '/\\.json$/',
+    ],
 
     /*
     |--------------------------------------------------------------------------
