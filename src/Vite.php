@@ -139,15 +139,31 @@ class Vite
      */
     public function findEntrypoints(): Collection
     {
-        $paths = collect(config('vite.entrypoints', []))
-            ->map(fn ($directory) => base_path($directory));
+        if (! $entrypoints = config('vite.entrypoints', [])) {
+            return collect();
+        }
 
-        return $paths->filter(fn ($directory) => File::isDirectory($directory))
-            ->flatMap(fn ($directory) => File::files($directory))
-            ->merge($paths->filter(fn ($directory) => File::isFile($directory))->map(fn (string $path) => new \SplFileInfo($path)))
+        return collect($entrypoints)
+            ->flatMap(function (string $fileOrDirectory) {
+                if (! file_exists($fileOrDirectory)) {
+                    $fileOrDirectory = base_path($fileOrDirectory);
+                }
+
+                if (! file_exists($fileOrDirectory)) {
+                    return [];
+                }
+
+                if (is_dir($fileOrDirectory)) {
+                    return File::files($fileOrDirectory);
+                }
+                
+                return [new \SplFileInfo($fileOrDirectory)];
+            })
             ->unique(fn (\SplFileInfo $file) => $file->getPathname())
-            ->filter(fn (\SplFileInfo $file) => ! collect(config('vite.ignore_patterns'))
-            ->some(fn ($pattern) => preg_match($pattern, $file->getFilename())));
+            ->filter(function (\SplFileInfo $file) {
+                return ! collect(config('vite.ignore_patterns'))
+                    ->some(fn ($pattern) => preg_match($pattern, $file->getFilename()));
+            });
     }
 
     /**
