@@ -39,9 +39,9 @@ class ManifestEntry implements Htmlable, Stringable
     {
         if (Str::endsWith($this->file, '.css')) {
             return sprintf('<link rel="stylesheet" href="%s" />', $this->asset($this->file));
-        } else {
-            return sprintf('<script type="module" src="%s"></script>', $this->asset($this->file));
         }
+
+        return sprintf('<script type="module" src="%s"></script>', $this->asset($this->file));
     }
 
     /**
