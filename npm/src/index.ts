@@ -166,8 +166,10 @@ export class ViteConfiguration {
 		// Run commands
 		if (artisan?.commands) {
 			for (const command of artisan.commands) {
-				debug('Running:', command)
-				debug(callArtisan(command))
+				const parts = Array.isArray(command) ? command : [command]
+
+				debug('Running:', parts.join(' '))
+				debug(callArtisan(...parts))
 			}
 		}
 	}
