@@ -267,27 +267,16 @@ export class ViteConfiguration {
 	}
 
 	/**
-	 * Adds an entry point.
-	 *
-	 * @example
-	 * export default defineConfig()
-	 *	.withEntry("resources/js/app.js")
+	 * @deprecated
 	 */
 	public withEntry(...entries: string[]): this {
-		this.build!.rollupOptions!.input = [
-			...(this.build!.rollupOptions!.input as string[]),
-			...entries,
-		]
+		throw new Error('Adding entrypoints via vite.config.ts is no longer supported, use config/vite.php instead.')
 
 		return this
 	}
 
 	/**
-	 * Adds entry points.
-	 *
-	 * @example
-	 * export default defineConfig()
-	 *	.withEntries("resources/js/app.js", "resources/js/admin.js")
+	 * @deprecated
 	 */
 	public withEntries(...entries: string[]): this {
 		return this.withEntry(...entries)
