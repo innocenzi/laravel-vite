@@ -88,7 +88,7 @@ This defines the URL to which Laravel Vite will perform a ping when ensuring tha
 - **Default**: `['vite:aliases']`
 - **Type**: `array`
 
-This option defines the list of artisan commands that will be executed when the development server is starting. Note that if a command fails, the server will just stop. 
+This option defines the list of artisan commands that will be executed when the development server or the production build is starting. Note that if a command fails, the server will just stop. 
 
 ## Vite configuration file
 
@@ -107,13 +107,12 @@ export default defineConfig()
 	})
 ```
 
-Note that `defineConfig` is imported from `laravel-vite`. This is a small wrapper around Vite's configuration that adds a few convenience methods, such as `withEntry` to add an entrypoint or `withOutput` to change the build directory. These two options are taken care of by Laravel Vite, so you don't need to define them manually.
+Note that `defineConfig` is imported from `laravel-vite` instead of `vite`. This is a small wrapper around Vite's configuration that adds a few convenience methods, such as `withEntry` to add an entrypoint or `withOutput` to change the build directory. These two options are taken care of by Laravel Vite, so you don't need to define them manually.
 
 ### Adding plugins
 
 You may call `withPlugin` or `withPlugins` with the plugin as a parameter.
 
-<!-- prettier-ignore -->
 ```ts
 // vite.config.ts
 import { defineConfig } from "laravel-vite";

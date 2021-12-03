@@ -77,7 +77,7 @@ return [
     | Commands
     |--------------------------------------------------------------------------
     | Defines the list of artisan commands that will be executed when
-    | the development server starts.
+    | the development server or the production build starts.
     */
     'commands' => [
         'vite:aliases',
