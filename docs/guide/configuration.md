@@ -90,6 +90,17 @@ This defines the URL to which Laravel Vite will perform a ping when ensuring tha
 
 This option defines the list of artisan commands that will be executed when the development server or the production build is starting. Note that if a command fails, the server will just stop. 
 
+If a command has arguments, use an array instead:
+
+```php
+    'commands' => [
+        ['ziggy:generate', 'resources/ziggy-generated-routes.js'],
+        'vite:aliases',
+        'typescript:generate',
+        'i18n:generate',
+    ],
+```
+
 ## Vite configuration file
 
 While most of the configuration can be done within `config/vite.php`, if you need more flexibility, you will need to update `vite.config.ts`.
