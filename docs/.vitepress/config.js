@@ -41,7 +41,8 @@ module.exports = {
 		docsDir: 'docs',
 		docsBranch: 'main',
 		algolia: {
-			apiKey: '64097e0c86334e38e09448baf030c4f9',
+			appId: 'UNQJXGJJCM',
+			apiKey: '13f1ef823ef6da38d5b51452d5768113',
 			indexName: 'laravel-vite',
 		},
 		editLinks: true,
