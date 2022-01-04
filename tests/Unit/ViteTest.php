@@ -125,6 +125,7 @@ it('generates production URLs that take the ASSET_URL environment variable into 
 
     Config::set('vite.entrypoints', 'scripts');
     App::setBasePath(__DIR__);
+    set_env('production');
     expect(get_vite()->getClientAndEntrypointTags())
         ->toEqual('<script type="module" src="https://cdn.random.url/build/app.83b2e884.js"></script>');
 });
@@ -136,6 +137,7 @@ it('generates an asset URL that takes ASSET_URL into account', function () {
         'https://cdn.random.url'
     ));
 
+    set_env('production');
     expect(vite_asset('image.png'))->toBe('https://cdn.random.url/build/image.png');
 });
 
