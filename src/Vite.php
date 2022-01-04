@@ -18,6 +18,9 @@ class Vite
     protected ?bool $isDevelopmentServerRunning;
     protected static ?bool $withoutManifest = false;
 
+    /** @var callable */
+    public static $generateTagsUsing = null;
+
     /**
      * Creates a new Vite instance.
      */
@@ -27,11 +30,20 @@ class Vite
     }
 
     /**
+     * Defines a callback to generate manifest tags with.
+     * First argument is the URL, second is whether it is a script or a style tag, third is the ManifestEntry instance.
+     */
+    public static function generateTagsUsing(callable $callable): void
+    {
+        static::$generateTagsUsing = $callable;
+    }
+
+    /**
      * Configures Vite to not use the manifest.
      */
     public static function withoutManifest(): void
     {
-        Vite::$withoutManifest = true;
+        static::$withoutManifest = true;
     }
 
     /**
@@ -39,7 +51,7 @@ class Vite
      */
     public static function withManifest(): void
     {
-        Vite::$withoutManifest = false;
+        static::$withoutManifest = false;
     }
 
     /**
@@ -189,7 +201,7 @@ class Vite
      */
     protected function shouldUseManifest(): bool
     {
-        if (Vite::$withoutManifest === true) {
+        if (static::$withoutManifest === true) {
             return false;
         }
 

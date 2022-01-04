@@ -6,10 +6,28 @@ use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Innocenzi\Vite\Exceptions\NoSuchEntrypointException;
+use Innocenzi\Vite\ManifestEntry;
 use Innocenzi\Vite\Vite;
 
 beforeEach(fn () => start_dev_server());
 afterEach(fn () => stop_dev_server());
+
+it('generates script tags using custom logic', function () {
+    set_env('production');
+    
+    Vite::generateTagsUsing(function (string $url, string $type) {
+        if ($type === ManifestEntry::SCRIPT_TAG) {
+            return sprintf('<script type="module" src="%s" crossorigin></script>', $url);
+        }
+
+        return sprintf('<link rel="stylesheet" href="%s" crossorigin />', $url);
+    });
+
+    expect(get_vite('with_css.json')->getEntry('resources/js/app.js')->toHtml())
+        ->toEqual('<script type="module" src="http://localhost/build/app.83b2e884.js" crossorigin></script><link rel="stylesheet" href="http://localhost/build/app.e33dabbf.css" crossorigin />');
+
+    Vite::$generateTagsUsing = null;
+});
 
 it('generates the client script in a local environment', function () {
     set_env('local');
