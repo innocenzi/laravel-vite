@@ -205,7 +205,7 @@ class Vite
             return false;
         }
 
-        if (! App::environment('local')) {
+        if (App::environment('production')) {
             return true;
         }
 
