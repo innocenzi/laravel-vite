@@ -150,12 +150,12 @@ If you share your project between different environments, you can use pass a cal
 ```ts
 export default defineConfig()
 	.withCertificates((env) => ([
-		env.VITE_DEV_KEY,
-		env.VITE_DEV_CERT,
+		env.DEV_SERVER_KEY,
+		env.DEV_SERVER_CERT,
 	]))
 ```
 
-Alternatively, using `withCertificates` without argumentse will use the `VITE_DEV_KEY` and `VITE_DEV_CERT` environment variables by default: 
+Alternatively, using `withCertificates` without argumentse will use the `DEV_SERVER_KEY` and `DEV_SERVER_CERT` environment variables by default: 
 
 ```ts
 export default defineConfig()

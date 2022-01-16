@@ -64,6 +64,7 @@ export class ViteConfiguration {
 	public plugins: UserConfig['plugins']
 	public base: UserConfig['base']
 	public resolve: UserConfig['resolve']
+	public envPrefix: UserConfig['envPrefix']
 
 	constructor(
 		config: (UserConfig | ((env: typeof process.env) => UserConfig)) = {},
@@ -71,6 +72,9 @@ export class ViteConfiguration {
 	) {
 		dotenvExpand(dotenv.config())
 		debug('Loaded configuration with dotenv')
+
+		// Sets the env prefixes
+		this.envPrefix = ['VITE_', 'MIX_']
 
 		// Sets the base directory.
 		this.base = process.env.ASSET_URL ?? ''
@@ -216,12 +220,18 @@ export class ViteConfiguration {
 	public withCertificates(key: string, cert: string): this
 	public withCertificates(callbackOrKey?: string | ((env: typeof process.env) => [string, string]), cert?: string): this {
 		if (!callbackOrKey && !cert) {
-			callbackOrKey = process.env.VITE_DEV_KEY
-			cert = process.env.VITE_DEV_CERT
+			callbackOrKey = process.env.DEV_SERVER_KEY
+			cert = process.env.DEV_SERVER_CERT
 		}
 
 		if (typeof callbackOrKey === 'function') {
 			[callbackOrKey, cert] = callbackOrKey(process.env)
+		}
+
+		if (!callbackOrKey && !cert) {
+			console.warn(chalk.yellow.bold('(!) Certificates are not configured properly. Ensure your environment file is has "DEV_SERVER_KEY" and "DEV_SERVER_CERT".'))
+
+			return this
 		}
 
 		return this.merge({
