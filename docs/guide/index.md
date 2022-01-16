@@ -9,17 +9,25 @@ editLink: true
 
 This is the recommended and the easiest approach. The [preset](https://github.com/laravel-presets/vite) can be applied with a single command, without prior installation.
 
-To use it, run the following command at the root of your project:
+### Inertia
+
+If you are an [Inertia](https://inertiajs.com/) user, you may use [an updated but not-yet-documented version of Preset for Inertia](https://github.com/laravel-presets/inertia/blob/main/preset.ts).
 
 ```bash
-npx apply laravel:vite
+npx @preset/cli laravel:vite
+```
+
+This preset will install Vite along with Inertia, Vue and Tailwind CSS. The later can be not installed by using the `--no-tailwindcss` flag.
+
+### Vanilla
+
+If you just want Vite, you can run the following command at the root of your project:
+
+```bash
+npx apply laravel:vite --ignore-existing
 ```
 
 The preset defaults to installing Vue 3. If you don't want that, you may use the `--no-vue` flag.
-
-:::warning Note for Mac users
-You will likely get an error because `apply` is a valid command on your system. You need to either install `apply` globally with `npm i -g apply`, or use the `--ignore-existing` flag.
-:::
 
 The preset will:
 
