@@ -2,12 +2,12 @@ import path from 'node:path'
 import makeDebugger from 'debug'
 import { execaSync } from 'execa'
 import { Plugin, UserConfig, loadEnv } from 'vite'
-import { finish } from './utils'
+import { finish, wrap } from './utils'
 import type { Options, PhpConfiguration } from './types'
 
 const PREFIX = 'Laravel Vite'
 const CONFIG_ARTISAN_COMMAND = 'vite:config'
-const debug = makeDebugger('laravel-vite')
+const debug = makeDebugger('laravel:config')
 
 /**
  * Calls an artisan command.
@@ -41,7 +41,7 @@ export const config = (options: Options = {}): Plugin => ({
 
 		// Loads artisan
 		const artisan = readConfig(env.PHP_EXECUTABLE || options?.phpExecutable || 'php')
-		debug('Configuration:', artisan)
+		debug('Configuration from PHP:', artisan)
 
 		// Sets base
 		const base = finish(`${finish(env.ASSET_URL, '/', '')}${command === 'build' ? `${artisan.build_path}/` : ''}`, '/')
@@ -51,8 +51,8 @@ export const config = (options: Options = {}): Plugin => ({
 		const { protocol, hostname, port } = new URL(artisan.dev_url || 'http://localhost:3000')
 		const key = env.DEV_SERVER_KEY
 		const cert = env.DEV_SERVER_CERT
-		const usesHttps = key && cert && protocol === 'https'
-		debug('Uses HTTPS:', usesHttps)
+		const usesHttps = key && cert && protocol === 'https:'
+		debug('Uses HTTPS:', usesHttps, { key, cert, protocol, hostname, port })
 
 		// Returns config
 		const config: UserConfig = {
@@ -63,7 +63,7 @@ export const config = (options: Options = {}): Plugin => ({
 				host: hostname,
 				https: usesHttps
 					? { maxVersion: 'TLSv1.2', key, cert }
-					: protocol === 'https',
+					: protocol === 'https:',
 				port: port ? Number(port) : 3000,
 				origin: `${protocol}:${hostname}:${port}`,
 				hmr: {
