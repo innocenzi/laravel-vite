@@ -83,4 +83,16 @@ return [
         'vite:aliases',
         // 'typescript:generate'
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Testing
+    |--------------------------------------------------------------------------
+    | Specifies settings related to testing.
+    | If `use_manifest` is set to false, Laravel Vite will not attempt to
+    | use the manifest when running tests.
+    */
+    'testing' => [
+        'use_manifest' => false,
+    ],
 ];

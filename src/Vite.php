@@ -201,22 +201,34 @@ class Vite
      */
     protected function shouldUseManifest(): bool
     {
+        // If explicitely asked, do not use the manifest.
         if (static::$withoutManifest === true) {
             return false;
         }
 
+        // If disabled in tests via the configuration, do not use the manifest.
+        if (App::environment('testing') && ! config('vite.testing.use_manifest')) {
+            return false;
+        }
+
+        // If running in production, do use the manifest.
         if (! App::environment(['local', 'testing'])) {
             return true;
         }
 
+        // If the development server check is disabled, do not use the manifest.
         if (! is_numeric(config('vite.ping_timeout'))) {
             return false;
         }
 
+        // If the development server is not running and the development server check
+        // was enabled, use the manifest.
+        // This happens when the development server is not started in a local environment.
         if (! $this->isDevelopmentServerRunning()) {
             return true;
         }
 
+        // Otherwise, the manifest should not be used.
         return false;
     }
 
