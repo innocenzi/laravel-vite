@@ -4,8 +4,8 @@ on:
   pull_request:
     branches: [main]
     paths-ignore:
-      - 'docs/**'
-      - 'npm/**'
+      - "docs/**"
+      - "vite-plugin-laravel/**"
 
 jobs:
   php-cs-fixer:
