@@ -1,6 +1,13 @@
-name: tests
+name: Run PHP tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - 'npm/**'
+  pull_request:
+    branches: [main]
 
 jobs:
   test:

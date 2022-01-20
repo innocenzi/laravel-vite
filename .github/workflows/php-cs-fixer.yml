@@ -1,6 +1,11 @@
 name: Check & fix styling
 
-on: [pull_request]
+on:
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - 'npm/**'
 
 jobs:
   php-cs-fixer:
