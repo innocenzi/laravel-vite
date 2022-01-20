@@ -21,4 +21,9 @@ export interface Options {
 	 * Post CSS plugins.
 	 */
 	postcss?: any[]
+
+	/**
+	 * Prefixes to use to expose environment variables to the scripts.
+	 */
+	envPrefix?: string | string[]
 }

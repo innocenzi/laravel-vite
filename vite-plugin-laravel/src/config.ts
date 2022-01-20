@@ -56,7 +56,7 @@ export const config = (options: Options = {}): Plugin => ({
 
 		// Returns config
 		const config: UserConfig = {
-			envPrefix: ['VITE_', 'MIX_'],
+			envPrefix: wrap(options.envPrefix, ['VITE_', 'MIX_']),
 			base,
 			publicDir: artisan.public_directory ?? 'resources/static',
 			server: {

@@ -13,3 +13,15 @@ export function finish(str: string | undefined, character: string, _default: str
 
 	return str
 }
+
+export function wrap<T>(input: undefined | T | T[], _default: T[]): T[] {
+	if (!input) {
+		return _default
+	}
+
+	if (Array.isArray(input)) {
+		return input
+	}
+
+	return [input]
+}
