@@ -1,0 +1,6 @@
+node_modules
+public
+vendor
+**/dist
+**/components.d.ts
+!/docs/.vitepress

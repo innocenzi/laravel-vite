@@ -9,3 +9,5 @@ phpunit.xml
 psalm.xml
 vendor
 tests/__sandbox__
+node_modules
+.pnpm-debug.log
