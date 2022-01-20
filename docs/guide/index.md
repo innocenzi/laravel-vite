@@ -14,7 +14,7 @@ This is the recommended and the easiest approach. The [preset](https://github.co
 If you are an [Inertia](https://inertiajs.com/) user, you may use [an updated but not-yet-documented version of Preset for Inertia](https://github.com/laravel-presets/inertia/blob/main/preset.ts).
 
 ```bash
-npx @preset/cli laravel:vite
+npx @preset/cli laravel:inertia
 ```
 
 This preset will install Vite along with Inertia, Vue and Tailwind CSS. The later can be not installed by using the `--no-tailwindcss` flag.
