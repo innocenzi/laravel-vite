@@ -1,7 +1,6 @@
-import { createHash } from 'crypto'
-import fs from 'fs/promises'
-import path from 'path'
-import { OutputAsset } from 'rollup'
+import fs from 'node:fs/promises'
+import path from 'node:path'
+import { createHash } from 'node:crypto'
 import { Manifest, ManifestChunk, Plugin, ResolvedConfig } from 'vite'
 
 // The concept of this plugin was taken from the Vite Ruby project.
@@ -13,13 +12,13 @@ import { Manifest, ManifestChunk, Plugin, ResolvedConfig } from 'vite'
  * Creates a plugin for patching Vite's manifest file.
  * @see https://github.com/innocenzi/laravel-vite/issues/153
  */
-export function manifestPlugin(): Plugin {
+export function manifest(): Plugin {
 	const manifest = new Map<string, ManifestChunk>()
 
 	let config: ResolvedConfig
 
 	return {
-		name: 'vite:laravel:manifest',
+		name: 'laravel:manifest',
 		apply: 'build',
 		enforce: 'post',
 
@@ -34,7 +33,7 @@ export function manifestPlugin(): Plugin {
 			}
 
 			const values = Object.values(bundle)
-			const assets = values.filter((c) => c.type === 'asset') as OutputAsset[]
+			const assets = values.filter((c) => c.type === 'asset') //  as OutputAsset[] // from rollup
 
 			// -- CSS
 

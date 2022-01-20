@@ -1,14 +1,14 @@
 {
 	"compilerOptions": {
-		"module": "ESNext",
-		"target": "es2017",
+		"module": "es2020",
+		"target": "ESNext",
 		"lib": ["ESNext", "DOM"],
 		"esModuleInterop": true,
 		"strict": true,
 		"strictNullChecks": true,
-		"moduleResolution": "Node",
+		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"skipLibCheck": true
 	},
-	"exclude": ["**/dist", "**/node_modules", "**/test"]
+	"exclude": ["**/dist", "**/node_modules"]
 }

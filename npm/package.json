@@ -4,7 +4,6 @@
   "author": "Enzo Innocenzi",
   "license": "MIT",
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
@@ -17,27 +16,19 @@
   "bugs": "https://github.com/innocenzi/laravel-vite/issues",
   "scripts": {
     "prepare": "npm run build",
-    "dev": "npm run build -- --watch",
-    "build": "tsup src/index.ts --dts --format cjs,esm"
+    "build": "tsup src/index.ts"
   },
   "devDependencies": {
-    "@innocenzi/eslint-config": "^0.3.1",
+    "@innocenzi/eslint-config": "^0.7.1",
     "@types/debug": "^4.1.7",
-    "@types/deepmerge": "^2.2.0",
-    "@types/execa": "^2.0.0",
-    "@types/node": "^16.11.11",
-    "eslint": "^7.32.0",
-    "rollup": "^2.60.2",
-    "tsup": "^5.10.1",
-    "typescript": "^4.5.2",
-    "vite": "^2.6.14"
+    "@types/node": "^17.0.10",
+    "eslint": "^8.7.0",
+    "tsup": "^5.11.11",
+    "typescript": "^4.5.4",
+    "vite": "^2.7.13"
   },
   "dependencies": {
-    "chalk": "^4.1.2",
     "debug": "^4.3.3",
-    "deepmerge": "^4.2.2",
-    "dotenv": "^10.0.0",
-    "dotenv-expand": "^5.1.0",
-    "execa": "^5.1.1"
+    "execa": "^6.0.0"
   }
 }
