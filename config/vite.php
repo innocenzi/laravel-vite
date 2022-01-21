@@ -5,9 +5,9 @@ return [
     |--------------------------------------------------------------------------
     | Entrypoints
     |--------------------------------------------------------------------------
-    | The files in the configured directories will be considered
-    | entry points and will not be required in the configuration file.
-    | To disable the feature, set to false.
+    | Entrypoints are scripts or style files that should be included by
+    | default. The `entrypoints` settings makes it easy to include a whole
+    | directory, or you can chose a specific file if you prefer.
     */
     'entrypoints' => [
         'resources/js',
@@ -17,6 +17,16 @@ return [
         '/\\.d\\.ts$/',
         '/\\.json$/',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | SSR
+    |--------------------------------------------------------------------------
+    | When building an SSR bundle, you must specify an entrypoint.
+    | This setting defines the SSR entrypoint that will be used when using
+    | the --ssr flag.
+    */
+    'ssr_entrypoint' => null,
 
     /*
     |--------------------------------------------------------------------------
