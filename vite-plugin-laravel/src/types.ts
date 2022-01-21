@@ -1,6 +1,8 @@
+import type { SSROptions } from 'vite'
 
 export interface PhpConfiguration {
-	entrypoints?: false | string | string[]
+	ssr_entrypoint?: string
+	entrypoints?: string | string[]
 	build_path?: string
 	dev_url?: string
 	aliases?: Record<string, string>
@@ -26,4 +28,9 @@ export interface Options {
 	 * Prefixes to use to expose environment variables to the scripts.
 	 */
 	envPrefix?: string | string[]
+
+	/**
+	 * SSR-specific options.
+	 */
+	ssr?: SSROptions
 }

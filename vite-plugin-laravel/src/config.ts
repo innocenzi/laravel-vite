@@ -54,6 +54,10 @@ export const config = (options: Options = {}): Plugin => ({
 		const usesHttps = key && cert && protocol === 'https:'
 		debug('Uses HTTPS:', usesHttps, { key, cert, protocol, hostname, port })
 
+		// Entrypoints
+		const ssr = process.argv.includes('--ssr')
+		const entrypoints = ssr ? artisan.ssr_entrypoint : artisan.entrypoints
+
 		// Returns config
 		const config: UserConfig = {
 			envPrefix: wrap(options.envPrefix, ['VITE_', 'MIX_']),
@@ -72,10 +76,12 @@ export const config = (options: Options = {}): Plugin => ({
 				},
 			},
 			build: {
-				manifest: true,
+				ssrManifest: ssr,
+				manifest: !ssr,
+				ssr,
 				outDir: `public/${artisan.build_path ?? 'build'}`,
 				rollupOptions: {
-					input: artisan.entrypoints || [],
+					input: entrypoints,
 				},
 			},
 			resolve: {
