@@ -1,3 +1,4 @@
+import fs from 'node:fs'
 import path from 'node:path'
 import makeDebugger from 'debug'
 import { execaSync } from 'execa'
@@ -18,14 +19,36 @@ export function callArtisan(executable: string, ...params: string[]): string {
 
 /**
  * Reads the configuration from the `php artisan vite:config` command.
- * @param executable
- * @returns
  */
-export function readConfig(executable: string): PhpConfiguration {
+export function readConfig(options: Options, env: Record<string, string>): PhpConfiguration {
 	try {
+		// Sets path from environment variable
+		if (options.config !== false && env.CONFIG_PATH_VITE) {
+			debug('Setting configuration file path to CONFIG_PATH_VITE.')
+			options.config = env.CONFIG_PATH_VITE
+		}
+
+		// Reads the config from the disk
+		if (typeof options.config === 'string') {
+			debug(`Reading configuration from ${options.config}`)
+
+			return JSON.parse(fs.readFileSync(options.config, { encoding: 'utf-8' }))
+		}
+
+		// Returns the given config
+		if (typeof options.config === 'object') {
+			debug('Reading configuration from the given object.')
+
+			return options.config
+		}
+
+		// Asks PHP for the configuration
+		debug('Reading configuration from PHP.')
+		const executable = env.PHP_EXECUTABLE || options?.phpExecutable || 'php'
+
 		return JSON.parse(callArtisan(executable, CONFIG_ARTISAN_COMMAND)) as PhpConfiguration
 	} catch (error: any) {
-		throw new Error(`[${PREFIX}] Could not read configuration from PHP: ${error.message}`)
+		throw new Error(`[${PREFIX}] Could not read configuration: ${error.message}`)
 	}
 }
 
@@ -39,16 +62,16 @@ export const config = (options: Options = {}): Plugin => ({
 		// Loads .env
 		const env = loadEnv(mode, process.cwd(), '')
 
-		// Loads artisan
-		const artisan = readConfig(env.PHP_EXECUTABLE || options?.phpExecutable || 'php')
-		debug('Configuration from PHP:', artisan)
+		// Loads config
+		const serverConfig = readConfig(options, env)
+		debug('Configuration from PHP:', serverConfig)
 
 		// Sets base
-		const base = finish(`${finish(env.ASSET_URL, '/', '')}${command === 'build' ? `${artisan.build_path}/` : ''}`, '/')
+		const base = finish(`${finish(env.ASSET_URL, '/', '')}${command === 'build' ? `${serverConfig.build_path}/` : ''}`, '/')
 		debug('Base URL:', base)
 
 		// Parses dev url
-		const { protocol, hostname, port } = new URL(artisan.dev_url || 'http://localhost:3000')
+		const { protocol, hostname, port } = new URL(serverConfig.dev_url || 'http://localhost:3000')
 		const key = env.DEV_SERVER_KEY
 		const cert = env.DEV_SERVER_CERT
 		const usesHttps = key && cert && protocol === 'https:'
@@ -56,13 +79,13 @@ export const config = (options: Options = {}): Plugin => ({
 
 		// Entrypoints
 		const ssr = process.argv.includes('--ssr')
-		const entrypoints = ssr ? artisan.ssr_entrypoint : artisan.entrypoints
+		const entrypoints = ssr ? serverConfig.ssr_entrypoint : serverConfig.entrypoints
 
 		// Returns config
-		const config: UserConfig = {
-			envPrefix: wrap(options.envPrefix, ['VITE_', 'MIX_']),
+		const resolvedConfig: UserConfig = {
+			envPrefix: wrap(options.envPrefix, ['MIX_', 'VITE_', 'SCRIPT_']),
 			base,
-			publicDir: artisan.public_directory ?? 'resources/static',
+			publicDir: serverConfig.public_directory ?? 'resources/static',
 			server: {
 				host: hostname,
 				https: usesHttps
@@ -79,20 +102,20 @@ export const config = (options: Options = {}): Plugin => ({
 				ssrManifest: ssr,
 				manifest: !ssr,
 				ssr,
-				outDir: `public/${artisan.build_path ?? 'build'}`,
+				outDir: `public/${serverConfig.build_path ?? 'build'}`,
 				rollupOptions: {
 					input: entrypoints,
 				},
 			},
 			resolve: {
-				alias: Object.fromEntries(Object.entries(artisan.aliases || {}).map(([alias, directory]) => {
+				alias: Object.fromEntries(Object.entries(serverConfig.aliases || {}).map(([alias, directory]) => {
 					return [alias, path.join(process.cwd(), directory)]
 				})),
 			},
 			css: { postcss: options.postcss ? { plugins: options.postcss } : baseConfig.css?.postcss },
 		}
 
-		return config
+		return resolvedConfig
 	},
 })
 
