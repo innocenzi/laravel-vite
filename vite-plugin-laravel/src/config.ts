@@ -1,10 +1,11 @@
+import os from 'node:os'
 import fs from 'node:fs'
 import path from 'node:path'
 import makeDebugger from 'debug'
 import { execaSync } from 'execa'
 import { Plugin, UserConfig, loadEnv } from 'vite'
 import { finish, wrap } from './utils'
-import type { Options, PhpConfiguration } from './types'
+import type { Certificates, Options, PhpConfiguration } from './types'
 
 const PREFIX = 'Laravel Vite'
 const CONFIG_ARTISAN_COMMAND = 'vite:config'
@@ -68,12 +69,11 @@ export const config = (options: Options = {}): Plugin => ({
 
 		// Sets base
 		const base = finish(`${finish(env.ASSET_URL, '/', '')}${command === 'build' ? `${serverConfig.build_path}/` : ''}`, '/')
-		debug('Base URL:', base)
+		debug('Base URL:', base || '<empty>')
 
 		// Parses dev url
 		const { protocol, hostname, port } = new URL(serverConfig.dev_url || 'http://localhost:3000')
-		const key = env.DEV_SERVER_KEY
-		const cert = env.DEV_SERVER_CERT
+		const { key, cert } = findCertificates(env, hostname)
 		const usesHttps = key && cert && protocol === 'https:'
 		debug('Uses HTTPS:', usesHttps, { key, cert, protocol, hostname, port })
 
@@ -92,7 +92,7 @@ export const config = (options: Options = {}): Plugin => ({
 					? { maxVersion: 'TLSv1.2', key, cert }
 					: protocol === 'https:',
 				port: port ? Number(port) : 3000,
-				origin: `${protocol}:${hostname}:${port}`,
+				origin: `${protocol}//${hostname}:${port}`,
 				hmr: {
 					host: hostname,
 					port: Number(port) || 3000,
@@ -115,24 +115,70 @@ export const config = (options: Options = {}): Plugin => ({
 			css: { postcss: options.postcss ? { plugins: options.postcss } : baseConfig.css?.postcss },
 		}
 
+		debug('Resolved config:', resolvedConfig)
+
 		return resolvedConfig
 	},
 })
 
-// const laravelVite = (): Plugin[] => [
-// 	blade(),
-// 	inertiaLayout(),
-// 	laravel(),
-// ]
+/**
+ * Tries to find certificates from the environment.
+ */
+export function findCertificates(env: Record<string, string>, hostname?: string): Certificates {
+	let key = env.DEV_SERVER_KEY || ''
+	let cert = env.DEV_SERVER_CERT || ''
 
-// export default defineConfig({
-// 	css: {
-// 		postcss: {
-// 			plugins: [tailwindcss(), autoprefixer()],
-// 		},
-// 	},
-// 	plugins: [
-// 		laravelVite(),
-// 		vue(),
-// 	],
-// })
+	if (!key || !cert) {
+		switch (os.platform()) {
+			case 'darwin': {
+				const home = os.homedir()
+				const domain = hostname
+				const valetPath = '/.config/valet/Certificates/'
+
+				key ||= `${home}${valetPath}${domain}.key`
+				cert ||= `${home}${valetPath}${domain}.crt`
+
+				debug('Automatically set certificates for Valet:', {
+					home,
+					domain,
+					valetPath,
+					key,
+					cert,
+				})
+
+				break
+			}
+
+			case 'win32': {
+				// Detect Laragon in PATH
+				let laragonDirectory = process.env.PATH?.split(';').find((l) => l.toLowerCase().includes('laragon'))
+
+				if (!laragonDirectory) {
+					break
+				}
+
+				laragonDirectory = laragonDirectory.split('\\bin')[0]
+
+				if (laragonDirectory.endsWith('\\')) {
+					laragonDirectory = laragonDirectory.slice(0, -1)
+				}
+
+				key ||= `${laragonDirectory}\\etc\\ssl\\laragon.key`
+				cert ||= `${laragonDirectory}\\etc\\ssl\\laragon.crt`
+
+				debug('Automatically set certificates for Laragon:', {
+					laragonDirectory,
+					key,
+					cert,
+				})
+
+				break
+			}
+		}
+	}
+
+	return {
+		key,
+		cert,
+	}
+}

@@ -37,3 +37,8 @@ export interface Options {
 	 */
 	ssr?: SSROptions
 }
+
+export interface Certificates {
+	key: string
+	cert: string
+}
