@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\HtmlString;
@@ -225,19 +226,23 @@ class Vite
      */
     public function isDevelopmentServerRunning(): bool
     {
-        try {
-            ['host' => $hostname, 'port' => $port] = parse_url(config('vite.ping_url') ?? config('vite.dev_url'));
-            $connection = @fsockopen($hostname, $port, $errno, $errstr, config('vite.ping_timeout'));
-
-            if (\is_resource($connection)) {
-                fclose($connection);
-
-                return true;
-            }
-        } catch (\Throwable $th) {
+        if (isset($this->isDevelopmentServerRunning)) {
+            return $this->isDevelopmentServerRunning;
         }
 
-        return false;
+        $url = config('vite.ping_url') ?? config('vite.dev_url');
+
+        try {
+            /**
+             * The below will throw an exception if no dev server is running.
+             */
+            Http::get($url);
+
+            return $this->isDevelopmentServerRunning = true;
+        } catch (\Throwable $e) {
+        }
+
+        return $this->isDevelopmentServerRunning = false;
     }
 
     /**
