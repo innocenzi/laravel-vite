@@ -11,3 +11,4 @@ vendor
 tests/__sandbox__
 node_modules
 .pnpm-debug.log
+**/node_modules
