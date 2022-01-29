@@ -159,6 +159,11 @@ final class Configuration
      */
     protected function shouldUseManifest(): bool
     {
+        // If the development server is disabled, use the manifest.
+        if (! $this->config('dev_server.enabled', true)) {
+            return true;
+        }
+
         // If disabled in tests via the configuration, do not use the manifest.
         if (app()->environment('testing') && ! config('vite.testing.use_manifest', false)) {
             return false;
@@ -166,11 +171,6 @@ final class Configuration
 
         // If running in production, do use the manifest.
         if (! app()->environment('local')) {
-            return true;
-        }
-
-        // If the development server is disabled, use the manifest.
-        if (! $this->config('dev_server.enabled', true)) {
             return true;
         }
 
