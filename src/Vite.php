@@ -231,13 +231,9 @@ class Vite
         }
 
         $url = config('vite.ping_url') ?? config('vite.dev_url');
-        $timeout = config('vite.ping_timeout');
 
         try {
-            Http::withOptions([
-                'connect_timeout' => $timeout,
-                'verify' => false,
-            ])->get($url);
+            Http::withOptions(['verify' => false])->get($url);
 
             return $this->isDevelopmentServerRunning = true;
         } catch (\Throwable $e) {
