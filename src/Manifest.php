@@ -4,6 +4,7 @@ namespace Innocenzi\Vite;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
+use Innocenzi\Vite\Exceptions\ManifestNotFoundException;
 use Innocenzi\Vite\Exceptions\NoSuchEntrypointException;
 
 final class Manifest implements Htmlable
@@ -18,6 +19,10 @@ final class Manifest implements Htmlable
      */
     public function __construct(protected string $path)
     {
+        if (! file_exists($path)) {
+            throw new ManifestNotFoundException($path, static::guessConfigName($path));
+        }
+
         $this->chunks = Collection::make(json_decode(file_get_contents($path), true));
         $this->entries = $this->chunks
             ->map(fn (array $value) => Chunk::fromArray($this, $value))

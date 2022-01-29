@@ -7,7 +7,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Innocenzi\Vite\EntrypointsFinder\EntrypointsFinder;
-use Innocenzi\Vite\Exceptions\ManifestNotFound;
 use Innocenzi\Vite\Exceptions\NoSuchConfigurationException;
 use Innocenzi\Vite\ServerCheckers\ServerChecker;
 use Innocenzi\Vite\TagGenerators\TagGenerator;
@@ -36,10 +35,6 @@ final class Configuration
     public function getManifest(): ?Manifest
     {
         $path = public_path(sprintf('%s/%s', $this->config('build_path'), 'manifest.json'));
-
-        if (! file_exists($path)) {
-            throw new ManifestNotFound($path, $this->name);
-        }
 
         return $this->manifest ??= Manifest::read($path);
     }

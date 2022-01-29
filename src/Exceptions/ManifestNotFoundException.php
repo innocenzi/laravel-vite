@@ -6,7 +6,7 @@ use Facade\IgnitionContracts\BaseSolution;
 use Facade\IgnitionContracts\ProvidesSolution;
 use Facade\IgnitionContracts\Solution;
 
-final class ManifestNotFound extends ViteException implements ProvidesSolution
+final class ManifestNotFoundException extends ViteException implements ProvidesSolution
 {
     protected array $links = [
         'Using the development server' => 'https://laravel-vite.innocenzi.dev/guide/usage.html#development',
