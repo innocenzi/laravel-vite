@@ -1,26 +1,46 @@
 <?php
 
-use Innocenzi\Vite\Exceptions\ManifestNotFound;
-
-beforeEach(fn () => set_env('local'));
-
-it('uses the development server if it is started in a local environment', function () {
-    with_dev_server(function () {
-        expect(get_vite('unknown-manifest.json')->getClientAndEntrypointTags())
-            ->toEqual('<script type="module" src="http://localhost:3000/@vite/client"></script>');
-    });
+it('uses the development server by default', function () {
+    with_dev_server();
+    set_env('local');
+    expect(vite()->usesServer())->toBeTrue();
 });
 
-it('does not use the development server if it is not started in a local environment', function () {
-    get_vite('unknown-manifest.json')->getClientAndEntrypointTags();
-})->throws(ManifestNotFound::class);
-
-it('generates the right asset URL when the development server is running', function () {
-    with_dev_server(function () {
-        expect(vite_asset('image.png'))->toBe('http://localhost:3000/image.png');
-    });
+it('uses uses the development server in tests by default', function () {
+    expect(vite()->usesServer())->toBeTrue();
 });
 
-it('generates the right asset URL when the development server is not running', function () {
-    expect(vite_asset('image.png'))->toBe('http://localhost/build/image.png');
+it('uses uses the manifest in tests when instructed', function () {
+    with_dev_server();
+    config()->set('vite.testing.use_manifest', true);
+    expect(vite()->usesManifest())->toBeTrue();
+});
+
+it('uses the manifest when the development server is disabled', function () {
+    with_dev_server();
+    set_env('local');
+    set_vite_config('default', [
+        'dev_server' => [
+            'enabled' => false,
+        ],
+    ]);
+    
+    expect(vite()->usesManifest())->toBeTrue();
+});
+
+it('uses the manifest when the development server is unreachable', function () {
+    with_dev_server(reacheable: false);
+    set_env('local');
+    expect(vite()->usesManifest())->toBeTrue();
+});
+
+it('uses the manifest in production', function () {
+    set_env('production');
+    expect(vite()->usesManifest())->toBeTrue();
+});
+
+it('uses the manifest in production even if a server is reacheable', function () {
+    with_dev_server();
+    set_env('production');
+    expect(vite()->usesManifest())->toBeTrue();
 });
