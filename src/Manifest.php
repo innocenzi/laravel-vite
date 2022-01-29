@@ -51,9 +51,7 @@ final class Manifest implements Htmlable
     public function getEntry(string $name): Chunk
     {
         if (! $entry = $this->entries->first(fn (Chunk $entry) => str_contains($entry->src, $name))) {
-            $configName = basename(\dirname($this->getPath()));
-
-            throw new NoSuchEntrypointException($name, $configName);
+            throw new NoSuchEntrypointException($name, static::guessConfigName($this->getPath()));
         }
 
         return $entry;
@@ -75,6 +73,17 @@ final class Manifest implements Htmlable
         return $this->chunks;
     }
 
+    /**
+     * Guesses the configuration name for a given path.
+     */
+    public static function guessConfigName(string $path)
+    {
+        return basename(\dirname($path));
+    }
+
+    /**
+     * Gets entries as HTML.
+     */
     public function toHtml()
     {
         return $this->entries->map->toHtml()->join('');
