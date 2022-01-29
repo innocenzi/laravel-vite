@@ -6,7 +6,7 @@ use Innocenzi\Vite\Commands\ExportConfigurationCommand;
 it('exposes the configuration contents to the command line', function () {
     $output = app(ExportConfigurationCommand::class)->getConfigurationAsJson();
 
-    test()->artisan('vite:config')
+    this()->artisan('vite:config')
         ->expectsOutput($output)
         ->assertExitCode(0);
 });
@@ -17,7 +17,9 @@ it('writes the configuration contents to the file system if requested', function
         app(ExportConfigurationCommand::class)->getConfigurationAsJson(),
     ]);
 
-    test()->artisan('vite:config --export=vite.config.json')
+    this()->artisan('vite:config --export=vite.config.json')
         ->expectsOutput('Configuration file written to vite.config.json.')
         ->assertExitCode(0);
 });
+
+it('updates the entrypoints.paths value of each configuration')->skip();

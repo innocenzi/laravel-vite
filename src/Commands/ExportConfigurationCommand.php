@@ -19,7 +19,7 @@ class ExportConfigurationCommand extends Command
 
     public function handle()
     {
-        $config = json_encode($this->configWithEntrypoints());
+        $config = $this->getConfigurationAsJson();
 
         if ($path = $this->option('export')) {
             File::put($path, $config);
@@ -32,7 +32,7 @@ class ExportConfigurationCommand extends Command
         $this->output->write($config);
     }
 
-    protected function configWithEntrypoints()
+    public function getConfigurationAsJson()
     {
         $config = config('vite');
 
@@ -43,6 +43,6 @@ class ExportConfigurationCommand extends Command
             )->map->getPathname();
         }
 
-        return $config;
+        return json_encode($config);
     }
 }
