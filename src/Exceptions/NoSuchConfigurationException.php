@@ -6,7 +6,7 @@ use Facade\IgnitionContracts\BaseSolution;
 use Facade\IgnitionContracts\ProvidesSolution;
 use Facade\IgnitionContracts\Solution;
 
-final class UnknownConfigurationException extends ViteException implements ProvidesSolution
+final class NoSuchConfigurationException extends ViteException implements ProvidesSolution
 {
     public function __construct(protected $name)
     {

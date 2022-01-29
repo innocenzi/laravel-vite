@@ -8,7 +8,7 @@ use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Innocenzi\Vite\EntrypointsFinder\EntrypointsFinder;
 use Innocenzi\Vite\Exceptions\ManifestNotFound;
-use Innocenzi\Vite\Exceptions\UnknownConfigurationException;
+use Innocenzi\Vite\Exceptions\NoSuchConfigurationException;
 use Innocenzi\Vite\ServerCheckers\ServerChecker;
 use Innocenzi\Vite\TagGenerators\TagGenerator;
 
@@ -23,7 +23,7 @@ final class Configuration
         protected ?TagGenerator $tagGenerator = null,
     ) {
         if (! config()->has("vite.configs.${name}")) {
-            throw new UnknownConfigurationException($name);
+            throw new NoSuchConfigurationException($name);
         }
 
         $this->entrypointsFinder ??= app(EntrypointsFinder::class);
