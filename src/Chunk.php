@@ -82,10 +82,12 @@ final class Chunk implements Htmlable
     {
         // Determines the base path from the manifest path
         $base = str_replace(public_path(), '', $this->manifest->getPath());
-        $base = str_replace('\\', '/', $base);
         $base = \dirname($base);
+        $base = Str::of($base)
+            ->replace('\\', '/')
+            ->finish('/');
 
-        return asset(sprintf('%s/%s', $base, $path));
+        return asset(sprintf('%s%s', $base, $path));
     }
 
     public function toHtml()
