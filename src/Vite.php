@@ -6,7 +6,7 @@ final class Vite
 {
     protected array $configs = [];
 
-    public function config(string $name): Configuration
+    public function config(string $name = null): Configuration
     {
         $name ??= config('vite.default');
         
