@@ -1,0 +1,21 @@
+{
+	"resources/scripts/entry.ts": {
+		"file": "entry.2615a355.js",
+		"src": "resources/scripts/entry.ts",
+		"isEntry": true
+	},
+  "resources/scripts/main.ts": {
+    "file": "assets/main.148637ab.js",
+    "src": "resources/scripts/main.ts",
+    "isEntry": true,
+    "imports": [
+      "_vendor.c371e0f4.js"
+    ],
+    "dynamicImports": [
+      "resources/views/pages/welcome.vue"
+    ],
+    "css": [
+      "assets/tw.c93b4b3d.css"
+    ]
+  }
+}

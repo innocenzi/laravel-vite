@@ -54,6 +54,24 @@ function using_manifest(string $manifest = 'manifest.json'): Configuration
 }
 
 /**
+ * Gets the given manifest.
+ */
+function get_manifest(string $manifest = 'manifest.json'): Manifest
+{
+    set_manifest_base_path('');
+
+    return Manifest::read(realpath(__DIR__ . "/Unit/manifests/${manifest}"));
+}
+
+/**
+ * Overrides the manifests' base paths.
+ */
+function set_manifest_base_path(string $path)
+{
+    app()->bind('path.public', fn () => realpath(__DIR__ . "/Unit/manifests/${path}"));
+}
+
+/**
  * Sets up a Vite configuration.
  */
 function set_vite_config(string $name, array $config): void
