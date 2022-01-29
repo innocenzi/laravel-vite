@@ -1,11 +1,12 @@
 <?php
 
+use Innocenzi\Vite\Configuration;
 use Innocenzi\Vite\Vite;
 
 if (! function_exists('vite')) {
-    function vite(): Vite
+    function vite(string $config = null): Configuration
     {
-        return app()->make(Vite::class);
+        return app()->make(Vite::class)->config($config);
     }
 }
 
@@ -15,7 +16,7 @@ if (! function_exists('vite_client')) {
      */
     function vite_client(string $configurationName = null)
     {
-        return vite()->config($configurationName)->getClientScriptTag();
+        return vite($configurationName)->getClientScriptTag();
     }
 }
 
@@ -25,7 +26,7 @@ if (! function_exists('vite_react_refresh_runtime')) {
      */
     function vite_react_refresh_runtime(string $configurationName = null)
     {
-        return vite()->config($configurationName)->getReactRefreshRuntimeScript();
+        return vite($configurationName)->getReactRefreshRuntimeScript();
     }
 }
 
@@ -35,7 +36,7 @@ if (! function_exists('vite_tag')) {
      */
     function vite_tag(string $entry, string $configurationName = null)
     {
-        return vite()->config($configurationName)->getTag($entry);
+        return vite($configurationName)->getTag($entry);
     }
 }
 
@@ -45,7 +46,7 @@ if (! function_exists('vite_tags')) {
      */
     function vite_tags(string $configurationName = null)
     {
-        return vite()->config($configurationName)->getTags();
+        return vite($configurationName)->getTags();
     }
 }
 
@@ -55,6 +56,6 @@ if (! function_exists('vite_asset')) {
      */
     function vite_asset(string $path, string $configurationName = null)
     {
-        return vite()->config($configurationName)->getAssetUrl($path);
+        return vite($configurationName)->getAssetUrl($path);
     }
 }
