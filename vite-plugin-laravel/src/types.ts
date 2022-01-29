@@ -1,13 +1,33 @@
 import type { SSROptions } from 'vite'
 
-export interface PhpConfiguration {
-	ssr_entrypoint?: string
-	entrypoints: string | string[]
+export interface ServerConfiguration {
+	default: keyof ServerConfiguration['configs']
+	aliases: Record<string, string>
+	configs: Record<string, ViteConfiguration>
+	commands: CommandsConfiguration
+}
+
+export interface CommandsConfiguration {
+	artisan: Record<string, string[]> | string[]
+	shell: Record<string, string[]> | string[]
+}
+
+export interface ViteConfiguration {
+	entrypoints: {
+		paths: string | string[]
+		ssr?: string
+		ignore?: string | string[]
+	}
 	build_path: string
-	dev_url: string
-	aliases?: Record<string, string>
-	public_directory?: string
-	commands?: string[]
+	public_directory: string
+	dev_server: {
+		url: string
+	}
+	commands?: CommandsConfiguration
+}
+
+export type ResolvedConfiguration = ViteConfiguration & {
+	aliases: Record<string, string>
 }
 
 export interface Options {
@@ -20,7 +40,7 @@ export interface Options {
 	 * A configuration object or a path to a configuration file.
 	 * Setting to false disables reading the configuration file path from the `CONFIG_PATH_VITE` environment variable.
 	 */
-	config?: PhpConfiguration | string | false
+	config?: ResolvedConfiguration | string | false
 
 	/**
 	 * Post CSS plugins.
@@ -36,6 +56,11 @@ export interface Options {
 	 * SSR-specific options.
 	 */
 	ssr?: SSROptions
+
+	/**
+	 * Whether to automatically update the tsconfig.json file with aliases.
+	 */
+	updateTsConfig?: boolean
 }
 
 export interface Certificates {

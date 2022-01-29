@@ -3,37 +3,51 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Entrypoints
+    | Default configuration
     |--------------------------------------------------------------------------
-    | Entrypoints are scripts or style files that should be included by
-    | default. The `entrypoints` settings makes it easy to include a whole
-    | directory, or you can chose a specific file if you prefer.
+    | Here you may specify which of the configurations below you wish
+    | to use as your default one. You can specify a specific configuration
+    | at any time.
     */
-    'entrypoints' => [
-        'resources/js',
-        'resources/scripts',
-    ],
-    'ignore_patterns' => [
-        '/\\.d\\.ts$/',
-        '/\\.json$/',
-    ],
+    'default' => env('VITE_DEFAULT_CONFIG', 'default'),
 
     /*
     |--------------------------------------------------------------------------
-    | SSR
+    | Configurations
     |--------------------------------------------------------------------------
-    | When building an SSR bundle, you must specify an entrypoint.
-    | This setting defines the SSR entrypoint that will be used when using
-    | the --ssr flag.
+    | The following describes a set of configurations that can be used
+    | independently. Because Vite does not support generating multiple
+    | bundles, using separate configuration files is necessary.
     */
-    'ssr_entrypoint' => null,
+    'configs' => [
+        'default' => [
+            'entrypoints' => [
+                'ssr' => 'resources/scripts/ssr.ts',
+                'paths' => [
+                    'resources/scripts/main.ts',
+                    'resources/js/app.js',
+                ],
+                'ignore' => '/\\.(d\\.ts|json)$/',
+            ],
+            'dev_server' => [
+                'enabled' => true,
+                'url' => env('DEV_SERVER_URL', 'http://localhost:3000'),
+                'ping_before_using_manifest' => true,
+                'ping_url' => null,
+                'ping_timeout' => 1,
+            ],
+            'build_path' => 'build',
+            'public_directory' => resource_path('static/default'),
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
     | Aliases
     |--------------------------------------------------------------------------
-    | These aliases will be added to the Vite configuration and used
-    | to generate a proper tsconfig.json file.
+    | You can define aliases to avoid having to make relative imports.
+    | Aliases will be written to tsconfig.json automatically so your IDE
+    | can know how to resolve them.
     */
     'aliases' => [
         '@' => 'resources',
@@ -41,68 +55,41 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Static assets path
-    |--------------------------------------------------------------------------
-    | This option defines the directory that Vite considers as the
-    | public directory. Its content will be copied to the build directory
-    | at build-time.
-    | https://vitejs.dev/config/#publicdir
-    */
-    'public_directory' => resource_path('static'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Ping timeout
-    |--------------------------------------------------------------------------
-    | The maximum duration, in seconds, that the ping to `ping_url` or
-    | `dev_url` should take while trying to determine whether to use the
-    | manifest or the server in a local environment. Using false will disable
-    | the feature.
-    | https://laravel-vite.innocenzi.dev/guide/configuration.html#ping-timeout
-    */
-    'ping_timeout' => .01,
-    'ping_url' => null,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Build path
-    |--------------------------------------------------------------------------
-    | The directory, relative to /public, in which Vite will build
-    | the production files. This should match "build.outDir" in the Vite
-    | configuration file.
-    */
-    'build_path' => 'build',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Development URL
-    |--------------------------------------------------------------------------
-    | The URL at which the Vite development server runs.
-    | This is used to generate the script tags when developing.
-    */
-    'dev_url' => env('DEV_SERVER_URL', 'http://localhost:3000'),
-
-    /*
-    |--------------------------------------------------------------------------
     | Commands
     |--------------------------------------------------------------------------
-    | Defines the list of artisan commands that will be executed when
-    | the development server or the production build starts.
+    | Before starting the development server or building the assets, you
+    | may need to run specific commands. With these options, you can
+    | define what to run, automatically.
     */
     'commands' => [
-        'vite:aliases',
-        // 'typescript:generate'
+        'artisan' => [
+            // 'typescript:generate'
+        ],
+        'shell' => [
+            //
+        ],
     ],
 
     /*
     |--------------------------------------------------------------------------
     | Testing
     |--------------------------------------------------------------------------
-    | Specifies settings related to testing.
-    | If `use_manifest` is set to false, Laravel Vite will not attempt to
-    | use the manifest when running tests.
+    | While testing, you may need to use the manifest, or not, depending
+    | what and how you test. You can tune these options according to
+    | your needs.
     */
     'testing' => [
         'use_manifest' => false,
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default interfaces
+    |--------------------------------------------------------------------------
+    | Here you may change how some parts of the package work by replacing
+    | their associated logic.
+    */
+    'server_checker' => Innocenzi\Vite\ServerCheckers\HttpServerChecker::class,
+    'tag_generator' => Innocenzi\Vite\TagGenerators\DefaultTagGenerator::class,
+    'entrypoints_finder' => Innocenzi\Vite\EntrypointsFinder\DefaultEntrypointsFinder::class,
 ];

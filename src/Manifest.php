@@ -4,46 +4,51 @@ namespace Innocenzi\Vite;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
-use Innocenzi\Vite\Exceptions\ManifestNotFound;
 use Innocenzi\Vite\Exceptions\NoSuchEntrypointException;
-use Stringable;
 
-class Manifest implements Htmlable, Stringable
+final class Manifest implements Htmlable
 {
-    const MANIFEST_FILE_NAME = 'manifest.json';
-
-    protected Collection $rawEntries;
+    protected Collection $chunks;
     protected Collection $entries;
-
-    /**
-     * Reads the manifest file and returns its representation.
-     */
-    public static function read(string $path = null): Manifest
-    {
-        return new Manifest($path);
-    }
 
     /**
      * Creates a Manifest instance.
      *
      * @param string $path Absolute path to the manifest
      */
-    public function __construct(string $path = null)
+    public function __construct(protected string $path)
     {
-        $this->rawEntries = Collection::make(json_decode(file_get_contents($this->getManifestPath($path)), true));
-        $this->entries = $this->rawEntries
-            ->map(fn (array $value) => ManifestEntry::fromArray($value))
-            ->filter(fn (ManifestEntry $entry) => $entry->isEntry);
+        $this->chunks = Collection::make(json_decode(file_get_contents($path), true));
+        $this->entries = $this->chunks
+            ->map(fn (array $value) => Chunk::fromArray($this, $value))
+            ->filter(fn (Chunk $entry) => $entry->isEntry);
+    }
+
+    /**
+     * Reads the manifest file and returns its representation.
+     */
+    public static function read(string $path): Manifest
+    {
+        return new Manifest($path);
+    }
+
+    /**
+     * Gets the absolute path of this manifest.
+     */
+    public function getPath(): string
+    {
+        return $this->path;
     }
 
     /**
      * Gets the manifest entry for the given name.
      */
-    public function getEntry(string $name): ManifestEntry
+    public function getEntry(string $name): Chunk
     {
-        if (! $entry = $this->entries->first(fn (ManifestEntry $entry) => Str::contains($entry->src, $name))) {
-            throw new NoSuchEntrypointException($name);
+        if (! $entry = $this->entries->first(fn (Chunk $entry) => str_contains($entry->src, $name))) {
+            $configName = basename(\dirname($this->getPath()));
+
+            throw new NoSuchEntrypointException($name, $configName);
         }
 
         return $entry;
@@ -58,33 +63,15 @@ class Manifest implements Htmlable, Stringable
     }
 
     /**
-     * Gets the path to the manifest file.
+     * Gets every chunk.
      */
-    protected function getManifestPath(string $path = null): string
+    public function getChunks(): Collection
     {
-        $path ??= public_path(config('vite.build_path') . '/' . self::MANIFEST_FILE_NAME);
-
-        if (! file_exists($path)) {
-            throw new ManifestNotFound($path);
-        }
-
-        return $path;
+        return $this->chunks;
     }
 
-    /**
-     * Get content as a string of HTML.
-     *
-     * @return string
-     */
     public function toHtml()
     {
-        return $this->entries->map
-            ->toHtml()
-            ->join('');
-    }
-
-    public function __toString()
-    {
-        return $this->toHtml();
+        return $this->entries->map->toHtml()->join('');
     }
 }

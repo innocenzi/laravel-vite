@@ -4,8 +4,7 @@ namespace Innocenzi\Vite\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
-use Innocenzi\Vite\Vite;
+use Innocenzi\Vite\EntrypointsFinder\EntrypointsFinder;
 
 class ExportConfigurationCommand extends Command
 {
@@ -13,9 +12,14 @@ class ExportConfigurationCommand extends Command
     public $description = 'Prints the Vite configuration.';
     public $hidden = true;
 
+    public function __construct(protected EntrypointsFinder $entrypointsFinder)
+    {
+        parent::__construct();
+    }
+
     public function handle()
     {
-        $config = $this->getConfigurationAsJson();
+        $config = json_encode($this->configWithEntrypoints());
 
         if ($path = $this->option('export')) {
             File::put($path, $config);
@@ -28,17 +32,17 @@ class ExportConfigurationCommand extends Command
         $this->output->write($config);
     }
 
-    public function getConfigurationAsJson(): string
+    protected function configWithEntrypoints()
     {
-        $entrypoints = app(Vite::class)->findEntrypoints()
-            ->map(fn (\SplFileInfo $file) => Str::of($file->getPathname())
-            ->replace(base_path(), '')
-            ->replace('\\', '/')
-            ->ltrim('/'))
-            ->values();
+        $config = config('vite');
 
-        return json_encode(array_merge(config('vite'), [
-            'entrypoints' => $entrypoints,
-        ]));
+        foreach ($config['configs'] as $name => $value) {
+            $config['configs'][$name]['entrypoints']['paths'] = $this->entrypointsFinder->find(
+                $value['entrypoints']['paths'] ?? [],
+                $value['entrypoints']['ignore'] ?? []
+            )->map->getPathname();
+        }
+
+        return $config;
     }
 }
