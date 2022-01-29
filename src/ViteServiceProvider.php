@@ -46,7 +46,7 @@ class ViteServiceProvider extends PackageServiceProvider
              * @vite
              * @vite('configName')
              */
-            $compiler->directive('vite', function ($expression) {
+            $compiler->directive('vite', function ($expression = null) {
                 return sprintf(
                     '<?php echo vite_tags(e(%s)); ?>',
                     $expression ?: '"' . config('vite.default') . '"'
@@ -57,19 +57,19 @@ class ViteServiceProvider extends PackageServiceProvider
              * @tag('entry')
              * @tag('entry', 'configName')
              */
-            $compiler->directive('tag', function ($expression) {
+            $compiler->directive('tag', function ($expression = null) {
                 $args = collect(explode(',', $expression))->map(fn ($str) => trim($str));
 
                 if (! \in_array(\count($args), [1, 2])) {
                     throw new InvalidArgumentException('The @tag directive accepts one or two arguments, ' . \count($args) . ' given.');
                 }
                 
-                [$entryName, $configName] = $args;
+                [$entryName, $configName] = $args->toArray() + ['', '"' . config('vite.default') . '"'];
                 
                 return sprintf(
                     '<?php echo vite_tag(e(%s), e(%s)); ?>',
                     $entryName,
-                    $configName ?: '"' . config('vite.default') . '"'
+                    $configName
                 );
             });
 
