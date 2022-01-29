@@ -143,6 +143,14 @@ final class Configuration
     }
 
     /**
+     * Gets the configuration.
+     */
+    public function getConfig(string $key = null): mixed
+    {
+        return $this->config($key);
+    }
+
+    /**
      * Finds entrypoints from the configuration.
      */
     protected function findEntrypoints(): Collection
@@ -233,8 +241,12 @@ final class Configuration
     /**
      * Gets an option value for this specific Vite configuration.
      */
-    protected function config(mixed $value, mixed $default = null): mixed
+    protected function config(mixed $key = null, mixed $default = null): mixed
     {
-        return config("vite.configs.{$this->name}.{$value}", $default);
+        if ($key) {
+            return config("vite.configs.{$this->name}.{$key}", $default);
+        }
+
+        return config("vite.configs.{$this->name}", $default);
     }
 }
