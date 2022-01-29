@@ -154,6 +154,22 @@ final class Configuration
     }
 
     /**
+     * Checks whether this configuration currently uses the manifest.
+     */
+    public function usesManifest(): bool
+    {
+        return $this->shouldUseManifest();
+    }
+
+    /**
+     * Checks whether this configuration currently uses the dev server.
+     */
+    public function usesServer(): bool
+    {
+        return ! $this->usesManifest();
+    }
+
+    /**
      * Checks if the manifest should be used to get an entry.
      */
     protected function shouldUseManifest(): bool
