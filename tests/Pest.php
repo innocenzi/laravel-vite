@@ -13,7 +13,10 @@
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use Innocenzi\Vite\Configuration;
+use Innocenzi\Vite\Manifest;
 use Innocenzi\Vite\Tests\TestCase;
 use Pest\TestSuite;
 
@@ -40,6 +43,32 @@ function this(): TestCase
 function set_env(string $env): void
 {
     app()->bind('env', fn () => $env);
+}
+
+/**
+ * Uses a configuration with the given manifest.
+ */
+function using_manifest(string $manifest = 'manifest.json'): Configuration
+{
+    return new Configuration('default', Manifest::read(__DIR__ . "/Unit/manifests/${manifest}"));
+}
+
+/**
+ * Sets up a Vite configuration.
+ */
+function set_vite_config(string $name, array $config): void
+{
+    config()->set("vite.configs.${name}", array_replace_recursive(config('vite.configs.default'), $config));
+}
+
+/**
+ * Mocks the dev server.
+ */
+function with_dev_server(bool $reacheable = true)
+{
+    if ($reacheable) {
+        return Http::fake(fn () => Http::response(status: 404));
+    }
 }
 
 /**
