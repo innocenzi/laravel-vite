@@ -14,10 +14,9 @@ use Innocenzi\Vite\TagGenerators\TagGenerator;
 
 final class Configuration
 {
-    protected ?Manifest $manifest;
-
     public function __construct(
         protected string $name,
+        protected ?Manifest $manifest = null,
         protected ?EntrypointsFinder $entrypointsFinder = null,
         protected ?ServerChecker $serverChecker = null,
         protected ?TagGenerator $tagGenerator = null,
