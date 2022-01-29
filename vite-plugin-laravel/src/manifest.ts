@@ -28,6 +28,7 @@ export function manifest(): Plugin {
 
 		async generateBundle(_, bundle) {
 			const entrypoints = getEntrypoints(config)
+
 			if (!entrypoints) {
 				return
 			}
@@ -136,7 +137,7 @@ function getEntrypoints(config: ResolvedConfig) {
 		return null
 	}
 
-	return input.map((entry) => path.relative(config.root, entry))
+	return input.map((entry) => path.relative(config.root, entry).replaceAll('\\', '/'))
 }
 
 /**
