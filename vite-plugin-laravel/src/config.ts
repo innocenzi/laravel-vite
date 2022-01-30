@@ -30,6 +30,7 @@ export function callShell(executable: string, ...params: string[]): string {
  * Reads the configuration from the `php artisan vite:config` command.
  */
 export function readConfig(options: Options, env: Record<string, string>, name?: string): ResolvedConfiguration {
+	const executable = env.PHP_EXECUTABLE || options?.phpExecutable || 'php'
 	const configFromJson = (json: any, name?: string) => {
 		if (name && !(name in json.configs)) {
 			throw new Error(`"${name}" is not defined in "config/vite.php"`)
@@ -49,12 +50,20 @@ export function readConfig(options: Options, env: Record<string, string>, name?:
 			options.config = env.CONFIG_PATH_VITE
 		}
 
-		// Reads the config from the disk
 		if (typeof options.config === 'string') {
-			debug(`Reading configuration from ${options.config}`)
-			const json = JSON.parse(fs.readFileSync(options.config, { encoding: 'utf-8' })) as ServerConfiguration
+			// Reads the config from the disk
+			if (fs.existsSync(options.config)) {
+				debug(`Reading configuration from ${options.config}`)
+				const json = JSON.parse(fs.readFileSync(options.config, { encoding: 'utf-8' })) as ServerConfiguration
 
-			return configFromJson(json, name)
+				return configFromJson(json, name)
+			}
+
+			// Use the specified config name
+			const json = JSON.parse(callArtisan(executable, CONFIG_ARTISAN_COMMAND)) as ServerConfiguration
+			debug('Using specified configuration name:', options.config)
+
+			return configFromJson(json, options.config)
 		}
 
 		// Returns the given config
@@ -66,7 +75,6 @@ export function readConfig(options: Options, env: Record<string, string>, name?:
 
 		// Asks PHP for the configuration
 		debug('Reading configuration from PHP.')
-		const executable = env.PHP_EXECUTABLE || options?.phpExecutable || 'php'
 		const json = JSON.parse(callArtisan(executable, CONFIG_ARTISAN_COMMAND)) as ServerConfiguration
 
 		return configFromJson(json, name)
