@@ -1,0 +1,36 @@
+body {
+	--vt-c-brand: #6988e6;
+	--vt-c-brand-light: #c084fc;
+	--vt-c-brand-dark: #f9a8d4;
+	--vt-c-brand-highlight: #f472b6;
+	--vt-c-green: #6988e6;
+}
+
+.dark body {
+	--vt-c-brand: #d8b4fe;
+	--vt-c-brand-light: #c084fc;
+	--vt-c-brand-dark: #d8b4fe;
+	--vt-c-brand-highlight: #f9a8d4;
+	--vt-c-green: #d8b4fe;
+}
+
+a.VPNavBarTitle span {
+	display: none;
+}
+
+a.VPNavBarTitle svg {
+	display: none;
+}
+
+a.VPNavBarTitle {
+	width: 40px;
+	background-image: url(/logo.svg);
+	background-position: center;
+	background-size: 30px;
+	background-repeat: no-repeat;
+}
+
+/* Fix for code blocks' one-too-many line */
+.vt-doc pre code > span:last-of-type {
+	display: none;
+}

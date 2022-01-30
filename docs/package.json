@@ -6,6 +6,18 @@
     "serve": "vitepress serve"
   },
   "devDependencies": {
-    "vitepress": "^0.15.6"
+    "@vue/theme": "^1.0.0",
+    "vitepress": "^0.21.6",
+    "vue": "^3.2.28"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@algolia/client-search",
+        "react",
+        "react-dom",
+        "@types/react"
+      ]
+    }
   }
 }

@@ -11,7 +11,7 @@ Laravel Vite is a project that aims to integrate [Vite](https://vitejs.dev) as m
 
 - A PHP package, which provides support for parsing Vite's [manifest](https://vitejs.dev/guide/backend-integration.html#backend-integration), [Blade directives](/guide/usage#directives), and [helper functions](/guide/usage#directives).
 - A Node package, which leverages Laravel's configuration to integrate with Vite's, and provides Blade file hot module replacement support.
-- A [Preset](https://usepreset.dev), which makes it easy to install Vite in a fresh Laravel project, with a single command.
+- A [preset](https://preset.dev), which installs Vite in a fresh Laravel project with just one command.
 
 ## Traditional approach
 
@@ -21,7 +21,7 @@ That means that Laravel Vite is **a replacement for Laravel Mix**.
 
 ## Requirements
 
-- The Laravel package requires PHP 7.4 or greater.
+- The Laravel package requires PHP 8.0 or greater.
 - Vite requires Node 12.0.0 or greater.
 - Vite requires [native ESM dynamic import support](https://caniuse.com/es6-module-dynamic-import) during development.
 - The production build assumes a baseline support for [native ESM via script tags](https://caniuse.com/es6-module). Vite does not perform any compatibility transpilation by default. Legacy browsers can be supported via the official [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy).
