@@ -39,3 +39,14 @@ it('respects ignore patterns when finding entrypoints', function () {
         ->toHaveCount(1)
         ->sequence(fn ($file) => $file->getBasename()->toBe('secondary.ts'));
 });
+
+it('finds CSS entrypoints', function () {
+    $entrypoints = (new DefaultEntrypointsFinder)->find(__DIR__ . '/entrypoints/multiple-with-css', []);
+    
+    expect($entrypoints)
+        ->toHaveCount(2)
+        ->sequence(
+            fn ($file) => $file->getBasename()->toBe('main.ts'),
+            fn ($file) => $file->getBasename()->toBe('style.css'),
+        );
+});

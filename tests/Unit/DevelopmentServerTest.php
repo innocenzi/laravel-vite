@@ -44,3 +44,26 @@ it('uses the manifest in production even if a server is reacheable', function ()
     set_env('production');
     expect(vite()->usesManifest())->toBeTrue();
 });
+
+it('generates the Vite client script tag', function () {
+    with_dev_server();
+    set_env('local');
+    expect(vite()->getClientScriptTag()->toHtml())
+        ->toBe('<script type="module" src="http://localhost:3000/@vite/client"></script>');
+});
+
+it('generates the Vite client script tag with the other tags', function () {
+    with_dev_server();
+    set_base_path_in('');
+    set_env('local');
+    set_vite_config('default', [
+        'entrypoints' => [
+            'paths' => 'entrypoints/multiple',
+        ],
+    ]);
+    
+    expect(vite()->getTags()->toHtml())
+        ->toContain('<script type="module" src="http://localhost:3000/@vite/client"></script>')
+        ->toContain('<script type="module" src="http://localhost:3000/entrypoints/multiple/main.ts"></script>')
+        ->toContain('<script type="module" src="http://localhost:3000/entrypoints/multiple/secondary.ts"></script>');
+});

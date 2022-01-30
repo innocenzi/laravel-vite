@@ -48,9 +48,9 @@ function set_env(string $env): void
 /**
  * Uses a configuration with the given manifest.
  */
-function using_manifest(string $manifest = 'manifest.json'): Configuration
+function using_manifest(string $path): Configuration
 {
-    return new Configuration('default', Manifest::read(__DIR__ . "/Unit/manifests/${manifest}"));
+    return new Configuration('default', Manifest::read(realpath(__DIR__ . "/Unit/${path}")));
 }
 
 /**
@@ -58,17 +58,17 @@ function using_manifest(string $manifest = 'manifest.json'): Configuration
  */
 function get_manifest(string $manifest = 'manifest.json'): Manifest
 {
-    set_manifest_base_path('');
-
     return Manifest::read(realpath(__DIR__ . "/Unit/manifests/${manifest}"));
 }
 
 /**
  * Overrides the manifests' base paths.
  */
-function set_manifest_base_path(string $path)
+function set_base_path_in(string $path = '')
 {
-    app()->bind('path.public', fn () => realpath(__DIR__ . "/Unit/manifests/${path}"));
+    $dir = realpath(__DIR__ . "/Unit/${path}");
+    app()->bind('path.public', fn () => $dir . '/public');
+    app()->setBasePath($dir);
 }
 
 /**

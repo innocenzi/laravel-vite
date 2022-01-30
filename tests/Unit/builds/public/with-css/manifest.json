@@ -1,0 +1,10 @@
+{
+  "resources/scripts/test.ts": {
+    "file": "assets/test.a2c636dd.js",
+    "src": "resources/scripts/test.ts",
+    "isEntry": true,
+    "css": [
+      "assets/test.65bd481b.css"
+    ]
+  }
+}
