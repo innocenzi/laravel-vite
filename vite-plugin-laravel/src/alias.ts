@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import makeDebugger from 'debug'
 
-const debug = makeDebugger('laravel:alias')
+const debug = makeDebugger('vite:laravel:alias')
 const tsconfigPath = path.resolve('tsconfig.json')
 
 export function updateAliases(aliasConfig: Record<string, string>) {

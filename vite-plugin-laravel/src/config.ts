@@ -8,9 +8,9 @@ import { finish, wrap } from './utils'
 import type { Certificates, Options, ResolvedConfiguration, ServerConfiguration } from './types'
 import { updateAliases } from './alias'
 
-const PREFIX = 'Laravel Vite'
+const PREFIX = 'vite:laravel:config'
 const CONFIG_ARTISAN_COMMAND = 'vite:config'
-const debug = makeDebugger('laravel:config')
+const debug = makeDebugger(PREFIX)
 
 /**
  * Calls an artisan command.
@@ -30,6 +30,18 @@ export function callShell(executable: string, ...params: string[]): string {
  * Reads the configuration from the `php artisan vite:config` command.
  */
 export function readConfig(options: Options, env: Record<string, string>, name?: string): ResolvedConfiguration {
+	const configFromJson = (json: any, name?: string) => {
+		if (name && !(name in json.configs)) {
+			throw new Error(`"${name}" is not defined in "config/vite.php"`)
+		}
+
+		return <ResolvedConfiguration>{
+			commands: json.commands,
+			aliases: json.aliases,
+			...json.configs[name ?? json.default],
+		}
+	}
+
 	try {
 		// Sets path from environment variable
 		if (options.config !== false && env.CONFIG_PATH_VITE) {
@@ -42,11 +54,7 @@ export function readConfig(options: Options, env: Record<string, string>, name?:
 			debug(`Reading configuration from ${options.config}`)
 			const json = JSON.parse(fs.readFileSync(options.config, { encoding: 'utf-8' })) as ServerConfiguration
 
-			return <ResolvedConfiguration>{
-				commands: json.commands,
-				aliases: json.aliases,
-				...json.configs[name ?? json.default],
-			}
+			return configFromJson(json, name)
 		}
 
 		// Returns the given config
@@ -61,11 +69,7 @@ export function readConfig(options: Options, env: Record<string, string>, name?:
 		const executable = env.PHP_EXECUTABLE || options?.phpExecutable || 'php'
 		const json = JSON.parse(callArtisan(executable, CONFIG_ARTISAN_COMMAND)) as ServerConfiguration
 
-		return <ResolvedConfiguration>{
-			commands: json.commands,
-			aliases: json.aliases,
-			...json.configs[name ?? json.default],
-		}
+		return configFromJson(json, name)
 	} catch (error: any) {
 		throw new Error(`[${PREFIX}] Could not read configuration: ${error.message}`)
 	}
@@ -97,9 +101,11 @@ export const config = (options: Options = {}): Plugin => ({
 		// Loads .env
 		const env = loadEnv(mode, process.cwd(), '')
 
-		// Loads config
+		// Infer config name
 		const configName = findConfigName()
-		debug('Config name:', configName ?? 'not found, using default')
+		debug('Config name:', configName ?? 'not found')
+
+		// Loads config
 		const serverConfig = readConfig(options, env, configName)
 		debug('Configuration from PHP:', serverConfig)
 
