@@ -35,6 +35,8 @@ return [
                 'ping_before_using_manifest' => true,
                 'ping_url' => null,
                 'ping_timeout' => 1,
+                'key' => env('DEV_SERVER_KEY'),
+                'cert' => env('DEV_SERVER_CERT'),
             ],
             'build_path' => 'build',
             'public_directory' => resource_path('static/default'),

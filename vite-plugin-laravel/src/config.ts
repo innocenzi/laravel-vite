@@ -109,7 +109,7 @@ export const config = (options: Options = {}): Plugin => ({
 
 		// Parses dev url
 		const { protocol, hostname, port } = new URL(serverConfig.dev_server.url || 'http://localhost:3000')
-		const { key, cert } = findCertificates(env, hostname)
+		const { key, cert } = findCertificates(serverConfig, env, hostname)
 		const usesHttps = key && cert && protocol === 'https:'
 		debug('Uses HTTPS:', usesHttps, { key, cert, protocol, hostname, port })
 
@@ -192,9 +192,9 @@ export const config = (options: Options = {}): Plugin => ({
 /**
  * Tries to find certificates from the environment.
  */
-export function findCertificates(env: Record<string, string>, hostname?: string): Certificates {
-	let key = env.DEV_SERVER_KEY || ''
-	let cert = env.DEV_SERVER_CERT || ''
+export function findCertificates(cfg: ResolvedConfiguration, env: Record<string, string>, hostname?: string): Certificates {
+	let key = cfg.dev_server.key || env.DEV_SERVER_KEY || ''
+	let cert = cfg.dev_server.cert || env.DEV_SERVER_CERT || ''
 
 	if (!key || !cert) {
 		switch (os.platform()) {

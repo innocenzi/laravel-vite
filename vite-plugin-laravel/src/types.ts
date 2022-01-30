@@ -22,6 +22,8 @@ export interface ViteConfiguration {
 	public_directory: string
 	dev_server: {
 		url: string
+		cert?: string
+		key?: string
 	}
 	commands?: CommandsConfiguration
 }
