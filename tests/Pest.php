@@ -11,8 +11,6 @@
 |
 */
 
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Innocenzi\Vite\Configuration;
@@ -46,11 +44,21 @@ function set_env(string $env): void
 }
 
 /**
+ * Gets a path relative to the fixtures.
+ */
+function fixtures_path(string $path = ''): string
+{
+    $path = (string) Str::of($path)->start('/');
+
+    return realpath(__DIR__ . "/Fixtures/${path}");
+}
+
+/**
  * Uses a configuration with the given manifest.
  */
 function using_manifest(string $path): Configuration
 {
-    return new Configuration('default', Manifest::read(realpath(__DIR__ . "/Unit/${path}")));
+    return new Configuration('default', Manifest::read(fixtures_path($path)));
 }
 
 /**
@@ -58,7 +66,7 @@ function using_manifest(string $path): Configuration
  */
 function get_manifest(string $manifest = 'manifest.json'): Manifest
 {
-    return Manifest::read(realpath(__DIR__ . "/Unit/manifests/${manifest}"));
+    return Manifest::read(fixtures_path("manifests/${manifest}"));
 }
 
 /**
@@ -66,7 +74,7 @@ function get_manifest(string $manifest = 'manifest.json'): Manifest
  */
 function set_base_path_in(string $path = '')
 {
-    $dir = realpath(__DIR__ . "/Unit/${path}");
+    $dir = fixtures_path($path);
     app()->bind('path.public', fn () => $dir . '/public');
     app()->setBasePath($dir);
 }
@@ -92,19 +100,4 @@ function with_dev_server(bool $reacheable = true)
         '*/@vite/client' => Http::response(status: 200),
         '*' => Http::response(status: 404),
     ]);
-}
-
-/**
- * Creates a sandbox in which the base path is updated.
- */
-function in_sandbox(callable $callback, string $base = __DIR__): string
-{
-    return tap($base . '/__sandbox__/' . Str::random(), function (string $directory) use ($callback) {
-        $initialBasePath = base_path();
-        App::setBasePath($directory);
-        File::makeDirectory($directory, recursive: true);
-        $callback($directory);
-        File::deleteDirectory($directory);
-        App::setBasePath($initialBasePath);
-    });
 }
