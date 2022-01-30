@@ -3,13 +3,12 @@
 
 <template>
   <section id="hero">
-    <img class="tagline" src="/logo.svg" />
+    <img class="tagline" src="/logo.svg" style="margin-bottom: 40px" />
 		<h1 class="tagline">
-			<span class="tagline--thin">Laravel</span>
-			Vite
+			<span class="tagline--thin">Laravel</span>Vite
 		</h1>
     <p class="description">
-			The best of front-end tooling meets the best of back-end frameworks.
+			The best of both worlds, seamlessly together.
     </p>
     <p class="actions">
       <a class="get-started" href="/guide/introduction.html">
@@ -84,7 +83,8 @@ section {
 }
 
 .tagline {
-  font-size: 76px;
+	text-transform: uppercase;
+  font-size: 55px;
   line-height: 1.25;
   font-weight: 700;
   letter-spacing: -1.5px;
@@ -93,7 +93,7 @@ section {
 }
 
 .tagline--thin {
-  font-weight: 700;
+  font-weight: 300;
 }
 
 html:not(.dark) .accent,
@@ -109,8 +109,8 @@ html:not(.dark) .accent,
   line-height: 1;
   color: var(--vt-c-text-2);
   transition: color 0.5s;
-  font-size: 28px;
-  margin: 20px 0px 60px 0px;
+  font-size: 35px;
+  margin: 10px 0px 60px 0px;
 }
 
 .actions a {
