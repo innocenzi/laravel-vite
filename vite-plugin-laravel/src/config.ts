@@ -30,7 +30,7 @@ export function callShell(executable: string, ...params: string[]): string {
  * Reads the configuration from the `php artisan vite:config` command.
  */
 export function readConfig(options: Options, env: Record<string, string>, name?: string): ResolvedConfiguration {
-	const executable = env.PHP_EXECUTABLE || options?.php || 'php'
+	const executable = getPhpExecutablePath(options, env)
 	const configFromJson = (json: any, name?: string) => {
 		if (name && !(name in json.configs)) {
 			throw new Error(`"${name}" is not defined in "config/vite.php"`)
@@ -132,7 +132,7 @@ export const config = (options: Options = {}): Plugin => ({
 		const entrypoints = ssr ? serverConfig.entrypoints.ssr : serverConfig.entrypoints.paths
 
 		// Runs commands
-		const executable = env.PHP_EXECUTABLE || options?.php || 'php'
+		const executable = getPhpExecutablePath(options, env)
 		Object.entries(serverConfig.commands?.artisan ?? {}).forEach(([command, args]) => {
 			if (!isNaN(+command)) {
 				debug('Running artisan command without arguments:', executable, 'artisan', args)
@@ -263,4 +263,8 @@ export function findCertificates(cfg: ResolvedConfiguration, env: Record<string,
 		key,
 		cert,
 	}
+}
+
+function getPhpExecutablePath(options: Options = {}, env: any = {}) {
+	return options?.php || env.PHP_EXECUTABLE_PATH || 'php'
 }
