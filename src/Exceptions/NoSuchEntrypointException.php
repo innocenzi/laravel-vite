@@ -10,15 +10,17 @@ final class NoSuchEntrypointException extends ViteException implements ProvidesS
 {
     public function __construct(
         protected string $entry,
-        protected string $configName
+        protected ?string $configName = null
     ) {
         $this->message = "Entry \"${entry}\" does not exist in the manifest.";
     }
 
     public function getSolution(): Solution
     {
+        $config = $this->configName ?? 'default';
+        
         return BaseSolution::create("Add it to your configuration")
-            ->setSolutionDescription("That entry point should be defined by the `vite.configs.{$this->configName}.entrypoints` configuration option.")
+            ->setSolutionDescription("That entry point should be defined by the `vite.configs.{$config}.entrypoints` configuration option.")
             ->setDocumentationLinks([
                 'About entrypoints' => 'https://laravel-vite.innocenzi.dev/guide/usage.html#entrypoints',
                 'Configuring entrypoints' => 'https://laravel-vite.innocenzi.dev/guide/configuration.html#options',

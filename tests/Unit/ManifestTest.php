@@ -5,8 +5,24 @@ use Innocenzi\Vite\Exceptions\NoSuchEntrypointException;
 use Innocenzi\Vite\Manifest;
 
 it('guesses the configuration name from the manifest path', function () {
-    expect(Manifest::guessConfigName('/public/build/config-name/manifest.json'))
+    set_vite_config('config-name', [
+        'build_path' => 'build/config-name',
+    ]);
+
+    expect(Manifest::guessConfigName(public_path('build/config-name/manifest.json')))
         ->toBe('config-name');
+        
+    set_vite_config('default', [
+        'build_path' => 'build',
+    ]);
+
+    expect(Manifest::guessConfigName(public_path('build/manifest.json')))
+        ->toBe('default');
+});
+
+it('does not return a guess when the build path is not defined', function () {
+    expect(Manifest::guessConfigName(public_path('build/path-not-defined/manifest.json')))
+        ->toBe(null);
 });
 
 it('throws a ManifestNotFoundException when the manifest does not exist', function () {

@@ -4,6 +4,7 @@ namespace Innocenzi\Vite;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Innocenzi\Vite\Exceptions\ManifestNotFoundException;
 use Innocenzi\Vite\Exceptions\NoSuchEntrypointException;
 
@@ -17,9 +18,9 @@ final class Manifest implements Htmlable
      *
      * @param string $path Absolute path to the manifest
      */
-    public function __construct(protected string $path)
+    public function __construct(protected string|null $path)
     {
-        if (! file_exists($path)) {
+        if (! $path || ! file_exists($path)) {
             throw new ManifestNotFoundException($path, static::guessConfigName($path));
         }
 
@@ -76,9 +77,17 @@ final class Manifest implements Htmlable
     /**
      * Guesses the configuration name for a given path.
      */
-    public static function guessConfigName(string $path)
+    public static function guessConfigName(string $path): string|null
     {
-        return basename(\dirname($path));
+        $path = str_replace(['\\', '//'], '/', $path);
+        $public = str_replace(['\\', '//'], '/', public_path());
+        $inferredBuildPath = (string) Str::of($path)->beforeLast('/manifest.json')->replace($public, '')->trim('/');
+
+        [$name] = collect(config('vite.configs'))
+            ->map(fn ($config, $name) => [$name, $config['build_path']])
+            ->first(fn ($config) => $config[1] === $inferredBuildPath);
+
+        return $name;
     }
 
     /**

@@ -15,9 +15,9 @@ final class ManifestNotFoundException extends ViteException implements ProvidesS
 
     public function __construct(
         protected string $manifestPath,
-        protected string $configName
+        protected ?string $configName = null
     ) {
-        $this->message = $configName === 'default'
+        $this->message = $configName === 'default' || ! $configName
             ? "The manifest could not be found."
             : "The manifest for the \"{$configName}\" configuration could not be found.";
     }
@@ -58,7 +58,7 @@ final class ManifestNotFoundException extends ViteException implements ProvidesS
     {
         $command = "${baseCommand} ${type}";
     
-        if ($this->configName !== 'default') {
+        if (! $this->configName || $this->configName !== 'default') {
             $command .= " --config vite.{$this->configName}.config.ts";
         }
 

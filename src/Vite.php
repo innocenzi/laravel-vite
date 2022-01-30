@@ -12,7 +12,7 @@ final class Vite
     public function config(string $name = null): Configuration
     {
         $name ??= config('vite.default');
-        
+
         return $this->configs[$name] ??= new Configuration($name);
     }
     
