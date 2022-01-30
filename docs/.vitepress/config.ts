@@ -122,10 +122,11 @@ export default defineConfigWithTheme<Config>({
 			{ icon: 'discord', link: 'https://chat.vitejs.dev' },
 		],
 
-		editLink: {
-			repo: 'innocenzi/laravel-vite',
-			text: 'Edit this page on Github',
-		},
+		// https://github.com/vuejs/theme/pull/44
+		// editLink: {
+		// 	repo: 'innocenzi/laravel-vite',
+		// 	text: 'Edit this page on Github',
+		// },
 
 		footer: {
 			license: {
