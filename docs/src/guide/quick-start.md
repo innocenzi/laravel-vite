@@ -30,8 +30,8 @@ To apply the preset, run the following command:
 
 :::tip What next?
 Everything will be up and ready. You can open your `resources/scripts/main.ts` file and start from there.
-- Read about the [development workflow](/essentials/development)
-- Check how to [building for production](/essentials/building-for-production)
+- Read about the [development workflow](/guide/essentials/development)
+- Check how to [building for production](/guide/essentials/building-for-production)
 :::
 
 ## In an existing project
