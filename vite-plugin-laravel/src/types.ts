@@ -19,7 +19,6 @@ export interface ViteConfiguration {
 		ignore?: string | string[]
 	}
 	build_path: string
-	public_directory: string
 	dev_server: {
 		url: string
 		cert?: string
