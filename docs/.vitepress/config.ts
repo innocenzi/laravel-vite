@@ -32,8 +32,27 @@ const head: HeadConfig[] = [
 ]
 
 const nav: NavItem[] = [
-	{ text: 'Guide', link: '/guide/' },
-	{ text: 'Vite', link: 'https://vitejs.dev/' },
+	{ text: 'Docs', link: '/guide/quick-start' },
+	{
+		text: 'Links',
+		items: [
+			{
+				text: 'Presets',
+				items: [
+					{ text: 'Laravel Vite', link: 'https://github.com/laravel-presets/vite' },
+					{ text: 'Laravel Inertia', link: 'https://github.com/laravel-presets/inertia' },
+				],
+			},
+			{
+				text: 'Documentation',
+				items: [
+					{ text: 'Vite', link: 'https://vitejs.dev/' },
+					{ text: 'Preset', link: 'https://preset.dev/' },
+					{ text: 'Laravel', link: 'https://laravel.com/' },
+				],
+			},
+		],
+	},
 ]
 
 const sidebar: SidebarConfig = {
@@ -105,6 +124,7 @@ export default defineConfigWithTheme<Config>({
 		socialLinks: [
 			{ icon: 'github', link: 'https://github.com/innocenzi/laravel-vite' },
 			{ icon: 'twitter', link: 'https://twitter.com/enzoinnocenzi' },
+			{ icon: 'discord', link: 'https://chat.vitejs.dev' },
 		],
 
 		editLink: {
