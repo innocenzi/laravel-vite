@@ -5,7 +5,7 @@
   <section id="hero">
     <img class="tagline" src="/logo.svg" style="margin-bottom: 40px" />
 		<h1 class="tagline">
-			<span class="tagline--thin">Laravel</span>Vite
+			<span class="tagline--bold">Laravel</span>Vite
 		</h1>
     <p class="description">
 			The best of both worlds, seamlessly together.
@@ -63,16 +63,16 @@ section {
 
 .tagline {
 	text-transform: uppercase;
-  font-size: 55px;
+  font-size: 45px;
   line-height: 1.25;
-  font-weight: 700;
+  font-weight: 300;
   letter-spacing: -1.5px;
   max-width: 960px;
   margin: 0px auto;
 }
 
-.tagline--thin {
-  font-weight: 300;
+.tagline--bold {
+  font-weight: 600;
 }
 
 html:not(.dark) .accent,
@@ -88,7 +88,7 @@ html:not(.dark) .accent,
   line-height: 1;
   color: var(--vt-c-text-2);
   transition: color 0.5s;
-  font-size: 35px;
+  font-size: 30px;
   margin: 10px 0px 60px 0px;
 }
 
