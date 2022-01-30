@@ -6,7 +6,7 @@ beforeEach(function () {
     this()->directives = Blade::getCustomDirectives();
 });
 
-it('creates directives the vite, tag, client and react directives', function () {
+it('creates the vite, tag, client and react directives', function () {
     expect(this()->directives)
         ->toHaveKeys(['vite', 'tag', 'client', 'react']);
 });
