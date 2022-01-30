@@ -5,7 +5,7 @@ title: Quick start
 # Installation
 
 :::info Are you using <a href="https://inertiajs.com">Inertia</a>?
-There is an Inertia preset for a fast and easy installation. You can check our [Inertia guide](/guide/extra-topics/inertia).
+There is an Inertia preset for a fast and easy installation. You can check our [Inertia guide](/guide/inertia).
 :::
 
 ## In a fresh project
@@ -26,7 +26,13 @@ To apply the preset, run the following command:
 > npx @preset/cli laravel:vite
 ```
 
+&nbsp;
+
+:::tip What next?
 Everything will be up and ready. You can open your `resources/scripts/main.ts` file and start from there.
+- Read about the [development workflow](/essentials/development)
+- Check how to [building for production](/essentials/building-for-production)
+:::
 
 ## In an existing project
 

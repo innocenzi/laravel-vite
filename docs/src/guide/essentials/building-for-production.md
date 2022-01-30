@@ -1,8 +1,8 @@
 ---
-title: Directives
+title: Building for production
 ---
 
-# Directives
+# Building for production
 
 :::info The documentation is work-in-progress
 This page is not yet documented. Check back later.

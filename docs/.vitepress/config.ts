@@ -10,13 +10,12 @@ const site = production ? 'https://laravel-vite.innocenzi.dev' : 'http://localho
 const image = `${site}/banner.png`
 
 const head: HeadConfig[] = [
-	// ['style', {}, 'img { border-radius: 10px }' + 'h1.title { margin-left: 0.5em }'],
 	['meta', { name: 'author', content: 'Enzo Innocenzi' }],
 	['meta', { name: 'keywords', content: 'laravel, vitejs, vue, react, vite, php' }],
 	['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
 	['meta', { name: 'HandheldFriendly', content: 'True' }],
 	['meta', { name: 'MobileOptimized', content: '320' }],
-	['meta', { name: 'theme-color', content: '#6a9dff' }],
+	['meta', { name: 'theme-color', content: '#d8b4fe' }],
 	['meta', { name: 'twitter:card', content: 'summary_large_image' }],
 	['meta', { name: 'twitter:site', content: site }],
 	['meta', { name: 'twitter:title', value: title }],
@@ -56,9 +55,9 @@ const nav: NavItem[] = [
 ]
 
 const sidebar: SidebarConfig = {
-	'/': [
+	'/guide/': [
 		{
-			text: 'Guide',
+			text: 'Getting started',
 			items: [
 				{ text: 'Introduction', link: '/guide/introduction' },
 				{ text: 'Quick start', link: '/guide/quick-start' },
@@ -68,8 +67,8 @@ const sidebar: SidebarConfig = {
 			text: 'Essentials',
 			items: [
 				{ text: 'Development', link: '/guide/essentials/development' },
-				{ text: 'Static assets', link: '/guide/essentials/static-assets' },
 				{ text: 'Configuration', link: '/guide/essentials/configuration' },
+				{ text: 'Building for production', link: '/guide/essentials/building-for-production' },
 			],
 		},
 		{
@@ -79,23 +78,19 @@ const sidebar: SidebarConfig = {
 				{ text: 'Directives', link: '/guide/features/directives' },
 				{ text: 'Helpers', link: '/guide/features/helpers' },
 				{ text: 'Entrypoints', link: '/guide/features/entrypoints' },
-				{ text: 'Multiple configurations', link: '/guide/features/multiple-configurations' },
 				{ text: 'SSR', link: '/guide/features/ssr' },
 			],
 		},
 		{
-			text: 'Configuration',
+			text: 'Guides',
 			items: [
-				{ text: 'Laravel', link: '/guide/configuration/laravel' },
-				{ text: 'Vite', link: '/guide/configuration/vite' },
+				{ text: 'Inertia', link: '/guide/inertia' },
+				{ text: 'Multiple configurations', link: '/guide/multiple-configurations' },
 			],
 		},
 		{
 			text: 'Extra topics',
 			items: [
-				{ text: 'Building for production', link: '/guide/extra-topics/building-for-production' },
-				{ text: 'Inertia', link: '/guide/extra-topics/inertia' },
-				{ text: 'Organization', link: '/guide/extra-topics/organization' },
 				{ text: 'Troubleshooting', link: '/guide/extra-topics/troubleshooting' },
 			],
 		},

@@ -4,8 +4,6 @@ title: Development
 
 # Development
 
-## How it works
-
 Developing with Vite might be a bit different from what you may be used to in the Webpack world. To be more specific, Vite isn't a bundler. Rather, it's a pre-configured tooling pipeline that uses [Rollup](https://rollupjs.org/) for building and a local server for development.
 
 When you start Vite's development server, [pre-optimisations](https://vitejs.dev/guide/dep-pre-bundling.html) are made on some of your dependencies. After that, your assets are being served - there is no bundling or compiling needed at that point, so starting the server is very fast.
