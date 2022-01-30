@@ -26,12 +26,22 @@ it('generates a call to vite_tag() with the given configuration from the @tag di
         ->toBe('<?php echo vite_tag(e("main"), e("config-name")); ?>');
 });
 
-it('generates a call to vite_client() from the @client directive', function () {
+it('generates a call to vite_client() from the @client directive with the default configuration when there is no parameter', function () {
     expect(this()->directives['client']())
-        ->toBe('<?php echo vite_client(); ?>');
+        ->toBe('<?php echo vite_client(e("default")); ?>');
 });
 
-it('generates a call to vite_react_refresh_runtime() from the @react directive', function () {
+it('generates a call to vite_client() from the @client directive with the specified configuration when there is a parameter', function () {
+    expect(this()->directives['client']('"main"'))
+        ->toBe('<?php echo vite_client(e("main")); ?>');
+});
+
+it('generates a call to vite_react_refresh_runtime() from the @client directive with the default configuration when there is no parameter', function () {
     expect(this()->directives['react']())
-        ->toBe('<?php echo vite_react_refresh_runtime(); ?>');
+        ->toBe('<?php echo vite_react_refresh_runtime(e("default")); ?>');
+});
+
+it('generates a call to vite_react_refresh_runtime() from the @client directive with the specified configuration when there is a parameter', function () {
+    expect(this()->directives['react']('"main"'))
+        ->toBe('<?php echo vite_react_refresh_runtime(e("main")); ?>');
 });

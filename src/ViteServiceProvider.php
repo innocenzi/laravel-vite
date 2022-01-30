@@ -73,12 +73,18 @@ class ViteServiceProvider extends PackageServiceProvider
                 );
             });
 
-            $compiler->directive('client', function () {
-                return '<?php echo vite_client(); ?>';
+            $compiler->directive('client', function ($expression = null) {
+                return sprintf(
+                    '<?php echo vite_client(e(%s)); ?>',
+                    $expression ?: '"' . config('vite.default') . '"'
+                );
             });
 
-            $compiler->directive('react', function () {
-                return '<?php echo vite_react_refresh_runtime(); ?>';
+            $compiler->directive('react', function ($expression = null) {
+                return sprintf(
+                    '<?php echo vite_react_refresh_runtime(e(%s)); ?>',
+                    $expression ?: '"' . config('vite.default') . '"'
+                );
             });
         });
     }
