@@ -164,7 +164,7 @@ export const config = (options: Options = {}): Plugin => ({
 
 		// Returns config
 		const resolvedConfig: UserConfig = {
-			envPrefix: wrap(options.envPrefix, ['MIX_', 'VITE_', 'SCRIPT_']),
+			envPrefix: wrap(serverConfig.env_prefixes, ['MIX_', 'VITE_', 'SCRIPT_']),
 			base,
 			publicDir: false,
 			server: {

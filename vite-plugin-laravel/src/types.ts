@@ -26,6 +26,7 @@ export interface ViteConfiguration {
 		key?: string
 	}
 	commands?: CommandsConfiguration
+	env_prefixes?: string[]
 }
 
 export type ResolvedConfiguration = ViteConfiguration & {
@@ -48,11 +49,6 @@ export interface Options {
 	 * Post CSS plugins.
 	 */
 	postcss?: any[]
-
-	/**
-	 * Prefixes to use to expose environment variables to the scripts.
-	 */
-	envPrefix?: string | string[]
 
 	/**
 	 * SSR-specific options.
