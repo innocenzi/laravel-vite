@@ -65,9 +65,9 @@ return [
     |--------------------------------------------------------------------------
     | Testing
     |--------------------------------------------------------------------------
-    | While testing, you may need to use the manifest, or not, depending
-    | what and how you test. You can tune these options according to
-    | your needs.
+    | Depending on the way you are testing your application,
+    | you may or may not need to use the manifest. This option controls
+    | the manifest should be used in the "testing" environment.
     */
     'testing' => [
         'use_manifest' => false,

@@ -17,6 +17,14 @@ final class Vite
 
         return $this->configs[$name] ??= new Configuration($name);
     }
+
+    /**
+     * Sets whether the manifest should be used when testing.
+     */
+    public static function useManifest(bool $useManifest = true): void
+    {
+        config()->set('vite.testing.use_manifest', $useManifest);
+    }
     
     /**
      * Execute a method against the default configuration.
