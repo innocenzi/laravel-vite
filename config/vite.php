@@ -3,16 +3,6 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Default configuration
-    |--------------------------------------------------------------------------
-    | Here you may specify which of the configurations below you wish
-    | to use as your default one. You can specify a specific configuration
-    | at any time.
-    */
-    'default' => env('VITE_DEFAULT_CONFIG', 'default'),
-
-    /*
-    |--------------------------------------------------------------------------
     | Configurations
     |--------------------------------------------------------------------------
     | The following describes a set of configurations that can be used
@@ -93,4 +83,13 @@ return [
     'server_checker' => Innocenzi\Vite\ServerCheckers\HttpServerChecker::class,
     'tag_generator' => Innocenzi\Vite\TagGenerators\DefaultTagGenerator::class,
     'entrypoints_finder' => Innocenzi\Vite\EntrypointsFinder\DefaultEntrypointsFinder::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default configuration
+    |--------------------------------------------------------------------------
+    | Here you may specify which of the configurations above you wish
+    | to use as your default one.
+    */
+    'default' => env('VITE_DEFAULT_CONFIG', 'default'),
 ];

@@ -184,7 +184,7 @@ export const config = (options: Options = {}): Plugin => ({
 				ssrManifest: ssr,
 				manifest: !ssr,
 				ssr,
-				outDir: `public/${serverConfig.build_path ?? 'build'}`,
+				outDir: `public/${serverConfig.build_path || 'build'}`,
 				rollupOptions: {
 					input: entrypoints,
 				},

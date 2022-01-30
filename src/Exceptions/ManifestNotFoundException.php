@@ -9,17 +9,17 @@ use Facade\IgnitionContracts\Solution;
 final class ManifestNotFoundException extends ViteException implements ProvidesSolution
 {
     protected array $links = [
-        'Using the development server' => 'https://laravel-vite.innocenzi.dev/guide/usage.html#development',
-        'Building the assets' => 'https://laravel-vite.innocenzi.dev/guide/production.html',
+        'About development' => 'https://laravel-vite.innocenzi.dev/guide/essentials/development',
+        'Building for production' => 'https://laravel-vite.innocenzi.dev/guide/essentials/building-for-production',
     ];
 
     public function __construct(
         protected string $manifestPath,
         protected ?string $configName = null
     ) {
-        $this->message = $configName === 'default' || ! $configName
+        $this->message = $this->hasConfigName()
             ? "The manifest could not be found."
-            : "The manifest for the \"{$configName}\" configuration could not be found.";
+            : "The manifest for the \"{$this->getConfigName()}\" configuration could not be found.";
     }
 
     public function getSolution(): Solution
@@ -58,8 +58,8 @@ final class ManifestNotFoundException extends ViteException implements ProvidesS
     {
         $command = "${baseCommand} ${type}";
     
-        if (! $this->configName || $this->configName !== 'default') {
-            $command .= " --config vite.{$this->configName}.config.ts";
+        if ($this->hasConfigName()) {
+            $command .= " --config vite.{$this->getConfigName()}.config.ts";
         }
 
         return $command;

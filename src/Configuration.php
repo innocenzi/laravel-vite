@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Innocenzi\Vite\EntrypointsFinder\EntrypointsFinder;
+use Innocenzi\Vite\Exceptions\NoBuildPathException;
 use Innocenzi\Vite\Exceptions\NoSuchConfigurationException;
 use Innocenzi\Vite\ServerCheckers\ServerChecker;
 use Innocenzi\Vite\TagGenerators\TagGenerator;
@@ -34,6 +35,10 @@ final class Configuration
      */
     public function getManifest(): ?Manifest
     {
+        if (! $this->config('build_path')) {
+            throw new NoBuildPathException($this->name);
+        }
+
         $path = public_path(sprintf('%s/%s', $this->config('build_path'), 'manifest.json'));
 
         return $this->manifest ??= Manifest::read($path);

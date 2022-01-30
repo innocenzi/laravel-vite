@@ -8,9 +8,9 @@ use Facade\IgnitionContracts\Solution;
 
 final class NoSuchConfigurationException extends ViteException implements ProvidesSolution
 {
-    public function __construct(protected $name)
+    public function __construct(protected $configName)
     {
-        $this->message = "Configuration \"${name}\" does not exist.";
+        $this->message = "Configuration \"${configName}\" does not exist.";
     }
 
     public function getSolution(): Solution
@@ -18,7 +18,8 @@ final class NoSuchConfigurationException extends ViteException implements Provid
         return BaseSolution::create("Add it to your configuration")
             ->setSolutionDescription('That configuration should be defined in the `vite.configs` configuration option.')
             ->setDocumentationLinks([
-                'About configurations' => 'https://laravel-vite.innocenzi.dev/guide/configurations.html',
+                'Using multiple configurations' => 'https://laravel-vite.innocenzi.dev/guide/multiple-configurations',
+                'Configuration' => 'https://laravel-vite.innocenzi.dev/guide/essentials/configuration',
             ]);
     }
 }
