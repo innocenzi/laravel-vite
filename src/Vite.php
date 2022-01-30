@@ -4,6 +4,8 @@ namespace Innocenzi\Vite;
 
 final class Vite
 {
+    const CLIENT_SCRIPT_PATH = '@vite/client';
+
     protected array $configs = [];
 
     /**

@@ -97,7 +97,7 @@ final class Configuration
             return new HtmlString();
         }
 
-        return $this->createDevelopmentTag('@vite/client');
+        return $this->createDevelopmentTag(Vite::CLIENT_SCRIPT_PATH);
     }
 
     /**
