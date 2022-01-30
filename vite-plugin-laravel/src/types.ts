@@ -36,7 +36,7 @@ export interface Options {
 	/**
 	 * Path to PHP executable.
 	 */
-	phpExecutable?: string
+	php?: string
 
 	/**
 	 * A configuration object or a path to a configuration file.
