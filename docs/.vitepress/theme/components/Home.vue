@@ -51,27 +51,6 @@
   </section>
 </template>
 
-<style>
-#VPContent, #VPContent > .VPContentPage {
-	height: 100%;
-	min-height: calc(100vh - var(--vt-nav-height));
-}
-
-#VPContent > .VPContentPage {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-}
-
-#VPContent > .VPContentPage main {
-	flex-grow: 1;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-</style>
-
 <style scoped>
 section {
   padding: 42px 32px;
