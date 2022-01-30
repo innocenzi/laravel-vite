@@ -42,11 +42,42 @@ const sidebar: SidebarConfig = {
 			text: 'Guide',
 			items: [
 				{ text: 'Introduction', link: '/guide/introduction' },
-				{ text: 'Installation', link: '/guide/' },
-				{ text: 'Usage', link: '/guide/usage' },
-				{ text: 'Building for production', link: '/guide/production' },
-				{ text: 'Configuration', link: '/guide/configuration' },
-				{ text: 'Troubleshooting', link: '/guide/troubleshooting' },
+				{ text: 'Quick start', link: '/guide/quick-start' },
+			],
+		},
+		{
+			text: 'Essentials',
+			items: [
+				{ text: 'Development', link: '/guide/essentials/development' },
+				{ text: 'Static assets', link: '/guide/essentials/static-assets' },
+				{ text: 'Configuration', link: '/guide/essentials/configuration' },
+			],
+		},
+		{
+			text: 'Features',
+			items: [
+				{ text: 'Server and manifest modes', link: '/guide/features/server-and-manifest-modes' },
+				{ text: 'Directives', link: '/guide/features/directives' },
+				{ text: 'Helpers', link: '/guide/features/helpers' },
+				{ text: 'Entrypoints', link: '/guide/features/entrypoints' },
+				{ text: 'Multiple configurations', link: '/guide/features/multiple-configurations' },
+				{ text: 'SSR', link: '/guide/features/ssr' },
+			],
+		},
+		{
+			text: 'Configuration',
+			items: [
+				{ text: 'Laravel', link: '/guide/configuration/laravel' },
+				{ text: 'Vite', link: '/guide/configuration/vite' },
+			],
+		},
+		{
+			text: 'Extra topics',
+			items: [
+				{ text: 'Building for production', link: '/guide/extra-topics/building-for-production' },
+				{ text: 'Inertia', link: '/guide/extra-topics/inertia' },
+				{ text: 'Organization', link: '/guide/extra-topics/organization' },
+				{ text: 'Troubleshooting', link: '/guide/extra-topics/troubleshooting' },
 			],
 		},
 	],

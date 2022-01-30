@@ -34,3 +34,8 @@ a.VPNavBarTitle {
 .vt-doc pre code > span:last-of-type {
 	display: none;
 }
+
+/* Add missing PHP in code blocks */
+.vt-doc [class~="language-php"]::before {
+	content: "php";
+}
