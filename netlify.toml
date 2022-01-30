@@ -1,5 +1,8 @@
+[build.environment]
+  NODE_VERSION = "16"
+  NPM_FLAGS = "--version" # prevent Netlify npm install
+
 [build]
-base = "docs/"
-command = "yarn run build"
-ignore = "git diff --quiet 'HEAD^' HEAD ."
-publish = ".vitepress/dist"
+	base = "docs/"
+  publish = ".vitepress/dist"
+  command = "npx pnpm i --store=node_modules/.pnpm-store && npm run build"
