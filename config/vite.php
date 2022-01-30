@@ -39,7 +39,6 @@ return [
                 'cert' => env('DEV_SERVER_CERT'),
             ],
             'build_path' => 'build',
-            'public_directory' => resource_path('static/default'),
         ],
     ],
 

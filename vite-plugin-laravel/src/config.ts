@@ -152,7 +152,7 @@ export const config = (options: Options = {}): Plugin => ({
 		const resolvedConfig: UserConfig = {
 			envPrefix: wrap(options.envPrefix, ['MIX_', 'VITE_', 'SCRIPT_']),
 			base,
-			publicDir: serverConfig.public_directory ?? 'resources/static',
+			publicDir: false,
 			server: {
 				host: hostname,
 				https: usesHttps
