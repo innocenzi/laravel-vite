@@ -8,7 +8,7 @@ This means that Laravel Vite is trying to use a manifest file instead of communi
 
 #### In development
 
-- Make sur `APP_ENV` is set to `local`.
+- Make sure `APP_ENV` is set to `local`.
 - Make sure you [started the development server](./usage#development) with `vite` (`npm run dev`).
 - Depending on your local environment, you may want to set [`ping_timeout`](./configuration#ping-timeout) to `false` in `config/vite.php` to disable the [automatic development server discovery](./configuration#automatic-development-server-discovery).
 
