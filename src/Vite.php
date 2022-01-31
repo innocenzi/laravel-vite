@@ -241,6 +241,7 @@ class Vite
 
         return $this->isDevelopmentServerRunning = false;
     }
+
     /**
      * Creates the tag for including the development server.
      */
