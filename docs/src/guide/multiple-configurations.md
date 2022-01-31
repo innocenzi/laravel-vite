@@ -20,25 +20,25 @@ Open `config/vite.php` and duplicate the `default` array located in `configs`, a
 
 ```php
 return [
-  // ...
-  'configs' => [
-    'default' => [
-      // ...
-    ],
-    
-    // Your new back-office configuration
-    'back-office' => [
-        'entrypoints' => [
-            'paths' => 'resources/scripts/back-office.ts',
-            // ...
-        ],
-        'dev_server' => [
-            'url' => env('DEV_SERVER_URL', 'http://localhost:3001'),
-            // ...
-        ],
-        'build_path' => 'build/back-office',
-    ],
-  ],
+	// ...
+	'configs' => [
+		'default' => [
+			// ...
+		],
+		
+		// Your new back-office configuration
+		'back-office' => [
+			'entrypoints' => [
+				'paths' => 'resources/scripts/back-office.ts',
+				// ...
+			],
+			'dev_server' => [
+				'url' => env('DEV_SERVER_URL', 'http://localhost:3001'),
+				// ...
+			],
+			'build_path' => 'build/back-office',
+		],
+	],
 ];
 ```
 
@@ -49,11 +49,11 @@ Aditionally, the `build_path` must differ as to not override other configuration
 ```md
 public/
 └─ build/
-    └─ back-office/
-        ├─ assets/
-        │   ├─ back-office.a2c636dd.js
-        │   └─ back-office.65bd481b.css
-        └─ manifest.json
+	└─ back-office/
+		├─ assets/
+		│	├─ back-office.a2c636dd.js
+		│	└─ back-office.65bd481b.css
+		└─ manifest.json
 ```
 
 ## Creating Vite's configuration file
@@ -85,13 +85,13 @@ It is easier to add commands to `package.json` instead of typing the entire conf
 
 ```json
 {
-  "scripts": {
-    "dev": "vite",
-    "dev:back": "vite --config vite.back-office.config.ts",
-    "build": "vite build",
-    "build:back": "vite build --config vite.back-office.config.ts",
-    "build:all": "npm run build && npm run build:test"
-  },
+	"scripts": {
+		"dev": "vite",
+		"dev:back": "vite --config vite.back-office.config.ts",
+		"build": "vite build",
+		"build:back": "vite build --config vite.back-office.config.ts",
+		"build:all": "npm run build && npm run build:test"
+	},
 }
 ```
 
@@ -107,11 +107,11 @@ Finally, to include assets from a specific configuration, simply pass its name t
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- -->
+		<!-- -->
 		@vite('back-office')
 	</head>
 	<body>
-    <!-- -->
+		<!-- -->
 	</body>
 </html>
 ```
