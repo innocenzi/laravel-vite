@@ -55,6 +55,11 @@ Defines the path to your SSL certificate and its private key. This is only neede
 
 Learn more about using `https` in the [development documentation](/guide/essentials/development#using-http-over-tsl).
 
+
+#### `enabled`
+
+If, for some reason, you don't want to use the development server at all, you can set this option to false. In this case, the manifest will always be used.
+
 ### `build_path`
 
 Defines the directory, relative to `/public`, in which the assets should be built. This cannot be an empty string, otherwise the `/public` directory would be emptied.
