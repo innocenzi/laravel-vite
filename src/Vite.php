@@ -126,7 +126,7 @@ class Vite
         }
 
         return $this->getEntries()->first(fn (Htmlable $entry) => Str::contains($entry->toHtml(), $name))
-            ?? $this->createDevelopmentScriptTag($name);
+            ?? $this->createDevelopmentTag($name);
     }
 
     /**
@@ -139,7 +139,7 @@ class Vite
         }
 
         return $this->findEntrypoints()
-            ->map(fn (\SplFileInfo $file) => $this->createDevelopmentScriptTag(
+            ->map(fn (\SplFileInfo $file) => $this->createDevelopmentTag(
                 Str::of($file->getPathname())
                     ->replace(base_path(), '')
                     ->replace('\\', '/')
@@ -240,6 +240,32 @@ class Vite
         }
 
         return $this->isDevelopmentServerRunning = false;
+    }
+
+    /**
+     * Creates the tag for including the development server.
+     */
+    protected function createDevelopmentTag(string $path): Htmlable
+    {
+        if (Str::endsWith($path, '.css')) {
+            return $this->createDevelopmentLinkTag($path);
+        }
+
+        return $this->createDevelopmentScriptTag($path);
+    }
+
+    /**
+     * Creates the link tag for including the development server.
+     */
+    protected function createDevelopmentLinkTag(string $path): Htmlable
+    {
+        // I suspect ASSET_URL should be takin into account here.
+        // If you find out it does, feel free to open an issue.
+        return new HtmlString(sprintf(
+            '<link rel="stylesheet" href="%s%s" />',
+            Str::finish(config('vite.dev_url'), '/'),
+            $path
+        ));
     }
 
     /**
