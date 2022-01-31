@@ -13,12 +13,18 @@ When you start Vite's development server, [pre-optimisations](https://vitejs.dev
 
 Simply start the development server:
 
-```sh
+```
 > npm run dev
+
+  vite v2.7.13 dev server running at:
+
+  > Local: http://localhost:3000/
+  > Network: use `--host` to expose
+
+  ready in 392ms.
 ```
 
-Using the default configuration, the server would be serving at `http://localhost:3000`.
-Paths in your scripts, CSS or import statements will automatically be handled by Vite to point there, so you don't have to worry about it. You can keep using relative paths and aliases.
+Paths in your scripts, CSS and import statements will automatically be handled by Vite to point there, so you don't have to worry about it. You can keep using relative paths and aliases.
 
 :::warning This server is not your application server
 Its sole purpose is to serve assets, such as scripts or stylesheets. It is not where your application is served: you still need to use something like [Valet](https://laravel.com/docs/8.x/valet), [Laragon](https://laragon.org/), [Docker](https://www.docker.com/) or `php artisan serve`.
