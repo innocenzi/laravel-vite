@@ -42,7 +42,7 @@ class Manifest implements Htmlable, Stringable
      */
     public function getEntry(string $name): ManifestEntry
     {
-        if (! $entry = $this->entries->first(fn (ManifestEntry $entry) => Str::contains($entry->src, $name))) {
+        if (! $entry = $this->entries->first(fn (ManifestEntry $entry) => Str::contains($entry->src, ltrim($name, '/')))) {
             throw new NoSuchEntrypointException($name);
         }
 
