@@ -4,15 +4,15 @@ title: Multiple configurations
 
 # Multiple configurations
 
-Vite currently does not support writing multiple bundles. It will always write one manifest, with potentially a `vendor.js` file containing third-party and shared code.
+Currently, Vite does not have support for generating multiple bundles. It will always write one manifest, with potentially a `vendor.js` file containing third-party and shared code.
 
-Sometimes though, you may need to create multiple bundles, and in that case you will need multiple configuration files.
+Sometimes though, you may need to have separated bundles for different parts of your application, and in that case you will need multiple configuration files.
 
 ## Creating multiple configurations
 
-Say you need a specific bundle for a back-office that uses different dependencies than the front-office. This documentation will guide you through that setup.
+Say you need a separate bundle for a back-office that uses a different stack than the front-office.
 
-You will need to update `config/vite.php`, create a new `vite.back-office.config.ts`, give the configuration name to the `@vite` directive and run slightly different development and build commands.
+You will need to add a configuration to `config/vite.php`, create a new `vite.back-office.config.ts` file, pass the configuration name to the `@vite` directive and run slightly different development and build commands.
 
 ## Updating Laravel Vite's config
 
