@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Innocenzi\Vite\EntrypointsFinder\EntrypointsFinder;
 use Innocenzi\Vite\Exceptions\NoBuildPathException;
 use Innocenzi\Vite\Exceptions\NoSuchConfigurationException;
-use Innocenzi\Vite\ServerCheckers\ServerChecker;
+use Innocenzi\Vite\HeartbeatCheckers\HeartbeatChecker;
 use Innocenzi\Vite\TagGenerators\TagGenerator;
 
 final class Configuration
@@ -18,7 +18,7 @@ final class Configuration
         protected string $name,
         protected ?Manifest $manifest = null,
         protected ?EntrypointsFinder $entrypointsFinder = null,
-        protected ?ServerChecker $serverChecker = null,
+        protected ?HeartbeatChecker $heartbeatChecker = null,
         protected ?TagGenerator $tagGenerator = null,
     ) {
         if (! config()->has("vite.configs.${name}")) {
@@ -26,7 +26,7 @@ final class Configuration
         }
 
         $this->entrypointsFinder ??= app(EntrypointsFinder::class);
-        $this->serverChecker ??= app(ServerChecker::class);
+        $this->heartbeatChecker ??= app(HeartbeatChecker::class);
         $this->tagGenerator ??= app(TagGenerator::class);
     }
     
@@ -235,7 +235,7 @@ final class Configuration
         $url = $this->config('dev_server.ping_url') ?? $this->config('dev_server.url');
         $timeout = $this->config('dev_server.ping_timeout');
 
-        return $this->serverChecker->ping($url, $timeout);
+        return $this->heartbeatChecker->ping($url, $timeout);
     }
 
     /**

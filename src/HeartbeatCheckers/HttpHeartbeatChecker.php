@@ -1,12 +1,12 @@
 <?php
 
-namespace Innocenzi\Vite\ServerCheckers;
+namespace Innocenzi\Vite\HeartbeatCheckers;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Innocenzi\Vite\Vite;
 
-final class HttpServerChecker implements ServerChecker
+final class HttpHeartbeatChecker implements HeartbeatChecker
 {
     public function ping(string $url, int $timeout): bool
     {

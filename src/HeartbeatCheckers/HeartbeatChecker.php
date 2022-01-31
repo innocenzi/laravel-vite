@@ -1,8 +1,8 @@
 <?php
 
-namespace Innocenzi\Vite\ServerCheckers;
+namespace Innocenzi\Vite\HeartbeatCheckers;
 
-interface ServerChecker
+interface HeartbeatChecker
 {
     public function ping(string $url, int $timeout): bool;
 }

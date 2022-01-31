@@ -6,8 +6,8 @@ use Illuminate\View\Compilers\BladeCompiler;
 use Innocenzi\Vite\Commands\ExportConfigurationCommand;
 use Innocenzi\Vite\EntrypointsFinder\DefaultEntrypointsFinder;
 use Innocenzi\Vite\EntrypointsFinder\EntrypointsFinder;
-use Innocenzi\Vite\ServerCheckers\HttpServerChecker;
-use Innocenzi\Vite\ServerCheckers\ServerChecker;
+use Innocenzi\Vite\HeartbeatCheckers\HeartbeatChecker;
+use Innocenzi\Vite\HeartbeatCheckers\HttpHeartbeatChecker;
 use Innocenzi\Vite\TagGenerators\DefaultTagGenerator;
 use Innocenzi\Vite\TagGenerators\TagGenerator;
 use InvalidArgumentException;
@@ -34,9 +34,9 @@ class ViteServiceProvider extends PackageServiceProvider
     {
         $this->app->singleton(Vite::class, fn () => new Vite());
 
-        $this->app->bind(EntrypointsFinder::class, config('vite.entrypoints_finder', DefaultEntrypointsFinder::class));
-        $this->app->bind(ServerChecker::class, config('vite.server_checker', HttpServerChecker::class));
-        $this->app->bind(TagGenerator::class, config('vite.tag_generator', DefaultTagGenerator::class));
+        $this->app->bind(EntrypointsFinder::class, config('vite.interfaces.entrypoints_finder', DefaultEntrypointsFinder::class));
+        $this->app->bind(HeartbeatChecker::class, config('vite.interfaces.heartbeat_checker', HttpHeartbeatChecker::class));
+        $this->app->bind(TagGenerator::class, config('vite.interfaces.tag_generator', DefaultTagGenerator::class));
     }
 
     protected function registerDirectives()

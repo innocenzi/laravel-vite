@@ -95,9 +95,11 @@ return [
     | their associated logic.
     | https://laravel-vite.innocenzi.dev/configuration/laravel-package.html#interfaces
     */
-    'server_checker' => Innocenzi\Vite\ServerCheckers\HttpServerChecker::class,
-    'tag_generator' => Innocenzi\Vite\TagGenerators\DefaultTagGenerator::class,
-    'entrypoints_finder' => Innocenzi\Vite\EntrypointsFinder\DefaultEntrypointsFinder::class,
+    'interfaces' => [
+        'heartbeat_checker' => Innocenzi\Vite\HeartbeatCheckers\HttpHeartbeatChecker::class,
+        'tag_generator' => Innocenzi\Vite\TagGenerators\DefaultTagGenerator::class,
+        'entrypoints_finder' => Innocenzi\Vite\EntrypointsFinder\DefaultEntrypointsFinder::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------

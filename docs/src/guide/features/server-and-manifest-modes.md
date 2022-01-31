@@ -26,6 +26,6 @@ Check the [development](/guide/essentials/development) documentation for more in
 
 ## Heartbeat service
 
-You can override the heartbeat service by replacing the `Innocenzi\Vite\ServerCheckers\ServerChecker` implementation. This can be done in the [configuration](/configuration/laravel-package#server-checker).
+You can override the heartbeat service by replacing the `Innocenzi\Vite\HeartbeatCheckers\HeartbeatChecker` implementation. This can be done in the [configuration](/configuration/laravel-package#server-checker).
 
-The default one, `Innocenzi\Vite\ServerCheckers\HttpServerChecker`, uses Laravel's `Http` client to ping the development server.
+The default one, `Innocenzi\Vite\HeartbeatCheckers\HttpHeartbeatChecker`, uses Laravel's `Http` client to ping the development server.

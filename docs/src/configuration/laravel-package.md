@@ -126,7 +126,7 @@ Vite has more features regarding `import.meta.env`, which you can read about in 
 
 This interface covers the logic for generating `script` and `link` tags. It can be useful to override it in case you need to add attributes such as `crossorigin` or `defer`.
 
-### `server_checker`
+### `heartbeat_checker`
 
 This interface covers the logic for checking if the development server is reacheable and should be used. By default, Laravel's `Http` client is used to perform a `GET` request on `/@vite/client`, which should return a `HTTP 200` code.
 
