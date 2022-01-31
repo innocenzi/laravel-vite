@@ -7,6 +7,12 @@ outline: deep
 
 This section explains each configuration option available in the `config/vite.php` configuration file.
 
+As a reminder, you can publish the configuration using the following command:
+
+```sh
+> php artisan vendor:publish --tag=vite-config
+```
+
 ## `configs`
 
 This option is an array of configurations, each one specific to a Vite configuration file. Most of the time, only one configuration is needed, the `default` one. 
