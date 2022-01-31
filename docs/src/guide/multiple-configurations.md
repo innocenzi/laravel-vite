@@ -4,17 +4,17 @@ title: Multiple configurations
 
 # Multiple configurations
 
-Vite does not support writing multiple bundles. It will always write one manifest, with potentially a `vendor.js` file containing third-party and shared code.
+Vite currently does not support writing multiple bundles. It will always write one manifest, with potentially a `vendor.js` file containing third-party and shared code.
 
 Sometimes though, you may need to create multiple bundles, and in that case you will need multiple configuration files.
 
-## Context
+## Creating multiple configurations
 
-Say you need a specific configuration for a back-office that uses different dependencies than the front-office. This documentation will guide you through its setup.
+Say you need a specific bundle for a back-office that uses different dependencies than the front-office. This documentation will guide you through that setup.
 
 You will need to update `config/vite.php`, create a new `vite.back-office.config.ts`, give the configuration name to the `@vite` directive and run slightly different development and build commands.
 
-## `config/vite.php` configuration
+## Updating Laravel Vite's config
 
 Open `config/vite.php` and duplicate the `default` array located in `configs`, and call it `back-office`:
 
@@ -56,7 +56,7 @@ public/
         └─ manifest.json
 ```
 
-## Vite configuration file
+## Creating Vite's configuration file
 
 Then, create a Vite configuration file: `vite.back-office.config.ts`. The name there is important, as it's used to infer the configuration name. 
 
@@ -73,7 +73,7 @@ export default defineConfig({
 })
 ```
 
-## Development and build commands
+## Using config-specific commands
 
 Instead of using `vite dev` or `vite build`, which will use the `default` configuration, you will need to specify the Vite configuration file you want to use.
 
@@ -97,7 +97,7 @@ It is easier to add commands to `package.json` instead of typing the entire conf
 
 With the above, you can just run `npm run dev:back` or `npm run build:back`.
 
-## `@vite` directive
+## Using the directives
 
 Finally, to include assets from a specific configuration, simply pass its name to the `@vite` directive:
 
