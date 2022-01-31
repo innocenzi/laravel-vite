@@ -118,7 +118,6 @@ const sidebar: SidebarConfig = {
 				{ text: 'Inertia', link: '/guide/inertia' },
 				{ text: 'Multiple configurations', link: '/guide/multiple-configurations' },
 				{ text: 'Tag generation', link: '/guide/tag-generation' },
-				{ text: 'Heartbeat service', link: '/guide/heartbeat-service' },
 			],
 		},
 		{
