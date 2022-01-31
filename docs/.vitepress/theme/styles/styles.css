@@ -12,6 +12,7 @@ body {
 	--vt-c-brand-dark: #d8b4fe;
 	--vt-c-brand-highlight: #f9a8d4;
 	--vt-c-green: #d8b4fe;
+	--docsearch-container-background: rgba(0, 0, 0, 0.5);
 }
 
 a.VPNavBarTitle span {
