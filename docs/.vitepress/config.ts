@@ -33,6 +33,13 @@ const head: HeadConfig[] = [
 const nav: NavItem[] = [
 	{ text: 'Docs', link: '/guide/quick-start' },
 	{
+		text: 'Config',
+		items: [
+			{ text: 'Laravel package', link: '/configuration/laravel-package' },
+			{ text: 'Vite plugin', link: '/configuration/vite-plugin' },
+		],
+	},
+	{
 		text: 'Links',
 		items: [
 			{
@@ -55,6 +62,30 @@ const nav: NavItem[] = [
 ]
 
 const sidebar: SidebarConfig = {
+	'/configuration/': [
+		{
+			text: 'Laravel package',
+			items: [
+				{ text: 'configs', link: '/configuration/laravel-package#configs' },
+				{ text: 'aliases', link: '/configuration/laravel-package#aliases' },
+				{ text: 'commands', link: '/configuration/laravel-package#commands' },
+				{ text: 'testing', link: '/configuration/laravel-package#testing' },
+				{ text: 'env_prefixes', link: '/configuration/laravel-package#env-prefixes' },
+				{ text: 'interfaces', link: '/configuration/laravel-package#interfaces' },
+				{ text: 'default', link: '/configuration/laravel-package#default' },
+			],
+		},
+		{
+			text: 'Vite plugin',
+			items: [
+				{ text: 'config', link: '/configuration/vite-plugin#config' },
+				{ text: 'php', link: '/configuration/vite-plugin#php' },
+				{ text: 'postcss', link: '/configuration/vite-plugin#postcss' },
+				{ text: 'ssr', link: '/configuration/vite-plugin#ssr' },
+				{ text: 'updateTsConfig', link: '/configuration/vite-plugin#updateTsConfig' },
+			],
+		},
+	],
 	'/guide/': [
 		{
 			text: 'Getting started',
@@ -86,6 +117,8 @@ const sidebar: SidebarConfig = {
 			items: [
 				{ text: 'Inertia', link: '/guide/inertia' },
 				{ text: 'Multiple configurations', link: '/guide/multiple-configurations' },
+				{ text: 'Tag generation', link: '/guide/tag-generation' },
+				{ text: 'Heartbeat service', link: '/guide/heartbeat-service' },
 			],
 		},
 		{
