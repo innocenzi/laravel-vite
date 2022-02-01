@@ -15,7 +15,7 @@ The former is done in the `vite.config.ts` file: that's where you define Vite an
 Note that some of these options, especially within the `server` and `build` sections, are defined by the `vite-plugin-laravel` plugin, and are necessary for it to work properly. Be careful when overriding them.
 :::
 
-The latter is done in `config/vite.php`, where you can set up aliases, commands that run before starting Vite, and [define other configurations](/guide/multiple-configurations).
+The latter is done in `config/vite.php`, where you can set up aliases, commands that run before starting Vite, and [define other configurations](/guide/extra-topics/multiple-configurations).
 
 &nbsp;
 

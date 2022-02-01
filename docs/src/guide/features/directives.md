@@ -56,7 +56,7 @@ This directive includes the tag for the entrypoint given as the first parameter.
 
 This directive includes the tag for the Vite client script, which is required to provide features such as [HMR](https://vitejs.dev/guide/features.html#hot-module-replacement). It should be included before any other directive. 
 
-When in [manifest mode](/guide/features/server-and-manifest-modes), even if this directive is called, the client script will not be included.
+When in [manifest mode](/guide/essentials/server-and-manifest-modes), even if this directive is called, the client script will not be included.
 
 :::tip Render once
 You can use the [built-in `@once` directive](https://laravel.com/docs/master/blade#the-once-directive) to render the client script only once if required. If you forget to do that, no worries, the Vite client is smart enough to not initialize twice.

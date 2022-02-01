@@ -5,7 +5,7 @@ title: Quick start
 # Installation
 
 :::info Are you using <a href="https://inertiajs.com">Inertia</a>?
-There is an Inertia preset for a fast and easy installation. You can check our [Inertia guide](/guide/inertia).
+There is an Inertia preset for a fast and easy installation. You can check our [Inertia guide](/guide/extra-topics/inertia).
 :::
 
 ## In a fresh project

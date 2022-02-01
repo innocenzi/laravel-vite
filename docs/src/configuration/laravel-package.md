@@ -17,7 +17,7 @@ As a reminder, you can publish the configuration using the following command:
 
 This option is an array of configurations, each one specific to a Vite configuration file. Most of the time, only one configuration is needed, the `default` one. 
 
-But sometimes, you may need to have multiple bundles, in which case you can define multiple configurations. You can learn more about that in the [related documentation](/guide/multiple-configurations).
+But sometimes, you may need to have multiple bundles, in which case you can define multiple configurations. You can learn more about that in the [related documentation](/guide/extra-topics/multiple-configurations).
 
 ### `entrypoints`
 
@@ -45,7 +45,7 @@ Defines the URL of the development server. For more information about this, see 
 
 Defines if the "fall back to using the manifest" feature should be used. When set to `false`, the manifest will never be used unless the environment is set to `production`.
 
-Read more about this in the [server and manifest modes documentation](/guide/features/server-and-manifest-modes).
+Read more about this in the [server and manifest modes documentation](/guide/essentials/server-and-manifest-modes).
 
 #### `ping_url`
 
@@ -132,7 +132,7 @@ Vite has more features regarding `import.meta.env`, which you can read about in 
 
 This interface covers the logic for generating `script` and `link` tags. It can be useful to override it in case you need to add attributes such as `crossorigin` or `defer`.
 
-Read more about that in the [tag generation documentation](/guide/tag-generation).
+Read more about that in the [tag generation documentation](/guide/extra-topics/tag-generation).
 
 ### `heartbeat_checker`
 

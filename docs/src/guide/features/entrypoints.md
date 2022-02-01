@@ -19,7 +19,7 @@ Remember that in this case, you will need to include the Vite client script as w
 
 ## Automatic CSS injection
 
-In [manifest mode](/guide/features/server-and-manifest-modes), when using either the `@vite` or `@tag` directives, any CSS file included within the scripts will also be rendered.
+In [manifest mode](/guide/essentials/server-and-manifest-modes), when using either the `@vite` or `@tag` directives, any CSS file included within the scripts will also be rendered.
 
 In server mode, CSS files will be injected by the Vite client script.
 

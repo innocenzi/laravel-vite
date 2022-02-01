@@ -105,7 +105,7 @@ const sidebar: SidebarConfig = {
 		{
 			text: 'Features',
 			items: [
-				{ text: 'Server and manifest modes', link: '/guide/features/server-and-manifest-modes' },
+				{ text: 'Server and manifest modes', link: '/guide/essentials/server-and-manifest-modes' },
 				{ text: 'Entrypoints', link: '/guide/features/entrypoints' },
 				{ text: 'Directives', link: '/guide/features/directives' },
 				{ text: 'Helpers', link: '/guide/features/helpers' },
@@ -115,9 +115,9 @@ const sidebar: SidebarConfig = {
 		{
 			text: 'Extra topics',
 			items: [
-				{ text: 'Vite with Inertia', link: '/guide/inertia' },
-				{ text: 'Multiple configurations', link: '/guide/multiple-configurations' },
-				{ text: 'Tag generation', link: '/guide/tag-generation' },
+				{ text: 'Vite with Inertia', link: '/guide/extra-topics/inertia' },
+				{ text: 'Multiple configurations', link: '/guide/extra-topics/multiple-configurations' },
+				{ text: 'Tag generation', link: '/guide/extra-topics/tag-generation' },
 				{ text: 'Troubleshooting', link: '/guide/extra-topics/troubleshooting' },
 			],
 		},
