@@ -67,3 +67,35 @@ it('finds a configured entrypoint by its name in development', function () {
 
     expect(vite()->getTag('main'))->toContain('http://localhost:3000/entrypoints/multiple/main.ts');
 });
+
+it('returns a valid asset URL in development', function () {
+    set_env('local');
+        
+    set_vite_config('default', ['build_path' => '/should-not-be/included']);
+    expect(vite()->getAssetUrl('/my-custom-asset.txt'))->toContain('http://localhost:3000/my-custom-asset.txt');
+    expect(vite()->getAssetUrl('without-leading-slash.txt'))->toContain('http://localhost:3000/without-leading-slash.txt');
+});
+
+it('returns a valid asset URL in production', function () {
+    set_env('production');
+        
+    set_vite_config('default', ['build_path' => '/with/slashes/']);
+    expect(vite()->getAssetUrl('/my-custom-asset.txt'))->toContain('http://localhost/with/slashes/my-custom-asset.txt');
+    
+    set_vite_config('default', ['build_path' => '/with/leading/slash']);
+    expect(vite()->getAssetUrl('/my-custom-asset.txt'))->toContain('http://localhost/with/leading/slash/my-custom-asset.txt');
+    
+    set_vite_config('default', ['build_path' => 'with/trailing/slash/']);
+    expect(vite()->getAssetUrl('/my-custom-asset.txt'))->toContain('http://localhost/with/trailing/slash/my-custom-asset.txt');
+    
+    set_vite_config('default', ['build_path' => 'build']);
+    expect(vite()->getAssetUrl('/my-custom-asset.txt'))->toContain('http://localhost/build/my-custom-asset.txt');
+    expect(vite()->getAssetUrl('my-custom/asset.txt'))->toContain('http://localhost/build/my-custom/asset.txt');
+
+    $property = new ReflectionProperty(UrlGenerator::class, 'assetRoot');
+    $property->setAccessible(true);
+    $property->setValue(app('url'), 'https://s3.us-west-2.amazonaws.com/12345678');
+    
+    expect(vite()->getAssetUrl('/my-custom-asset.txt'))
+        ->toContain('https://s3.us-west-2.amazonaws.com/12345678/build/my-custom-asset');
+});
