@@ -30,7 +30,7 @@
 <div align="center">
   This project aims to integrate <a href="https://vitejs.dev">Vite</a> with the Laravel framework as seemlessly as possible.
   <br />
-  <a href="https://laravel-vite.innocenzi.dev">Documentation</a>
+  <a href="https://laravel-vite.dev">Documentation</a>
 </div>
 
 <p align="center">

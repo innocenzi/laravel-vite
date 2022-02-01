@@ -8,7 +8,7 @@ return [
     | The following describes a set of configurations that can be used
     | independently. Because Vite does not support generating multiple
     | bundles, using separate configuration files is necessary.
-    | https://laravel-vite.innocenzi.dev/configuration/laravel-package.html#configs
+    | https://laravel-vite.dev/configuration/laravel-package.html#configs
     */
     'configs' => [
         'default' => [
@@ -40,7 +40,7 @@ return [
     | You can define aliases to avoid having to make relative imports.
     | Aliases will be written to tsconfig.json automatically so your IDE
     | can know how to resolve them.
-    | https://laravel-vite.innocenzi.dev/configuration/laravel-package.html#aliases
+    | https://laravel-vite.dev/configuration/laravel-package.html#aliases
     */
     'aliases' => [
         '@' => 'resources',
@@ -53,7 +53,7 @@ return [
     | Before starting the development server or building the assets, you
     | may need to run specific commands. With these options, you can
     | define what to run, automatically.
-    | https://laravel-vite.innocenzi.dev/configuration/laravel-package.html#commands
+    | https://laravel-vite.dev/configuration/laravel-package.html#commands
     */
     'commands' => [
         'artisan' => [
@@ -71,7 +71,7 @@ return [
     | Depending on the way you are testing your application,
     | you may or may not need to use the manifest. This option controls
     | the manifest should be used in the "testing" environment.
-    | https://laravel-vite.innocenzi.dev/configuration/laravel-package.html#testing
+    | https://laravel-vite.dev/configuration/laravel-package.html#testing
     */
     'testing' => [
         'use_manifest' => false,
@@ -83,7 +83,7 @@ return [
     |--------------------------------------------------------------------------
     | This option defines the prefixes that environment variables must
     | have in order to be accessible from the front-end.
-    | https://laravel-vite.innocenzi.dev/configuration/laravel-package.html#env_prefixes
+    | https://laravel-vite.dev/configuration/laravel-package.html#env_prefixes
     */
     'env_prefixes' => ['VITE_', 'MIX_', 'SCRIPT_'],
 
@@ -93,7 +93,7 @@ return [
     |--------------------------------------------------------------------------
     | Here you may change how some parts of the package work by replacing
     | their associated logic.
-    | https://laravel-vite.innocenzi.dev/configuration/laravel-package.html#interfaces
+    | https://laravel-vite.dev/configuration/laravel-package.html#interfaces
     */
     'interfaces' => [
         'heartbeat_checker' => Innocenzi\Vite\HeartbeatCheckers\HttpHeartbeatChecker::class,
@@ -107,7 +107,7 @@ return [
     |--------------------------------------------------------------------------
     | Here you may specify which of the configurations above you wish
     | to use as your default one.
-    | https://laravel-vite.innocenzi.dev/configuration/laravel-package.html#default
+    | https://laravel-vite.dev/configuration/laravel-package.html#default
     */
     'default' => env('VITE_DEFAULT_CONFIG', 'default'),
 ];

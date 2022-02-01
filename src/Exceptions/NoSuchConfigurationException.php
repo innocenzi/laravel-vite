@@ -18,8 +18,8 @@ final class NoSuchConfigurationException extends ViteException implements Provid
         return BaseSolution::create("Add it to your configuration")
             ->setSolutionDescription('That configuration should be defined in the `vite.configs` configuration option.')
             ->setDocumentationLinks([
-                'Using multiple configurations' => 'https://laravel-vite.innocenzi.dev/guide/extra-topics/multiple-configurations',
-                'Configuration' => 'https://laravel-vite.innocenzi.dev/guide/essentials/configuration',
+                'Using multiple configurations' => 'https://laravel-vite.dev/guide/extra-topics/multiple-configurations',
+                'Configuration' => 'https://laravel-vite.dev/guide/essentials/configuration',
             ]);
     }
 }

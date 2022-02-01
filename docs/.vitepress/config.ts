@@ -6,7 +6,7 @@ import { NavItem, SidebarConfig } from '@vue/theme/src/vitepress/config'
 const production = process.env.NODE_ENV === 'production'
 const title = 'Laravel Vite'
 const description = 'Vite integration for the Laravel framework'
-const site = production ? 'https://laravel-vite.innocenzi.dev' : 'http://localhost:3000'
+const site = production ? 'https://laravel-vite.dev' : 'http://localhost:3000'
 const image = `${site}/banner.png`
 
 const head: HeadConfig[] = [
