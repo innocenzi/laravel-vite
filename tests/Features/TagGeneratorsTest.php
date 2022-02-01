@@ -25,7 +25,7 @@ it('respects TagGenerator overrides when using the server', function () {
         ],
     ]);
     
-    expect(vite()->getTags()->toHtml())
+    expect(vite()->getTags())
         ->toContain('<script type="module" src="http://localhost:3000/@vite/client" crossorigin></script>')
         ->toContain('<script type="module" src="http://localhost:3000/entrypoints/multiple-with-css/main.ts" crossorigin></script>')
         ->toContain('<link rel="stylesheet" href="http://localhost:3000/entrypoints/multiple-with-css/style.css" crossorigin />');
@@ -37,7 +37,7 @@ it('respects TagGenerator overrides when not using the server', function () {
     set_base_path_in('builds');
     set_env('production');
         
-    expect(using_manifest('builds/public/with-css/manifest.json')->getTags()->toHtml())
+    expect(using_manifest('builds/public/with-css/manifest.json')->getTags())
         ->toContain('<link rel="stylesheet" href="http://localhost/with-css/assets/test.65bd481b.css" crossorigin />')
         ->toContain('<script type="module" src="http://localhost/with-css/assets/test.a2c636dd.js" crossorigin></script>');
 });

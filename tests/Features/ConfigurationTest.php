@@ -23,7 +23,7 @@ it('generates URLs relative to the app URL by default in production', function (
     set_base_path_in('builds');
     set_env('production');
     
-    expect(using_manifest('builds/public/with-css/manifest.json')->getTags()->toHtml())
+    expect(using_manifest('builds/public/with-css/manifest.json')->getTags())
         ->toContain('<link rel="stylesheet" href="http://localhost/with-css/assets/test.65bd481b.css" />')
         ->toContain('<script type="module" src="http://localhost/with-css/assets/test.a2c636dd.js"></script>');
 });
@@ -36,7 +36,7 @@ it('generates URLs relative to the configured ASSET_URL in production', function
     $property->setAccessible(true);
     $property->setValue(app('url'), 'https://s3.us-west-2.amazonaws.com/12345678');
     
-    expect(using_manifest('builds/public/with-css/manifest.json')->getTags()->toHtml())
+    expect(using_manifest('builds/public/with-css/manifest.json')->getTags())
         ->toContain('<link rel="stylesheet" href="https://s3.us-west-2.amazonaws.com/12345678/with-css/assets/test.65bd481b.css" />')
         ->toContain('<script type="module" src="https://s3.us-west-2.amazonaws.com/12345678/with-css/assets/test.a2c636dd.js"></script>');
 });
@@ -54,3 +54,16 @@ it('throws when the build path is not defined', function () {
 
     vite()->getTags();
 })->throws(NoBuildPathException::class);
+
+it('finds a configured entrypoint by its name', function () {
+    with_dev_server();
+    set_base_path_in('');
+    set_env('local');
+    set_vite_config('default', [
+        'entrypoints' => [
+            'paths' => 'entrypoints/multiple',
+        ],
+    ]);
+
+    expect(vite()->getTag('main'))->toContain('http://localhost:3000/entrypoints/multiple/main.ts');
+});

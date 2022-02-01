@@ -32,7 +32,7 @@ if (! function_exists('vite_react_refresh_runtime')) {
 
 if (! function_exists('vite_tag')) {
     /**
-     * Get the HTML tags that include the given entry.
+     * Get the HTML tags which path name include the given entry name.
      */
     function vite_tag(string $entry, string $configurationName = null)
     {

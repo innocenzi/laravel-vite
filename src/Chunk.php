@@ -2,13 +2,12 @@
 
 namespace Innocenzi\Vite;
 
-use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Innocenzi\Vite\TagGenerators\TagGenerator;
 use Stringable;
 
-final class Chunk implements Htmlable, Stringable
+final class Chunk implements Stringable
 {
     protected TagGenerator $tagGenerator;
 
@@ -91,13 +90,8 @@ final class Chunk implements Htmlable, Stringable
         return asset(sprintf('%s%s', $base, $path));
     }
 
-    public function toHtml()
-    {
-        return $this->getTags()->join('');
-    }
-
     public function __toString(): string
     {
-        return $this->toHtml();
+        return $this->getTags()->join('');
     }
 }

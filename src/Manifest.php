@@ -2,13 +2,13 @@
 
 namespace Innocenzi\Vite;
 
-use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Innocenzi\Vite\Exceptions\ManifestNotFoundException;
 use Innocenzi\Vite\Exceptions\NoSuchEntrypointException;
+use Stringable;
 
-final class Manifest implements Htmlable
+final class Manifest implements Stringable
 {
     protected Collection $chunks;
     protected Collection $entries;
@@ -93,8 +93,8 @@ final class Manifest implements Htmlable
     /**
      * Gets entries as HTML.
      */
-    public function toHtml()
+    public function __toString(): string
     {
-        return $this->entries->map->toHtml()->join('');
+        return $this->entries->map->join('');
     }
 }

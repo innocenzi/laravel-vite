@@ -2,9 +2,7 @@
 
 namespace Innocenzi\Vite;
 
-use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
-use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Innocenzi\Vite\EntrypointsFinder\EntrypointsFinder;
 use Innocenzi\Vite\Exceptions\NoBuildPathException;
@@ -47,14 +45,16 @@ final class Configuration
     /**
      * Gets the tag for the given entry.
      */
-    public function getTag(string $entryName): Htmlable
+    public function getTag(string $entryName): string
     {
         if ($this->shouldUseManifest()) {
             return $this->getManifest()->getEntry($entryName);
         }
 
-        return $this->getEntries()->first(fn (Htmlable $chunk) => str_contains($chunk->toHtml(), $entryName))
-            ?? $this->createDevelopmentTag($entryName);
+        return $this->getEntries()->first(
+            fn (string $chunk) => str_contains($chunk, $entryName),
+            $this->createDevelopmentTag($entryName)
+        );
     }
 
     /**
@@ -78,7 +78,7 @@ final class Configuration
     /**
      * Gets all tags for this configuration.
      */
-    public function getTags(): Htmlable
+    public function getTags(): string
     {
         $tags = collect();
 
@@ -86,20 +86,18 @@ final class Configuration
             $tags->push($this->getClientScriptTag());
         }
 
-        $tags = $tags->merge($this->getEntries())
-            ->map(fn (Htmlable $chunk) => $chunk->toHtml())
+        return $tags->merge($this->getEntries())
+            ->map(fn ($entrypoint) => (string) $entrypoint)
             ->join('');
-
-        return new HtmlString($tags);
     }
     
     /**
      * Gets the script tag for the client module.
      */
-    public function getClientScriptTag(): Htmlable
+    public function getClientScriptTag(): string
     {
         if ($this->shouldUseManifest()) {
-            return new HtmlString();
+            return '';
         }
 
         return $this->createDevelopmentTag(Vite::CLIENT_SCRIPT_PATH);
@@ -108,17 +106,15 @@ final class Configuration
     /**
      * Gets the script tag for React's refresh runtime.
      */
-    public function getReactRefreshRuntimeScript(): Htmlable
+    public function getReactRefreshRuntimeScript(): string
     {
         if ($this->shouldUseManifest()) {
-            return new HtmlString();
+            return '';
         }
-
-        $url = $this->config('dev_server.url');
 
         $script = <<<HTML
             <script type="module">
-                import RefreshRuntime from "{$url}/@react-refresh"
+                import RefreshRuntime from "%s/@react-refresh"
                 RefreshRuntime.injectIntoGlobalHook(window)
                 window.\$RefreshReg$ = () => {}
                 window.\$RefreshSig$ = () => (type) => type
@@ -126,7 +122,7 @@ final class Configuration
             </script>
         HTML;
 
-        return new HtmlString($script);
+        return sprintf($script, $this->config('dev_server.url'));
     }
 
     /**
@@ -216,15 +212,15 @@ final class Configuration
     /**
      * Creates a script tag using the development server URL.
      */
-    protected function createDevelopmentTag(string $path): Htmlable
+    protected function createDevelopmentTag(string $path): string
     {
         $url = Str::of($this->config('dev_server.url'))->finish('/')->append($path);
 
         if (Str::endsWith($path, '.css')) {
-            return new HtmlString($this->tagGenerator->makeStyleTag($url));
+            return $this->tagGenerator->makeStyleTag($url);
         }
 
-        return new HtmlString($this->tagGenerator->makeScriptTag($url));
+        return $this->tagGenerator->makeScriptTag($url);
     }
 
     /**
