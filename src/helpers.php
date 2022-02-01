@@ -52,7 +52,7 @@ if (! function_exists('vite_tags')) {
 
 if (! function_exists('vite_asset')) {
     /**
-     * Gets a valid URL for the given asset.
+     * Gets a valid URL for the given asset path.
      */
     function vite_asset(string $path, string $configurationName = null)
     {
