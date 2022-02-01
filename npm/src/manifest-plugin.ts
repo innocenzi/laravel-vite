@@ -1,5 +1,5 @@
 import { createHash } from 'crypto'
-import fs from 'fs/promises'
+import { promises as fs } from 'fs'
 import path from 'path'
 import { OutputAsset } from 'rollup'
 import { Manifest, ManifestChunk, Plugin, ResolvedConfig } from 'vite'
