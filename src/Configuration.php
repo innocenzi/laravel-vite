@@ -37,7 +37,7 @@ final class Configuration
             throw new NoBuildPathException($this->name);
         }
 
-        $path = public_path(sprintf('%s/%s', $this->config('build_path'), 'manifest.json'));
+        $path = public_path(sprintf('%s/%s', trim($this->config('build_path'), '/\\'), 'manifest.json'));
 
         return $this->manifest ??= Manifest::read($path);
     }
@@ -132,10 +132,10 @@ final class Configuration
     public function getAssetUrl(string $path): string
     {
         if ($this->shouldUseManifest()) {
-            return asset(sprintf('/%s/%s', $this->config('build_path'), $path));
+            return asset(sprintf('/%s/%s', trim($this->config('build_path'), '/\\'), ltrim($path, '/')));
         }
 
-        return sprintf('%s/%s', $this->config('dev_server.url'), $path);
+        return sprintf('%s/%s', rtrim($this->config('dev_server.url'), '/'), ltrim($path, '/'));
     }
 
     /**
