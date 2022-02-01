@@ -63,7 +63,7 @@ it('generates the Vite client script tag', function () {
 
 it('generates the Vite client script tag with the other tags', function () {
     with_dev_server();
-    set_base_path_in('');
+    set_fixtures_path('');
     set_env('local');
     set_vite_config('default', [
         'entrypoints' => [

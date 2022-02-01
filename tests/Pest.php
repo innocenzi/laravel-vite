@@ -72,7 +72,7 @@ function get_manifest(string $manifest = 'manifest.json'): Manifest
 /**
  * Overrides the manifests' base paths.
  */
-function set_base_path_in(string $path = '')
+function set_fixtures_path(string $path = '')
 {
     $dir = fixtures_path($path);
     app()->bind('path.public', fn () => $dir . '/public');

@@ -20,7 +20,7 @@ it('uses the right configuration when specifying it', function () {
 });
 
 it('generates URLs relative to the app URL by default in production', function () {
-    set_base_path_in('builds');
+    set_fixtures_path('builds');
     set_env('production');
     
     expect(using_manifest('builds/public/with-css/manifest.json')->getTags())
@@ -29,7 +29,7 @@ it('generates URLs relative to the app URL by default in production', function (
 });
 
 it('generates URLs relative to the configured ASSET_URL in production', function () {
-    set_base_path_in('builds');
+    set_fixtures_path('builds');
     set_env('production');
 
     $property = new ReflectionProperty(UrlGenerator::class, 'assetRoot');
@@ -46,7 +46,7 @@ it('throws when accessing a configuration that does not exist', function () {
 })->throws(NoSuchConfigurationException::class);
 
 it('throws when the build path is not defined', function () {
-    set_base_path_in('builds');
+    set_fixtures_path('builds');
     set_env('production');
     set_vite_config('default', [
         'build_path' => '',
@@ -55,9 +55,9 @@ it('throws when the build path is not defined', function () {
     vite()->getTags();
 })->throws(NoBuildPathException::class);
 
-it('finds a configured entrypoint by its name', function () {
+it('finds a configured entrypoint by its name in development', function () {
     with_dev_server();
-    set_base_path_in('');
+    set_fixtures_path('');
     set_env('local');
     set_vite_config('default', [
         'entrypoints' => [

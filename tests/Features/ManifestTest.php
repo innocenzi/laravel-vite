@@ -71,6 +71,24 @@ it('finds a entry with its complete path name', function () {
         ->isEntry->toBeTrue();
 });
 
+it('finds a manifest entrypoint by its name in production', function () {
+    set_fixtures_path('builds');
+    set_env('production');
+    set_vite_config('default', ['build_path' => 'with-css']);
+
+    expect(vite()->getTag('test'))
+        ->toContain('http://localhost/with-css/assets/test.a2c636dd.js')
+        ->toContain('http://localhost/with-css/assets/test.65bd481b.css');
+});
+
+it('throws when accessing a tag that does not exist by its name', function () {
+    set_fixtures_path('builds');
+    set_env('production');
+    set_vite_config('default', ['build_path' => 'with-css']);
+
+    expect(vite()->getTag('main'));
+})->throws(NoSuchEntrypointException::class);
+
 it('throws when trying to access an entry that does not exist', function () {
     get_manifest('with-entries.json')->getEntry('this-entry-does-not-exist');
 })->throws(NoSuchEntrypointException::class);

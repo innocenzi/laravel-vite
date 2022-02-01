@@ -17,7 +17,7 @@ it('respects TagGenerator overrides when using the server', function () {
     app()->bind(TagGenerator::class, fn () => new CrossOriginTagGenerator());
 
     with_dev_server();
-    set_base_path_in('');
+    set_fixtures_path('');
     set_env('local');
     set_vite_config('default', [
         'entrypoints' => [
@@ -34,7 +34,7 @@ it('respects TagGenerator overrides when using the server', function () {
 it('respects TagGenerator overrides when not using the server', function () {
     app()->bind(TagGenerator::class, fn () => new CrossOriginTagGenerator());
 
-    set_base_path_in('builds');
+    set_fixtures_path('builds');
     set_env('production');
         
     expect(using_manifest('builds/public/with-css/manifest.json')->getTags())
