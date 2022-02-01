@@ -58,6 +58,10 @@ This directive includes the tag for the Vite client script, which is required to
 
 When in [manifest mode](/guide/features/server-and-manifest-modes), even if this directive is called, the client script will not be included.
 
+:::tip Render once
+You can use the [built-in `@once` directive](https://laravel.com/docs/master/blade#the-once-directive) to render the client script only once if required. If you forget to do that, no worries, the Vite client is smart enough to not initialize twice.
+:::
+
 ## `@react`
 
 This directive includes the script necessary for providing the hot module replacement feature [when using React](https://vitejs.dev/guide/backend-integration.html). It should be included manually when using React, whether `@vite` is used or not.
