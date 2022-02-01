@@ -106,9 +106,9 @@ const sidebar: SidebarConfig = {
 			text: 'Features',
 			items: [
 				{ text: 'Server and manifest modes', link: '/guide/features/server-and-manifest-modes' },
+				{ text: 'Entrypoints', link: '/guide/features/entrypoints' },
 				{ text: 'Directives', link: '/guide/features/directives' },
 				{ text: 'Helpers', link: '/guide/features/helpers' },
-				{ text: 'Entrypoints', link: '/guide/features/entrypoints' },
 				{ text: 'SSR', link: '/guide/features/ssr' },
 			],
 		},
