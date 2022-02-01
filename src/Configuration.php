@@ -139,7 +139,7 @@ final class Configuration
     }
 
     /**
-     * Gets the configuration.
+     * Gets a configuration value.
      */
     public function getConfig(string $key = null): mixed
     {
@@ -147,14 +147,11 @@ final class Configuration
     }
 
     /**
-     * Finds entrypoints from the configuration.
+     * Gets the name of this configuration.
      */
-    protected function findEntrypoints(): Collection
+    public function getName(): string
     {
-        $paths = $this->config('entrypoints.paths', []);
-        $ignore = $this->config('entrypoints.ignore', []);
-
-        return $this->entrypointsFinder->find($paths, $ignore);
+        return $this->name;
     }
 
     /**
@@ -171,6 +168,17 @@ final class Configuration
     public function usesServer(): bool
     {
         return ! $this->usesManifest();
+    }
+
+    /**
+     * Finds entrypoints from the configuration.
+     */
+    protected function findEntrypoints(): Collection
+    {
+        $paths = $this->config('entrypoints.paths', []);
+        $ignore = $this->config('entrypoints.ignore', []);
+
+        return $this->entrypointsFinder->find($paths, $ignore);
     }
 
     /**
