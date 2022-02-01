@@ -113,16 +113,11 @@ const sidebar: SidebarConfig = {
 			],
 		},
 		{
-			text: 'Guides',
-			items: [
-				{ text: 'Inertia', link: '/guide/inertia' },
-				{ text: 'Multiple configurations', link: '/guide/multiple-configurations' },
-				{ text: 'Tag generation', link: '/guide/tag-generation' },
-			],
-		},
-		{
 			text: 'Extra topics',
 			items: [
+				{ text: 'Vite with Inertia', link: '/guide/inertia' },
+				{ text: 'Multiple configurations', link: '/guide/multiple-configurations' },
+				{ text: 'Tag generation', link: '/guide/tag-generation' },
 				{ text: 'Troubleshooting', link: '/guide/extra-topics/troubleshooting' },
 			],
 		},
