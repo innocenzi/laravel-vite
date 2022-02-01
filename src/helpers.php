@@ -4,6 +4,9 @@ use Innocenzi\Vite\Configuration;
 use Innocenzi\Vite\Vite;
 
 if (! function_exists('vite')) {
+    /**
+     * Gets the given Vite configuration instance or the default one.
+     */
     function vite(string $config = null): Configuration
     {
         return app()->make(Vite::class)->config($config);

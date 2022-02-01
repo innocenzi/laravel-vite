@@ -8,7 +8,7 @@ use Innocenzi\Vite\EntrypointsFinder\DefaultEntrypointsFinder;
 use Innocenzi\Vite\EntrypointsFinder\EntrypointsFinder;
 use Innocenzi\Vite\HeartbeatCheckers\HeartbeatChecker;
 use Innocenzi\Vite\HeartbeatCheckers\HttpHeartbeatChecker;
-use Innocenzi\Vite\TagGenerators\DefaultTagGenerator;
+use Innocenzi\Vite\TagGenerators\CallbackTagGenerator;
 use Innocenzi\Vite\TagGenerators\TagGenerator;
 use InvalidArgumentException;
 use Spatie\LaravelPackageTools\Package;
@@ -36,7 +36,7 @@ class ViteServiceProvider extends PackageServiceProvider
 
         $this->app->bind(EntrypointsFinder::class, config('vite.interfaces.entrypoints_finder', DefaultEntrypointsFinder::class));
         $this->app->bind(HeartbeatChecker::class, config('vite.interfaces.heartbeat_checker', HttpHeartbeatChecker::class));
-        $this->app->bind(TagGenerator::class, config('vite.interfaces.tag_generator', DefaultTagGenerator::class));
+        $this->app->bind(TagGenerator::class, config('vite.interfaces.tag_generator', CallbackTagGenerator::class));
     }
 
     protected function registerDirectives()

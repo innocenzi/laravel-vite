@@ -1,7 +1,13 @@
 <?php
 
+use Innocenzi\Vite\TagGenerators\CallbackTagGenerator;
 use Innocenzi\Vite\TagGenerators\DefaultTagGenerator;
 use Innocenzi\Vite\TagGenerators\TagGenerator;
+use Innocenzi\Vite\Vite;
+
+it('uses the callback tag generator by default', function () {
+    expect(app(TagGenerator::class))->toBeInstanceOf(CallbackTagGenerator::class);
+});
 
 it('generates a script tag with the specified url', function () {
     expect(app(DefaultTagGenerator::class)->makeScriptTag('https://localhost/build/main.ts'))
@@ -31,7 +37,31 @@ it('respects TagGenerator overrides when using the server', function () {
         ->toContain('<link rel="stylesheet" href="http://localhost:3000/entrypoints/multiple-with-css/style.css" crossorigin />');
 });
 
-it('respects TagGenerator overrides when not using the server', function () {
+it('respects TagGenerator callback overrides in development', function () {
+    Vite::makeScriptTagsUsing(function (string $url): string {
+        return sprintf('<script type="module" src="%s" crossorigin="anonymous"></script>', $url);
+    });
+
+    Vite::makeStyleTagsUsing(function (string $url): string {
+        return sprintf('<link rel="stylesheet" href="%s" crossorigin="anonymous" />', $url);
+    });
+
+    with_dev_server();
+    set_fixtures_path('');
+    set_env('local');
+    set_vite_config('default', [
+        'entrypoints' => [
+            'paths' => 'entrypoints/multiple-with-css',
+        ],
+    ]);
+    
+    expect(vite()->getTags())
+        ->toContain('<script type="module" src="http://localhost:3000/@vite/client" crossorigin="anonymous"></script>')
+        ->toContain('<script type="module" src="http://localhost:3000/entrypoints/multiple-with-css/main.ts" crossorigin="anonymous"></script>')
+        ->toContain('<link rel="stylesheet" href="http://localhost:3000/entrypoints/multiple-with-css/style.css" crossorigin="anonymous" />');
+});
+
+it('respects TagGenerator overrides in production', function () {
     app()->bind(TagGenerator::class, fn () => new CrossOriginTagGenerator());
 
     set_fixtures_path('builds');
