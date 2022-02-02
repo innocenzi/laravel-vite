@@ -50,15 +50,13 @@ final class Chunk implements Stringable
      */
     public function getTag(): string
     {
-        $attributes = ['integrity' => $this->integrity];
-
         // If the file is a CSS file, the main tag is a style tag.
         if (Str::endsWith($this->file, '.css')) {
-            return $this->tagGenerator->makeStyleTag($this->getAssetUrl($this->file), $attributes);
+            return $this->tagGenerator->makeStyleTag($this->getAssetUrl($this->file), $this);
         }
 
         // Otherwise, it's a script tag.
-        return $this->tagGenerator->makeScriptTag($this->getAssetUrl($this->file), $attributes);
+        return $this->tagGenerator->makeScriptTag($this->getAssetUrl($this->file), $this);
     }
 
     /**

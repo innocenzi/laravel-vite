@@ -2,40 +2,33 @@
 
 namespace Innocenzi\Vite\TagGenerators;
 
+use Innocenzi\Vite\Chunk;
+
 final class DefaultTagGenerator implements TagGenerator
 {
-    public function makeScriptTag(string $url, array $attributes = []): string
+    public function makeScriptTag(string $url, Chunk $chunk = null): string
     {
-        return sprintf('<script type="module" src="%s"%s></script>', $url, $this->processAttributes($attributes));
+        return sprintf('<script type="module" src="%s"%s></script>', $url, $this->processIntegrity($chunk));
     }
 
-    public function makeStyleTag(string $url, array $attributes = []): string
+    public function makeStyleTag(string $url, Chunk $chunk = null): string
     {
-        return sprintf('<link rel="stylesheet" href="%s"%s />', $url, $this->processAttributes($attributes));
+        return sprintf('<link rel="stylesheet" href="%s"%s />', $url, $this->processIntegrity($chunk));
     }
     
-    protected function processAttributes(array $attributes = []): string
+    protected function processIntegrity(Chunk $chunk = null): string
     {
-        $attributes = collect($attributes)->map(function ($value, $key) {
-            if ($value === null) {
-                return null;
-            }
-
-            if (\is_bool($value)) {
-                $value = $value ? 'true' : 'false';
-            }
-
-            if ($value === '') {
-                return $key;
-            }
-
-            return sprintf('%s="%s"', $key, (string) $value);
-        })->filter()->join(' ');
-
-        if (\strlen($attributes) > 0) {
-            $attributes = ' ' . $attributes;
+        if (! $chunk?->integrity) {
+            return '';
         }
 
-        return $attributes;
+        $attributes = [
+            'integrity' => $chunk->integrity,
+            'crossorigin' => 'anonymous',
+        ];
+        
+        return ' ' . collect($attributes)
+            ->map(fn ($value, $key) => sprintf('%s="%s"', $key, $value))
+            ->join(' ');
     }
 }

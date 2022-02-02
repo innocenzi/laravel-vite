@@ -11,12 +11,12 @@ final class Vite
     protected array $configs = [];
 
     /**
-     * @var (Closure(string, array<string, string|bool|null>): string)
+     * @var (Closure(string, Innocenzi\Vite\Chunk|null): string)
      */
     public static Closure|null $makeScriptTagsCallback = null;
     
     /**
-     * @var (Closure(string, array<string, string|bool|null>): string)
+     * @var (Closure(string, Innocenzi\Vite\Chunk|null): string)
      */
     public static Closure|null $makeStyleTagsCallback = null;
 
@@ -41,7 +41,7 @@ final class Vite
     /**
      * Sets the logic for creating a script tag.
      *
-     * @param (Closure(string, array<string, string|bool|null>): string) $callback
+     * @param (Closure(string, Innocenzi\Vite\Chunk|null): string) $callback
      */
     public static function makeScriptTagsUsing(Closure $callback = null): void
     {
@@ -51,7 +51,7 @@ final class Vite
     /**
      * Sets the logic for creating a style tag.
      *
-     * @param (Closure(string, array<string, string|bool|null>): string) $callback
+     * @param (Closure(string, Innocenzi\Vite\Chunk|null): string) $callback
      */
     public static function makeStyleTagsUsing(Closure $callback = null): void
     {

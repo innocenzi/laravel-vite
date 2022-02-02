@@ -2,6 +2,7 @@
 
 namespace Innocenzi\Vite\TagGenerators;
 
+use Innocenzi\Vite\Chunk;
 use Innocenzi\Vite\Vite;
 
 final class CallbackTagGenerator implements TagGenerator
@@ -10,21 +11,21 @@ final class CallbackTagGenerator implements TagGenerator
     {
     }
 
-    public function makeScriptTag(string $url, array $attributes = []): string
+    public function makeScriptTag(string $url, Chunk $chunk = null): string
     {
         if (\is_callable(Vite::$makeScriptTagsCallback)) {
-            return \call_user_func(Vite::$makeScriptTagsCallback, $url, $attributes);
+            return \call_user_func(Vite::$makeScriptTagsCallback, $url, $chunk);
         }
 
-        return $this->tagGenerator->makeScriptTag($url, $attributes);
+        return $this->tagGenerator->makeScriptTag($url, $chunk);
     }
 
-    public function makeStyleTag(string $url, array $attributes = []): string
+    public function makeStyleTag(string $url, Chunk $chunk = null): string
     {
         if (\is_callable(Vite::$makeStyleTagsCallback)) {
-            return \call_user_func(Vite::$makeStyleTagsCallback, $url, $attributes);
+            return \call_user_func(Vite::$makeStyleTagsCallback, $url, $chunk);
         }
 
-        return $this->tagGenerator->makeStyleTag($url, $attributes);
+        return $this->tagGenerator->makeStyleTag($url, $chunk);
     }
 }
