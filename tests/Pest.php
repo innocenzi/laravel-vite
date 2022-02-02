@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 use Innocenzi\Vite\Configuration;
 use Innocenzi\Vite\Manifest;
 use Innocenzi\Vite\Tests\TestCase;
+use Innocenzi\Vite\Vite;
 use Pest\TestSuite;
 
 uses(Innocenzi\Vite\Tests\TestCase::class)->in('Unit');
@@ -97,7 +98,7 @@ function with_dev_server(bool $reacheable = true)
     }
 
     return Http::fake([
-        '*/@vite/client' => Http::response(status: 200),
+        Vite::CLIENT_SCRIPT_PATH => Http::response(status: 200),
         '*' => Http::response(status: 404),
     ]);
 }

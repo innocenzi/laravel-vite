@@ -69,6 +69,7 @@ it('finds a configured entrypoint by its name in development', function () {
 });
 
 it('returns a valid asset URL in development', function () {
+    with_dev_server();
     set_env('local');
         
     set_vite_config('default', ['build_path' => '/should-not-be/included']);

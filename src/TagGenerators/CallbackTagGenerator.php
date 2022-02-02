@@ -10,21 +10,21 @@ final class CallbackTagGenerator implements TagGenerator
     {
     }
 
-    public function makeScriptTag(string $url): string
+    public function makeScriptTag(string $url, array $attributes = []): string
     {
-        if (\is_callable(Vite::$makeScriptTagsCallback ?? null)) {
-            return \call_user_func(Vite::$makeScriptTagsCallback, $url);
+        if (\is_callable(Vite::$makeScriptTagsCallback)) {
+            return \call_user_func(Vite::$makeScriptTagsCallback, $url, $attributes);
         }
 
-        return $this->tagGenerator->makeScriptTag($url);
+        return $this->tagGenerator->makeScriptTag($url, $attributes);
     }
 
-    public function makeStyleTag(string $url): string
+    public function makeStyleTag(string $url, array $attributes = []): string
     {
-        if (\is_callable(Vite::$makeStyleTagsCallback ?? null)) {
-            return \call_user_func(Vite::$makeStyleTagsCallback, $url);
+        if (\is_callable(Vite::$makeStyleTagsCallback)) {
+            return \call_user_func(Vite::$makeStyleTagsCallback, $url, $attributes);
         }
 
-        return $this->tagGenerator->makeStyleTag($url);
+        return $this->tagGenerator->makeStyleTag($url, $attributes);
     }
 }

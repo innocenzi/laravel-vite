@@ -11,14 +11,14 @@ final class Vite
     protected array $configs = [];
 
     /**
-     * @var (Closure(string): string)
+     * @var (Closure(string, array<string, string|bool|null>): string)
      */
-    public static Closure $makeScriptTagsCallback;
+    public static Closure|null $makeScriptTagsCallback = null;
     
     /**
-     * @var (Closure(string): string)
+     * @var (Closure(string, array<string, string|bool|null>): string)
      */
-    public static Closure $makeStyleTagsCallback;
+    public static Closure|null $makeStyleTagsCallback = null;
 
     /**
      * Gets the given configuration or the default one.
@@ -41,9 +41,9 @@ final class Vite
     /**
      * Sets the logic for creating a script tag.
      *
-     * @param (Closure(string): string) $callback
+     * @param (Closure(string, array<string, string|bool|null>): string) $callback
      */
-    public static function makeScriptTagsUsing(Closure $callback): void
+    public static function makeScriptTagsUsing(Closure $callback = null): void
     {
         static::$makeScriptTagsCallback = $callback;
     }
@@ -51,9 +51,9 @@ final class Vite
     /**
      * Sets the logic for creating a style tag.
      *
-     * @param (Closure(string): string) $callback
+     * @param (Closure(string, array<string, string|bool|null>): string) $callback
      */
-    public static function makeStyleTagsUsing(Closure $callback): void
+    public static function makeStyleTagsUsing(Closure $callback = null): void
     {
         static::$makeStyleTagsCallback = $callback;
     }
