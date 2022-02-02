@@ -27,7 +27,7 @@
   </a>
   <br />
   <br />
-  <pre><div align="center">composer require innocenzi/laravel-vite</div></pre>
+  <pre><div align="center">composer require innocenzi/laravel-vite:0.2.*</div></pre>
 </p>
 <br />
 
