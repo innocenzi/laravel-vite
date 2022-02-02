@@ -60,7 +60,7 @@ class ViteServiceProvider extends PackageServiceProvider
             $compiler->directive('tag', function ($expression = null) {
                 $args = collect(explode(',', $expression))->map(fn ($str) => trim($str));
 
-                if (! \in_array(\count($args), [1, 2])) {
+                if (!\in_array(\count($args), [1, 2])) {
                     throw new InvalidArgumentException('The @tag directive accepts one or two arguments, ' . \count($args) . ' given.');
                 }
                 

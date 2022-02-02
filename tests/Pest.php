@@ -93,7 +93,7 @@ function set_vite_config(string $name, array $config): void
  */
 function with_dev_server(bool $reacheable = true)
 {
-    if (! $reacheable) {
+    if (!$reacheable) {
         return Http::fake(fn () => Http::response(status: 503));
     }
 

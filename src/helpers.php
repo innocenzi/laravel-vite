@@ -3,7 +3,7 @@
 use Innocenzi\Vite\Configuration;
 use Innocenzi\Vite\Vite;
 
-if (! function_exists('vite')) {
+if (!function_exists('vite')) {
     /**
      * Gets the given Vite configuration instance or the default one.
      */
@@ -13,7 +13,7 @@ if (! function_exists('vite')) {
     }
 }
 
-if (! function_exists('vite_client')) {
+if (!function_exists('vite_client')) {
     /**
      * Get the HTML script tag that includes the Vite client.
      */
@@ -23,7 +23,7 @@ if (! function_exists('vite_client')) {
     }
 }
 
-if (! function_exists('vite_react_refresh_runtime')) {
+if (!function_exists('vite_react_refresh_runtime')) {
     /**
      * Get the HTML script tag that includes the React Refresh runtime.
      */
@@ -33,7 +33,7 @@ if (! function_exists('vite_react_refresh_runtime')) {
     }
 }
 
-if (! function_exists('vite_tag')) {
+if (!function_exists('vite_tag')) {
     /**
      * Get the HTML tags which path name include the given entry name.
      */
@@ -43,7 +43,7 @@ if (! function_exists('vite_tag')) {
     }
 }
 
-if (! function_exists('vite_tags')) {
+if (!function_exists('vite_tags')) {
     /**
      * Get the HTML tags for the Vite client and every configured entrypoint.
      */
@@ -53,7 +53,7 @@ if (! function_exists('vite_tags')) {
     }
 }
 
-if (! function_exists('vite_asset')) {
+if (!function_exists('vite_asset')) {
     /**
      * Gets a valid URL for the given asset path.
      */

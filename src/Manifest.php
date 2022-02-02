@@ -20,7 +20,7 @@ final class Manifest implements Stringable
      */
     public function __construct(protected string|null $path)
     {
-        if (! $path || ! file_exists($path)) {
+        if (!$path || !file_exists($path)) {
             throw new ManifestNotFoundException($path, static::guessConfigName($path));
         }
 
@@ -51,7 +51,7 @@ final class Manifest implements Stringable
      */
     public function getEntry(string $name): Chunk
     {
-        if (! $entry = $this->entries->first(fn (Chunk $entry) => str_contains($entry->src, $name))) {
+        if (!$entry = $this->entries->first(fn (Chunk $entry) => str_contains($entry->src, $name))) {
             throw new NoSuchEntrypointException($name, static::guessConfigName($this->getPath()));
         }
 

@@ -18,7 +18,7 @@ final class DefaultTagGenerator implements TagGenerator
     
     protected function processIntegrity(Chunk $chunk = null): string
     {
-        if (! $chunk?->integrity) {
+        if (!$chunk?->integrity) {
             return '';
         }
 

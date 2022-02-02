@@ -11,11 +11,11 @@ final class DefaultEntrypointsFinder implements EntrypointsFinder
     {
         return collect($paths)
             ->flatMap(function (string $fileOrDirectory) {
-                if (! file_exists($fileOrDirectory)) {
+                if (!file_exists($fileOrDirectory)) {
                     $fileOrDirectory = base_path($fileOrDirectory);
                 }
 
-                if (! file_exists($fileOrDirectory)) {
+                if (!file_exists($fileOrDirectory)) {
                     return [];
                 }
 
@@ -27,7 +27,7 @@ final class DefaultEntrypointsFinder implements EntrypointsFinder
             })
             ->unique(fn (\SplFileInfo $file) => $file->getPathname())
             ->filter(function (\SplFileInfo $file) use ($ignore) {
-                return ! collect($ignore)->some(fn ($pattern) => preg_match($pattern, $file->getFilename()));
+                return !collect($ignore)->some(fn ($pattern) => preg_match($pattern, $file->getFilename()));
             });
     }
 }

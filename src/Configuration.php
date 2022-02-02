@@ -19,7 +19,7 @@ final class Configuration
         protected ?HeartbeatChecker $heartbeatChecker = null,
         protected ?TagGenerator $tagGenerator = null,
     ) {
-        if (! config()->has("vite.configs.${name}")) {
+        if (!config()->has("vite.configs.${name}")) {
             throw new NoSuchConfigurationException($name);
         }
 
@@ -33,7 +33,7 @@ final class Configuration
      */
     public function getManifest(): ?Manifest
     {
-        if (! $this->config('build_path')) {
+        if (!$this->config('build_path')) {
             throw new NoBuildPathException($this->name);
         }
 
@@ -82,7 +82,7 @@ final class Configuration
     {
         $tags = collect();
 
-        if (! $this->shouldUseManifest()) {
+        if (!$this->shouldUseManifest()) {
             $tags->push($this->getClientScriptTag());
         }
 
@@ -167,7 +167,7 @@ final class Configuration
      */
     public function usesServer(): bool
     {
-        return ! $this->usesManifest();
+        return !$this->usesManifest();
     }
 
     /**
@@ -191,35 +191,35 @@ final class Configuration
             $result = \call_user_func(Vite::$useManifestCallback, $this);
 
             // Only override if the result is a boolean.
-            if (! \is_null($result)) {
+            if (!\is_null($result)) {
                 return $result;
             }
         }
         
         // If the development server is disabled, use the manifest.
-        if (! $this->config('dev_server.enabled', true)) {
+        if (!$this->config('dev_server.enabled', true)) {
             return true;
         }
 
         // If disabled in tests via the configuration, do not use the manifest.
-        if (app()->environment('testing') && ! config('vite.testing.use_manifest', false)) {
+        if (app()->environment('testing') && !config('vite.testing.use_manifest', false)) {
             return false;
         }
 
         // If running in production, do use the manifest.
-        if (! app()->environment('local')) {
+        if (!app()->environment('local')) {
             return true;
         }
 
         // At this point, environment checks have passed, so we're likely to not
         // use the manifest. If the ping is disabled, do not use the manifest.
-        if (! $this->config('dev_server.ping_before_using_manifest', true)) {
+        if (!$this->config('dev_server.ping_before_using_manifest', true)) {
             return false;
         }
 
         // If we wanted to check if the dev server was running but it
         // is not, actually use the manifest.
-        if (! $this->isDevelopmentServerRunning()) {
+        if (!$this->isDevelopmentServerRunning()) {
             return true;
         }
 

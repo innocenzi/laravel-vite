@@ -23,7 +23,7 @@ return (new PhpCsFixer\Config())
         'single_trait_insert_per_statement' => true,
         'explicit_string_variable' => true,
         'single_line_throw' => false,
-        'not_operator_with_successor_space' => true,
+        'not_operator_with_successor_space' => false,
         'trailing_comma_in_multiline' => true,
         'phpdoc_scalar' => true,
         'unary_operator_spaces' => true,
