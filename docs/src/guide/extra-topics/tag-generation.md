@@ -10,7 +10,7 @@ By default, Laravel Vite generates basic script and style tags, with no specific
 
 ## Override via callbacks
 
-You may call `Vite::makeScriptTagsUsing()` and `Vite::makeStyleTagsUsing()` in your application provider or a middleware. 
+You may call `Vite::makeScriptTagsUsing()` and `Vite::makeStyleTagsUsing()` in your application service provider or a middleware. 
 
 ```php
 // Overrides script tag generation

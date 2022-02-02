@@ -44,7 +44,7 @@ Vite can replace Webpack in existing projects, but some changes will be necessar
 - Vite explicitly requires that all Vue single-file components imports include the `.vue` in the path.
 - Vite is ESM-based, so you should use `import` instead of `require`.
 
-There are a handful more differences between the two that could make your existing application build to fail, especially when coming from Webpack 4, which had some Node polyfills. When encountering issues, we recommend asking in [Vite's Discord server](https://chat.vitejs.dev) in the `#help` or `#laravel`.
+There are a handful more differences between the two that could make your existing application build to fail, especially when coming from Webpack 4, which had some Node polyfills. When encountering issues, we recommend asking in the [Vite Discord](https://chat.vitejs.dev)'s `#help` or `#laravel` channels.
 
 ### Initial setup
 
@@ -84,7 +84,7 @@ The main configuration is defined in `config/vite.php`, which the Vite plugin re
 
 #### Loaders
 
-If you were using any Webpack loader for TypeScript, Vue, PostCSS, SASS, Stylus... you can safely remove them. Vite handles them without any additionnal configuration. 
+If you were using any Webpack loader for TypeScript, Vue, PostCSS, SASS, Stylus... you can safely remove them. Vite handles them without additionnal configuration. 
 
 You do need to install the CSS pre-processors you are using, though. You can learn more about this on the [Vite documentation](https://vitejs.dev/guide/features.html#css-pre-processors).
 
@@ -97,7 +97,7 @@ mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css');
 ```
 
-You should use the following Vite configuration:
+You should use the following `config/vite.php` configuration:
 
 ```php
 <?php
