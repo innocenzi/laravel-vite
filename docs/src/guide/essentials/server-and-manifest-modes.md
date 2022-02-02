@@ -1,10 +1,11 @@
 ---
 title: Server and manifest modes
+outline: deep
 ---
 
 # Server and manifest modes
 
-## Modes
+## Overview
 
 ### Server mode
 

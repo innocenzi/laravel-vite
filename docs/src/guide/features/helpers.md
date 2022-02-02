@@ -4,6 +4,8 @@ title: Helpers
 
 # Helpers
 
+## Overview
+
 Helpers are global functions you may use to help you get informations regarding manifests and assets. Generally speaking, it's best not to use them and just rely on the [directives](/guide/features/directives), but they are here if you need.
 
 ## `vite`

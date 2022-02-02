@@ -1,5 +1,6 @@
 ---
 title: Multiple configurations
+outline: deep
 ---
 
 # Multiple configurations
@@ -8,13 +9,13 @@ Currently, Vite does not have support for generating multiple bundles. It will a
 
 Sometimes though, you may need to have separated bundles for different parts of your application, and in that case you will need multiple configuration files.
 
-## Creating multiple configurations
+## Overview
 
 Say you need a separate bundle for a back-office that uses a different stack than the front-office.
 
 You will need to add a configuration to `config/vite.php`, create a new `vite.back-office.config.ts` file, pass the configuration name to the `@vite` directive and run slightly different development and build commands.
 
-## Updating Laravel Vite's config
+## Configuring the Laravel package
 
 Open `config/vite.php` and duplicate the `default` array located in `configs`, and call it `back-office`:
 
@@ -56,7 +57,7 @@ public/
 		└─ manifest.json
 ```
 
-## Creating Vite's configuration file
+## Configuring Vite
 
 Then, create a Vite configuration file: `vite.back-office.config.ts`. The name there is important, as it's used to infer the configuration name. 
 
@@ -73,7 +74,7 @@ export default defineConfig({
 })
 ```
 
-## Using config-specific commands
+## Chosing which config to use
 
 Instead of using `vite dev` or `vite build`, which will use the `default` configuration, you will need to specify the Vite configuration file you want to use.
 

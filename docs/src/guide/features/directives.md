@@ -4,6 +4,8 @@ title: Directives
 
 # Directives
 
+## Overview
+
 Directives help you inject tags in your Blade file. Typically, you will only need to use `@vite`, which is smart enough to include the development server script and your entrypoints. However, `@tag` and `@client` are also available if you need more control.
 
 ## `@vite`
