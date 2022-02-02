@@ -98,7 +98,7 @@ return [
     'interfaces' => [
         'heartbeat_checker' => Innocenzi\Vite\HeartbeatCheckers\HttpHeartbeatChecker::class,
         'tag_generator' => Innocenzi\Vite\TagGenerators\CallbackTagGenerator::class,
-        'entrypoints_finder' => Innocenzi\Vite\EntrypointsFinder\EntrypointsFinder::class,
+        'entrypoints_finder' => Innocenzi\Vite\EntrypointsFinder\DefaultEntrypointsFinder::class,
     ],
 
     /*
