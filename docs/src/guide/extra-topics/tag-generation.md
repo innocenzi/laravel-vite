@@ -10,19 +10,25 @@ By default, Laravel Vite generates basic script and style tags, with no specific
 
 ## Override via callbacks
 
-You may call `Vite::makeScriptTagsUsing()` and `Vite::makeStyleTagsUsing()` in your application provider or a middleware.
+You may call `Vite::makeScriptTagsUsing()` and `Vite::makeStyleTagsUsing()` in your application provider or a middleware. 
 
 ```php
 // Overrides script tag generation
-Vite::makeScriptTagsUsing(function (string $url): string {
+Vite::makeScriptTagsUsing(function (string $url, array $attributes = []): string {
     return sprintf('<script type="module" src="%s" defer></script>', $url);
 });
 
 // Overrides style tag generation
-Vite::makeStyleTagsUsing(function (string $url): string {
+Vite::makeStyleTagsUsing(function (string $url, array $attributes = []): string {
     return sprintf('<link rel="stylesheet" href="%s" crossorigin />', $url);
 });
 ```
+
+## Subresource Integrity
+
+[Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) is supported through [`vite-plugin-manifest-sri`](https://github.com/ElMassimo/vite-plugin-manifest-sri). When this plugin is registered, Vite will add an `integrity` attribute on entrypoint tags. 
+
+The `$attributes` parameter will also contain the `integrity` value.
 
 ## Override the implementation
 
