@@ -17,7 +17,7 @@ final class ManifestNotFoundException extends ViteException implements ProvidesS
         protected string $manifestPath,
         protected ?string $configName = null
     ) {
-        $this->message = $this->hasConfigName()
+        $this->message = !$this->hasConfigName()
             ? "The manifest could not be found."
             : "The manifest for the \"{$this->getConfigName()}\" configuration could not be found.";
     }
