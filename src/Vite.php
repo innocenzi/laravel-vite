@@ -288,9 +288,9 @@ class Vite
     public function getAssetUrl(string $path): string
     {
         if ($this->shouldUseManifest()) {
-            return asset(sprintf('/%s/%s', config('vite.build_path'), $path));
+            return asset(sprintf('/%s/%s', config('vite.build_path'), ltrim($path, '/')));
         }
 
-        return sprintf('%s/%s', config('vite.dev_url'), $path);
+        return sprintf('%s/%s', config('vite.dev_url'), ltrim($path, '/'));
     }
 }
