@@ -3,13 +3,13 @@ title: Quick start
 outline: deep
 ---
 
-# Installation
+# Quick start
 
 :::info Are you using <a href="https://inertiajs.com">Inertia</a>?
 There is an Inertia preset for a fast and easy installation. You can check our [Inertia guide](/guide/extra-topics/inertia).
 :::
 
-## In a fresh project
+## Installation in a fresh project
 
 The recommended and the easiest approach to get started with Laravel Vite is to use the preset. It's a single command that will:
 
@@ -35,7 +35,7 @@ Everything will be up and ready. You can open your `resources/scripts/main.ts` f
 - Check how to [building for production](/guide/essentials/building-for-production)
 :::
 
-## In an existing project
+## Installation in an existing project
 
 ### Before starting
 
