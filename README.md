@@ -18,8 +18,8 @@
     <img alt="packagist" src="https://img.shields.io/packagist/v/innocenzi/laravel-vite">
   </a>
   <span>&nbsp;</span>
-  <a href="https://www.npmjs.com/package/laravel-vite">
-    <img alt="npm" src="https://img.shields.io/npm/v/laravel-vite">
+  <a href="https://www.npmjs.com/package/vite-plugin-laravel">
+    <img alt="npm" src="https://img.shields.io/npm/v/vite-plugin-laravel">
   </a>
   <span>&nbsp;</span>
   <a href="https://laravel-vite.dev">
@@ -34,7 +34,10 @@
 <div align="center">
   This project aims to integrate <a href="https://vitejs.dev">Vite</a> with the Laravel framework as seamlessly as possible.
   <br />
-  <a href="https://laravel-vite.dev">Documentation</a>
+  It consists of a preset, a Laravel package and a Vite plugin.
+  <br />
+  <br />
+  <a href="https://laravel-vite.dev">See the documentation</a>
 </div>
 
 <p align="center">
