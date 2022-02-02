@@ -21,6 +21,7 @@ final class Chunk implements Stringable
         public Collection $imports,
         public Collection $dynamicImports,
         public Collection $assets,
+        public string|null $integrity = null
     ) {
         $this->tagGenerator = app(TagGenerator::class);
     }
@@ -40,6 +41,7 @@ final class Chunk implements Stringable
             imports: collect($manifestEntry['imports'] ?? []),
             dynamicImports: collect($manifestEntry['dynamicImports'] ?? []),
             assets: collect($manifestEntry['assets'] ?? []),
+            integrity: $manifestEntry['integrity'] ?? null
         );
     }
 
@@ -48,13 +50,15 @@ final class Chunk implements Stringable
      */
     public function getTag(): string
     {
+        $attributes = ['integrity' => $this->integrity];
+
         // If the file is a CSS file, the main tag is a style tag.
         if (Str::endsWith($this->file, '.css')) {
-            return $this->tagGenerator->makeStyleTag($this->getAssetUrl($this->file));
+            return $this->tagGenerator->makeStyleTag($this->getAssetUrl($this->file), $attributes);
         }
 
         // Otherwise, it's a script tag.
-        return $this->tagGenerator->makeScriptTag($this->getAssetUrl($this->file));
+        return $this->tagGenerator->makeScriptTag($this->getAssetUrl($this->file), $attributes);
     }
 
     /**
