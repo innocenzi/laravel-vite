@@ -30,6 +30,12 @@ Vite::makeStyleTagsUsing(function (string $url, array $attributes = []): string 
 
 The `$attributes` parameter will also contain the `integrity` value.
 
+:::info Script-imported CSS files are not supported
+The extended manifest file from [`vite-plugin-manifest-sri`](https://github.com/ElMassimo/vite-plugin-manifest-sri) does not add an `integrity` property to imported CSS. 
+
+If you need to ensure CSS integrity, register them as [entrypoints](/configuration/laravel-package#entrypoints) instead.
+:::
+
 ## Override the implementation
 
 Alternatively, you may implement the `Innocenzi\Vite\TagGenerators\TagGenerator` interface. 
