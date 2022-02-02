@@ -1,54 +1,53 @@
-<script setup lang="ts">
-</script>
-
 <template>
-  <section id="hero">
-    <img class="tagline" src="/logo.svg" style="margin-bottom: 40px" />
-		<h1 class="tagline">
-			<span class="tagline--bold">Laravel</span>Vite
-		</h1>
-    <p class="description">
-			The best of both worlds, seamlessly together.
-    </p>
-    <p class="actions">
-      <a class="get-started" href="/guide/introduction.html">
-        Get Started
-        <svg
-          class="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="10"
-          height="10"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"
-          />
-        </svg>
-      </a>
-      <a class="setup" href="/guide/quick-start.html">Install</a>
-    </p>
-  </section>
+	<ClientOnly>
+		<section id="hero">
+			<img class="tagline" src="/logo.svg" style="margin-bottom: 40px" />
+			<h1 class="tagline">
+				<span class="tagline--bold">Laravel</span>Vite
+			</h1>
+			<p class="description">
+				The best of both worlds, seamlessly together.
+			</p>
+			<p class="actions">
+				<a class="get-started" href="/guide/introduction.html">
+					Get Started
+					<svg
+						class="icon"
+						xmlns="http://www.w3.org/2000/svg"
+						width="10"
+						height="10"
+						viewBox="0 0 24 24"
+					>
+						<path
+							d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"
+						/>
+					</svg>
+				</a>
+				<a class="setup" href="/guide/quick-start.html">Install</a>
+			</p>
+		</section>
 
-  <section id="highlights" class="vt-box-container">
-    <div class="vt-box">
-      <h2>Approachable</h2>
-      <p>
-        Distributed with a one-off command to install both the package and Vite in a fresh Laravel project.
-      </p>
-    </div>
-    <div class="vt-box">
-      <h2>Integrated</h2>
-      <p>
-        Configurable through PHP. A single Blade directive is required to get started.
-      </p>
-    </div>
-    <div class="vt-box">
-      <h2>Powerful</h2>
-      <p>
-        Multiple configuration support, customizable behavior. TypeScript, JSX, PostCSS and more.
-      </p>
-    </div>
-  </section>
+		<section id="highlights" class="vt-box-container">
+			<div class="vt-box">
+				<h2>Approachable</h2>
+				<p>
+					Distributed with a one-off command to install both the package and Vite in a fresh Laravel project.
+				</p>
+			</div>
+			<div class="vt-box">
+				<h2>Integrated</h2>
+				<p>
+					Configurable through PHP. A single Blade directive is required to get started.
+				</p>
+			</div>
+			<div class="vt-box">
+				<h2>Powerful</h2>
+				<p>
+					Multiple configuration support, customizable behavior. TypeScript, JSX, PostCSS and more.
+				</p>
+			</div>
+		</section>
+	</ClientOnly>
 </template>
 
 <style scoped>
