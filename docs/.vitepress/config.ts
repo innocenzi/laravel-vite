@@ -102,6 +102,8 @@ const sidebar: SidebarConfig = {
 			text: 'Essentials',
 			items: [
 				{ text: 'Development', link: '/guide/essentials/development' },
+				{ text: 'Server and manifest modes', link: '/guide/essentials/server-and-manifest-modes' },
+				{ text: 'Working with assets', link: '/guide/essentials/working-with-assets' },
 				{ text: 'Configuration', link: '/guide/essentials/configuration' },
 				{ text: 'Building for production', link: '/guide/essentials/building-for-production' },
 			],
@@ -109,7 +111,6 @@ const sidebar: SidebarConfig = {
 		{
 			text: 'Features',
 			items: [
-				{ text: 'Server and manifest modes', link: '/guide/essentials/server-and-manifest-modes' },
 				{ text: 'Entrypoints', link: '/guide/features/entrypoints' },
 				{ text: 'Directives', link: '/guide/features/directives' },
 				{ text: 'Helpers', link: '/guide/features/helpers' },
