@@ -23,9 +23,9 @@ But sometimes, you may need to have multiple bundles, in which case you can defi
 
 #### `paths`
 
-This property is required and defines the paths to the entrypoints for this configuration. It can be a single string or an array of string, and either of these can be a path to a file or a directory. Only script files and CSS are supported as entrypoints. 
+This property is required and defines the paths to the entrypoints for this configuration. It can be a single string or an array of string, and either of these can be a path to a file or a directory. Only script and CSS files are supported as entrypoints. 
 
-When using a directory instead of a path to a file, the paths in that directory will all be defined as an entrypoint. When possible, we recommend using a path to a script directly.
+When using a directory instead of a path to a file, all the files inside will be registered as entrypoints. When possible, we recommend using a direct path to a script directly.
 
 #### `ssr`
 
