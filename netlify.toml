@@ -4,4 +4,4 @@
 [build]
 	base = "docs/"
   publish = ".vitepress/dist"
-  command = "npm run docs:build"
+  command = "npm run build"
