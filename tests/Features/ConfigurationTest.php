@@ -1,8 +1,12 @@
 <?php
 
 use Illuminate\Routing\UrlGenerator;
+use Innocenzi\Vite\Configuration;
 use Innocenzi\Vite\Exceptions\NoBuildPathException;
 use Innocenzi\Vite\Exceptions\NoSuchConfigurationException;
+use Innocenzi\Vite\Vite;
+
+afterAll(fn () => Vite::$useManifestCallback = null);
 
 it('uses the default configuration when not specifying one', function () {
     expect(vite()->getClientScriptTag())
@@ -99,4 +103,48 @@ it('returns a valid asset URL in production', function () {
     
     expect(vite()->getAssetUrl('/my-custom-asset.txt'))
         ->toContain('https://s3.us-west-2.amazonaws.com/12345678/build/my-custom-asset');
+});
+
+it('respects the mode override in production', function () {
+    set_env('production');
+    
+    expect(vite()->usesManifest())->toBeTrue();
+
+    Vite::useManifest(fn () => false);
+
+    expect(vite()->usesManifest())->toBeFalse();
+});
+
+it('respects the mode override in development', function () {
+    with_dev_server(reacheable: true);
+    set_env('local');
+    
+    expect(vite()->usesManifest())->toBeFalse();
+
+    Vite::useManifest(fn () => true);
+
+    expect(vite()->usesManifest())->toBeTrue();
+
+    config()->set('vite.configs.default.dev_server.enabled', false);
+
+    Vite::useManifest(function (Configuration $cfg) {
+        return $cfg->getConfig('dev_server.enabled');
+    });
+
+    expect(vite()->usesManifest())->toBeFalse();
+});
+
+it('does not override the mode if returning null from the callback', function () {
+    set_env('production');
+    expect(vite()->usesManifest())->toBeTrue();
+
+    Vite::useManifest(fn () => false);
+    expect(vite()->usesManifest())->toBeFalse();
+    
+    Vite::useManifest(fn () => null);
+    expect(vite()->usesManifest())->toBeTrue();
+    
+    with_dev_server(reacheable: true);
+    set_env('local');
+    expect(vite()->usesManifest())->toBeFalse();
 });

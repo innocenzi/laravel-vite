@@ -38,3 +38,15 @@ Check the [development](/guide/essentials/development) documentation for more in
 You may need to replace the heartbeat implementation depending on your networking setup. 
 
 To do so, you will need to bind your own implementation to the  `Innocenzi\Vite\HeartbeatCheckers\HeartbeatChecker` interface. This can be done in the [configuration](/configuration/laravel-package#heartbeat-checker).
+
+## Overriding the mode
+
+If you have specific requirements and you prefer using your own logic to determine if the development server or the manifest should be used, you may call `Vite::useManifest()`.
+
+```php
+Vite::useManifest(function (Configuration $configuration) {
+  return true;
+});
+```
+
+Its return value will determine whether the manifest will be used. If the callback returns `null` instead of a boolean value, it will be ignored and the normal checks will be performed.

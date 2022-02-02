@@ -1,7 +1,5 @@
 <?php
 
-use Innocenzi\Vite\Vite;
-
 it('uses the development server by default', function () {
     with_dev_server();
     set_env('local');
@@ -20,9 +18,6 @@ it('uses uses the manifest in tests when instructed', function () {
     
     config()->set('vite.testing.use_manifest', false);
     expect(vite()->usesManifest())->toBeFalse();
-
-    Vite::useManifest();
-    expect(vite()->usesManifest())->toBeTrue();
 });
 
 it('uses the manifest when the development server is disabled', function () {

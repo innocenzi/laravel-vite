@@ -186,6 +186,16 @@ final class Configuration
      */
     protected function shouldUseManifest(): bool
     {
+        // If there is a strategy override, try to use that.
+        if (\is_callable(Vite::$useManifestCallback)) {
+            $result = \call_user_func(Vite::$useManifestCallback, $this);
+
+            // Only override if the result is a boolean.
+            if (! \is_null($result)) {
+                return $result;
+            }
+        }
+        
         // If the development server is disabled, use the manifest.
         if (! $this->config('dev_server.enabled', true)) {
             return true;

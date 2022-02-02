@@ -21,6 +21,11 @@ final class Vite
     public static Closure|null $makeStyleTagsCallback = null;
 
     /**
+     * @var (Closure(Innocenzi\Vite\Configuration): bool|null)
+     */
+    public static Closure|null $useManifestCallback = null;
+
+    /**
      * Gets the given configuration or the default one.
      */
     public function config(string $name = null): Configuration
@@ -28,14 +33,6 @@ final class Vite
         $name ??= config('vite.default');
 
         return $this->configs[$name] ??= new Configuration($name);
-    }
-
-    /**
-     * Sets whether the manifest should be used when testing.
-     */
-    public static function useManifest(bool $useManifest = true): void
-    {
-        config()->set('vite.testing.use_manifest', $useManifest);
     }
 
     /**
@@ -56,6 +53,16 @@ final class Vite
     public static function makeStyleTagsUsing(Closure $callback = null): void
     {
         static::$makeStyleTagsCallback = $callback;
+    }
+
+    /**
+     * Sets the logic for determining if the manifest should be used.
+     *
+     * @param (Closure(Innocenzi\Vite\Configuration): bool|null) $callback
+     */
+    public static function useManifest(Closure $callback = null): void
+    {
+        static::$useManifestCallback = $callback;
     }
     
     /**
