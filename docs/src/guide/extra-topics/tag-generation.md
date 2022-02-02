@@ -14,21 +14,19 @@ You may call `Vite::makeScriptTagsUsing()` and `Vite::makeStyleTagsUsing()` in y
 
 ```php
 // Overrides script tag generation
-Vite::makeScriptTagsUsing(function (string $url, array $attributes = []): string {
+Vite::makeScriptTagsUsing(function (string $url, Chunk $chunk = null): string {
     return sprintf('<script type="module" src="%s" defer></script>', $url);
 });
 
 // Overrides style tag generation
-Vite::makeStyleTagsUsing(function (string $url, array $attributes = []): string {
-    return sprintf('<link rel="stylesheet" href="%s" crossorigin />', $url);
+Vite::makeStyleTagsUsing(function (string $url, Chunk $chunk = null): string {
+    return sprintf('<link rel="stylesheet" href="%s" crossorigin="anonymous" />', $url);
 });
 ```
 
 ## Subresource Integrity
 
-[Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) is supported through [`vite-plugin-manifest-sri`](https://github.com/ElMassimo/vite-plugin-manifest-sri). When this plugin is registered, Vite will add an `integrity` attribute on entrypoint tags. 
-
-The `$attributes` parameter will also contain the `integrity` value.
+[Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) is supported through [`vite-plugin-manifest-sri`](https://github.com/ElMassimo/vite-plugin-manifest-sri). When this plugin is registered, Vite will add `integrity` and `crossorigin` attributes on entrypoint tags. 
 
 :::info Script-imported CSS files are not supported
 The extended manifest file from [`vite-plugin-manifest-sri`](https://github.com/ElMassimo/vite-plugin-manifest-sri) does not add an `integrity` property to imported CSS. 
