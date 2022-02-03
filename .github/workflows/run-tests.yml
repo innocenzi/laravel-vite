@@ -1,16 +1,45 @@
-name: Run PHP tests
+name: Run tests
 
 on:
   push:
     branches: [main]
     paths-ignore:
       - "docs/**"
-      - "vite-plugin-laravel/**"
   pull_request:
     branches: [main]
 
 jobs:
-  test:
+  vite:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [16.x]
+        os: [ubuntu-latest, windows-latest]
+    name: Vite - Node ${{ matrix.os }} - ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.24.4
+
+      - name: Use Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://registry.npmjs.org/
+          cache: "pnpm"
+
+      - run: pnpm install
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Test
+        run: pnpm run test:vite
+
+  php:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
@@ -24,9 +53,7 @@ jobs:
             testbench: 6.*
           - laravel: "9.*"
             testbench: 7.x-dev
-
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
-
+    name: PHP ${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
