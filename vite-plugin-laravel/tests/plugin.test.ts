@@ -5,7 +5,7 @@ import laravel from '../src'
 
 it('runs the plugin as expected', async() => {
 	const result = await build({
-		root: path.resolve(__dirname, '__fixtures__'),
+		root: path.resolve(__dirname),
 		logLevel: 'silent',
 		plugins: [
 			laravel({
@@ -13,7 +13,7 @@ it('runs the plugin as expected', async() => {
 					aliases: { '@': 'vite-plugin-laravel/tests/__fixtures__/resources' },
 					build_path: 'build',
 					dev_server: { url: 'http://localhost:3000' },
-					entrypoints: { paths: 'resources/scripts/app.ts' },
+					entrypoints: { paths: path.resolve(__dirname, './__fixtures__/resources/scripts/app.ts') },
 				},
 			}),
 		],
