@@ -88,6 +88,27 @@ createInertiaApp({
 })
 ```
 
+## Asset versioning
+
+Inertia has [a versioning feature](https://inertiajs.com/asset-versioning) that forces a hard-refresh when an asset change is detected.
+
+You can notify Inertia of such a change by giving the manifest's hash to Inertia's `version` method, either in its default middleware or via its facade.
+
+```php
+// app/Http/Middleware/HandleInertiaRequests.php
+public function version(Request $request): ?string
+{
+    return vite()->getHash();
+}
+
+// Elsewhere
+Inertia::version(fn () => vite()->getHash());
+```
+
+Note that [cache-busting](https://www.keycdn.com/support/what-is-cache-busting) is made possible because Vite appends a hash to the bundled files' names. 
+
+If you changed Vite's Rollup options manually, you may need to take care of cache-busting yourself.
+
 ## Server-side rendering
 
 Inertia provides an implementation for server-side rendering, which you can learn about in [their documentation](https://inertiajs.com/server-side-rendering).
