@@ -59,7 +59,7 @@ it('throws when the build path is not defined', function () {
     vite()->getTags();
 })->throws(NoBuildPathException::class);
 
-it('fins the manifest path', function () {
+it('finds the manifest path', function () {
     set_fixtures_path('builds');
     set_env('production');
 
@@ -74,6 +74,20 @@ it('fins the manifest path', function () {
     
     set_vite_config('default', ['build_path' => '/build/']);
     expect(vite()->getManifestPath())->toBe(str_replace('\\', '/', public_path('build/manifest.json')));
+});
+
+it('finds the manifest version', function () {
+    set_fixtures_path('builds');
+    set_env('production');
+    
+    set_vite_config('default', ['build_path' => '']);
+    expect(vite()->getHash())->toBeNull();
+    
+    set_vite_config('default', ['build_path' => 'with-css']);
+    expect(vite()->getHash())->toBe(md5_file(fixtures_path('builds/public/with-css/manifest.json')));
+    
+    set_vite_config('default', ['build_path' => 'with-integrity']);
+    expect(vite()->getHash())->toBe(md5_file(fixtures_path('builds/public/with-integrity/manifest.json')));
 });
 
 it('finds a configured entrypoint by its name in development', function () {

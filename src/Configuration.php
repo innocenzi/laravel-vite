@@ -55,6 +55,18 @@ final class Configuration
     }
 
     /**
+     * Returns the manifest's md5.
+     */
+    public function getHash(): string|null
+    {
+        if (!file_exists($path = $this->getManifestPath())) {
+            return null;
+        }
+
+        return md5_file($path) ?: null;
+    }
+
+    /**
      * Gets the tag for the given entry.
      */
     public function getTag(string $entryName): string
