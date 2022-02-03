@@ -96,6 +96,7 @@ const sidebar: SidebarConfig = {
 			items: [
 				{ text: 'Introduction', link: '/guide/introduction' },
 				{ text: 'Quick start', link: '/guide/quick-start' },
+				{ text: 'Upgrade guide', link: '/guide/upgrade' },
 			],
 		},
 		{
