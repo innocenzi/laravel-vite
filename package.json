@@ -6,7 +6,9 @@
     "docs:build": "pnpm -C docs run build",
     "docs:serve": "pnpm -C docs run serve",
     "release": "bumpp vite-plugin-laravel/package.json --push --tag --commit \"release: v\"",
-    "test:php": ".\\vendor\\bin\\pest"
+		"test": "npm run test:php && npm run test:vite",
+    "test:php": ".\\vendor\\bin\\pest",
+		"test:vite": "vitest --run"
   },
   "devDependencies": {
     "@innocenzi/eslint-config": "^0.7.1",

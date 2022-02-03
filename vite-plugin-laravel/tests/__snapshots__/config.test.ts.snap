@@ -1,0 +1,132 @@
+// Vitest Snapshot v1
+
+exports[`does not read config the CONFIG_PATH_VITE if config is set to false 1`] = `
+{
+  "aliases": {
+    "@": "resources",
+  },
+  "build_path": "build",
+  "commands": {
+    "artisan": [],
+    "shell": [],
+  },
+  "dev_server": {
+    "cert": null,
+    "enabled": true,
+    "key": null,
+    "ping_before_using_manifest": true,
+    "ping_timeout": 1,
+    "ping_url": null,
+    "url": "http://localhost:3000",
+  },
+  "entrypoints": {
+    "ignore": "/\\\\.(d\\\\.ts|json)$/",
+    "paths": [
+      "resources/scripts/main-artisan.ts",
+    ],
+    "ssr": "resources/scripts/ssr-artisan.ts",
+  },
+}
+`;
+
+exports[`reads config from the CONFIG_PATH_VITE environment variable 1`] = `
+{
+  "aliases": {
+    "@": "resources",
+  },
+  "build_path": "build",
+  "commands": {
+    "artisan": [],
+    "shell": [],
+  },
+  "dev_server": {
+    "cert": null,
+    "enabled": true,
+    "key": null,
+    "ping_before_using_manifest": true,
+    "ping_timeout": 1,
+    "ping_url": null,
+    "url": "http://localhost:3000",
+  },
+  "entrypoints": {
+    "ignore": "/\\\\.(d\\\\.ts|json)$/",
+    "paths": [
+      "resources/scripts/main.ts",
+    ],
+    "ssr": "resources/scripts/ssr.ts",
+  },
+}
+`;
+
+exports[`reads config from the given option object 1`] = `
+{
+  "aliases": {
+    "@": "resources",
+  },
+  "build_path": "build",
+  "dev_server": {
+    "url": "http://localhost:3000",
+  },
+  "entrypoints": {
+    "paths": "resources/scripts/js",
+  },
+}
+`;
+
+exports[`reads config from the given path 1`] = `
+{
+  "aliases": {
+    "@": "resources",
+  },
+  "build_path": "build",
+  "commands": {
+    "artisan": [],
+    "shell": [],
+  },
+  "dev_server": {
+    "cert": null,
+    "enabled": true,
+    "key": null,
+    "ping_before_using_manifest": true,
+    "ping_timeout": 1,
+    "ping_url": null,
+    "url": "http://localhost:3000",
+  },
+  "entrypoints": {
+    "ignore": "/\\\\.(d\\\\.ts|json)$/",
+    "paths": [
+      "resources/scripts/main.ts",
+    ],
+    "ssr": "resources/scripts/ssr.ts",
+  },
+}
+`;
+
+exports[`tries to read the specified configuration from php 1`] = `
+{
+  "aliases": {
+    "@": "resources",
+  },
+  "build_path": "build",
+  "commands": {
+    "artisan": [],
+    "shell": [],
+  },
+  "dev_server": {
+    "cert": null,
+    "enabled": true,
+    "key": null,
+    "ping_before_using_manifest": true,
+    "ping_timeout": 1,
+    "ping_url": null,
+    "url": "http://localhost:3000",
+  },
+  "entrypoints": {
+    "ignore": "/\\\\.(d\\\\.ts|json)$/",
+    "paths": [
+      "resources/scripts/main-artisan.ts",
+    ],
+    "ssr": "resources/scripts/ssr-artisan.ts",
+  },
+}
+`;

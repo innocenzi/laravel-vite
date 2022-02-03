@@ -1,0 +1,33 @@
+{
+	"configs": {
+		"artisan": {
+			"entrypoints": {
+				"ssr": "resources/scripts/ssr-artisan.ts",
+				"paths": [
+					"resources/scripts/main-artisan.ts"
+				],
+				"ignore": "/\\.(d\\.ts|json)$/"
+			},
+			"dev_server": {
+				"enabled": true,
+				"url": "http://localhost:3000",
+				"ping_before_using_manifest": true,
+				"ping_url": null,
+				"ping_timeout": 1,
+				"key": null,
+				"cert": null
+			},
+			"build_path": "build"
+		}
+	},
+	"aliases": { "@": "resources" },
+	"commands": { "artisan": [], "shell": [] },
+	"testing": { "use_manifest": false },
+	"env_prefixes": ["VITE_", "MIX_", "SCRIPT_"],
+	"interfaces": {
+		"heartbeat_checker": "Innocenzi\\Vite\\HeartbeatCheckers\\HttpHeartbeatChecker",
+		"tag_generator": "Innocenzi\\Vite\\TagGenerators\\CallbackTagGenerator",
+		"entrypoints_finder": "Innocenzi\\Vite\\EntrypointsFinder\\DefaultEntrypointsFinder"
+	},
+	"default": "artisan"
+}

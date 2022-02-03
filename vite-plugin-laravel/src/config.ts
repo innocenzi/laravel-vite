@@ -16,6 +16,10 @@ const debug = makeDebugger(PREFIX)
  * Calls an artisan command.
  */
 export function callArtisan(executable: string, ...params: string[]): string {
+	if (process.env.VITEST) {
+		return execaSync(process.env.TEST_ARTISAN_SCRIPT!, [executable, 'artisan', ...params], { encoding: 'utf-8' })?.stdout
+	}
+
 	return execaSync(executable, ['artisan', ...params])?.stdout
 }
 
@@ -23,13 +27,17 @@ export function callArtisan(executable: string, ...params: string[]): string {
  * Calls a shell command.
  */
 export function callShell(executable: string, ...params: string[]): string {
+	if (process.env.VITEST) {
+		return execaSync(process.env.TEST_ARTISAN_SCRIPT!, [executable, ...params])?.stdout
+	}
+
 	return execaSync(executable, [...params])?.stdout
 }
 
 /**
  * Reads the configuration from the `php artisan vite:config` command.
  */
-export function readConfig(options: Options, env: Record<string, string>, name?: string): ResolvedConfiguration {
+export function readConfig(options: Options, env: NodeJS.ProcessEnv, name?: string): ResolvedConfiguration {
 	const executable = getPhpExecutablePath(options, env)
 	const configFromJson = (json: any, name?: string) => {
 		if (name && !(name in json.configs)) {
@@ -45,7 +53,7 @@ export function readConfig(options: Options, env: Record<string, string>, name?:
 
 	try {
 		// Sets path from environment variable
-		if (options.config !== false && env.CONFIG_PATH_VITE) {
+		if (!options.config && options.config !== false && env.CONFIG_PATH_VITE) {
 			debug('Setting configuration file path to CONFIG_PATH_VITE.')
 			options.config = env.CONFIG_PATH_VITE
 		}

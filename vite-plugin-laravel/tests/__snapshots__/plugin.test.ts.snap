@@ -1,0 +1,68 @@
+// Vitest Snapshot v1
+
+exports[`runs the plugin as expected 1`] = `
+{
+  "output": [
+    {
+      "code": "console.log(\\"app content\\");
+",
+      "dynamicImports": [],
+      "exports": [],
+      "facadeModuleId": "D:/Code/packages/laravel-vite/vite-plugin-laravel/tests/__fixtures__/resources/scripts/app.ts",
+      "fileName": "assets/app.d997abbd.js",
+      "implicitlyLoadedBefore": [],
+      "importedBindings": {},
+      "imports": [],
+      "isDynamicEntry": false,
+      "isEntry": true,
+      "isImplicitEntry": false,
+      "map": null,
+      "modules": {
+        "D:/Code/packages/laravel-vite/vite-plugin-laravel/tests/__fixtures__/resources/css/styles.css": {
+          "code": "var styles = '';",
+          "originalLength": 22,
+          "removedExports": [],
+          "renderedExports": [
+            "default",
+          ],
+          "renderedLength": 16,
+        },
+        "D:/Code/packages/laravel-vite/vite-plugin-laravel/tests/__fixtures__/resources/scripts/app.ts": {
+          "code": "console.log(\\"app content\\");",
+          "originalLength": 53,
+          "removedExports": [],
+          "renderedExports": [],
+          "renderedLength": 27,
+        },
+      },
+      "name": "app",
+      "referencedFiles": [],
+      "type": "chunk",
+    },
+    {
+      "fileName": "assets/app.59db6eb8.css",
+      "isAsset": true,
+      "name": "app.css",
+      "source": "body{color:red}
+",
+      "type": "asset",
+    },
+    {
+      "fileName": "manifest.json",
+      "isAsset": true,
+      "name": undefined,
+      "source": "{
+  \\"resources/scripts/app.ts\\": {
+    \\"file\\": \\"assets/app.d997abbd.js\\",
+    \\"src\\": \\"resources/scripts/app.ts\\",
+    \\"isEntry\\": true,
+    \\"css\\": [
+      \\"assets/app.59db6eb8.css\\"
+    ]
+  }
+}",
+      "type": "asset",
+    },
+  ],
+}
+`;
