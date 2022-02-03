@@ -83,7 +83,8 @@ final class Chunk implements Stringable
     protected function getAssetUrl(string $path): string
     {
         // Determines the base path from the manifest path
-        $base = str_replace(public_path(), '', $this->manifest->getPath());
+        $public = str_replace('\\', '/', public_path());
+        $base = str_replace($public, '', $this->manifest->getPath());
         $base = \dirname($base);
         $base = Str::of($base)
             ->replace('\\', '/')

@@ -20,6 +20,8 @@ final class Manifest implements Stringable
      */
     public function __construct(protected string|null $path)
     {
+        $this->path = str_replace('\\', '/', $path);
+        
         if (!$path || !file_exists($path)) {
             throw new ManifestNotFoundException($path, static::guessConfigName($path));
         }
