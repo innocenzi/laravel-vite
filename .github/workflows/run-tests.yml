@@ -37,9 +37,7 @@ jobs:
         run: pnpm run build
 
       - name: Test
-        run: |
-          chmod +x /home/runner/work/laravel-vite/laravel-vite/vite-plugin-laravel/tests/artisan.js
-          pnpm run test:vite
+        run: pnpm run test:vite
 
   php:
     runs-on: ${{ matrix.os }}
