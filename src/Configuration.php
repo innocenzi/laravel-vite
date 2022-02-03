@@ -30,6 +30,8 @@ final class Configuration
     
     /**
      * Returns the manifest, reading it from the disk if necessary.
+     *
+     * @throws NoBuildPathException
      */
     public function getManifest(): ?Manifest
     {
@@ -37,9 +39,19 @@ final class Configuration
             throw new NoBuildPathException($this->name);
         }
 
-        $path = public_path(sprintf('%s/%s', trim($this->config('build_path'), '/\\'), 'manifest.json'));
+        return $this->manifest ??= Manifest::read($this->getManifestPath());
+    }
 
-        return $this->manifest ??= Manifest::read($path);
+    /**
+     * Returns the manifest path.
+     */
+    public function getManifestPath(): string
+    {
+        return str_replace(
+            ['\\', '//'],
+            '/',
+            public_path(sprintf('%s/%s', trim($this->config('build_path'), '/\\'), 'manifest.json'))
+        );
     }
 
     /**
