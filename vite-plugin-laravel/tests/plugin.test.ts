@@ -3,7 +3,7 @@ import { expect, it } from 'vitest'
 import { build } from 'vite'
 import laravel from '../src'
 
-it.only('runs the plugin as expected', async() => {
+it('runs the plugin as expected', async() => {
 	const result = await build({
 		root: path.resolve(__dirname, '__fixtures__'),
 		logLevel: 'silent',
@@ -17,7 +17,22 @@ it.only('runs the plugin as expected', async() => {
 				},
 			}),
 		],
+	}) as any
+
+	expect(result.output[0]).toMatchObject({
+		code: 'console.log("app content");\n',
+		isDynamicEntry: false,
+		isEntry: true,
+		isImplicitEntry: false,
+		type: 'chunk',
+		fileName: 'assets/app.d997abbd.js',
 	})
 
-	expect(result).toMatchSnapshot()
+	expect(result.output[1]).toMatchObject({
+		name: 'app.css',
+		fileName: 'assets/app.59db6eb8.css',
+		source: 'body{color:red}\n',
+		isAsset: true,
+		type: 'asset',
+	})
 })
