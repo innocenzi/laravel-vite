@@ -181,6 +181,7 @@ export const config = (options: Options = {}): Plugin => ({
 					? { maxVersion: 'TLSv1.2', key, cert }
 					: protocol === 'https:',
 				port: port ? Number(port) : 3000,
+				strictPort: !process.argv.includes('--no-strict-port'),
 				origin: `${protocol}//${hostname}:${port}`,
 				hmr: {
 					host: hostname,
