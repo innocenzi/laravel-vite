@@ -10,21 +10,11 @@
 
 <p align="center">
   <br />
-  <a href="https://github.com/innocenzi/laravel-vite/actions?query=workflow%3Atests">
-    <img alt="Status" src="https://github.com/innocenzi/laravel-vite/workflows/tests/badge.svg">
-  </a>
+  <a href="https://github.com/innocenzi/laravel-vite/actions?query=workflow%3Atests"><img alt="Status" src="https://github.com/innocenzi/laravel-vite/workflows/tests/badge.svg"></a>
   <span>&nbsp;</span>
-  <a href="https://packagist.org/packages/innocenzi/laravel-vite">
-    <img alt="packagist" src="https://img.shields.io/packagist/v/innocenzi/laravel-vite">
-  </a>
+  <a href="https://github.com/innocenzi/laravel-vite/releases"><img alt="version" src="https://img.shields.io/github/v/release/innocenzi/laravel-vite?include_prereleases&label=version&logo=github&logoColor=white"></a>
   <span>&nbsp;</span>
-  <a href="https://www.npmjs.com/package/vite-plugin-laravel">
-    <img alt="npm" src="https://img.shields.io/npm/v/vite-plugin-laravel">
-  </a>
-  <span>&nbsp;</span>
-  <a href="https://laravel-vite.dev">
-    <img alt="docs" src="https://img.shields.io/badge/documentation-read-blue">
-  </a>
+  <a href="https://laravel-vite.dev"><img alt="docs" src="https://img.shields.io/badge/documentation-online-blue?logo=readthedocs&logoColor=white"></a>
   <br />
   <br />
   <pre><div align="center">composer require innocenzi/laravel-vite:0.2.*</div></pre>
