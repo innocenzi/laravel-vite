@@ -23,15 +23,15 @@ export default defineConfig({
 
 ## `config`
 
-This option can be one of three things: 
-- A path to a file that contains a JSON-encoded version of the Laravel package configuration.
+This option can be one of the following: 
+- A path to a file that contains a JSON version of the Laravel package configuration.
 - An object representing the Laravel package configuration.
 - The name of a configuration defined in `config/vite.php`'s `configs`.
 - `false` to disable reading the configuration from the path defined in the `CONFIG_PATH_VITE` environment variable.
 
 ## `php`
 
-The path to the PHP executable. By default, `php` will be used, or the path in the `PHP_EXECUTABLE_PATH` environment variable, if defined.
+The path to the PHP executable. By default, the path in the the `PHP_EXECUTABLE_PATH` environment variable will be used, or `php` if it's not defined.
 
 ## `postcss`
 
