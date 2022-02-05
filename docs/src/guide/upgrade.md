@@ -30,7 +30,7 @@ Open `vite.config.ts` and make the following changes:
 
 - Use `vite`'s `defineConfig` instead of `laravel-vite`'s, and use the `plugin` option instead of chaining `withPlugin` to `defineConfig`:
 
-```diff
+```diff {3,11}
 - import { defineConfig } from 'laravel-vite'
 + import { defineConfig } from 'vite'
 + import laravel from 'vite-plugin-laravel'
@@ -48,7 +48,7 @@ Open `vite.config.ts` and make the following changes:
 
 - Replace `withPostCss` with the `postcss` option of the plugin:
 
-```diff
+```diff {10,11,12,13}
 - export default defineConfig()
 - 	.withPostCSS([
 - 		tailwindcss(),
@@ -71,6 +71,8 @@ Note that `withCertificates` has no equivalent since it is no longer needed. Ins
 
 ### Update `config/vite.php`
 
+#### Configuration format
+
 The configuration format changed and a few options moved. We recommend grabbing the new configuration file [from the source](https://github.com/innocenzi/laravel-vite/blob/main/config/vite.php) and replacing your current one.
 
 Then, you can configure it again, with the following changes:
@@ -82,6 +84,12 @@ Then, you can configure it again, with the following changes:
 - `ping_url` -> `configs.default.dev_server.ping_url`
 - `build_path` -> `configs.default.build_path`
 - `commands` -> `commands.artisan`
+
+#### The `vite:aliases` artisan command
+
+Additionally, the `vite:aliases` artisan command no longer exists. 
+
+Its functionality has been moved to the plugin, which you can disable by setting the [`updateTsConfig`](/configuration/vite-plugin.html#updatetsconfig) option to `false`.
 
 
 ### The `@vite` directive
