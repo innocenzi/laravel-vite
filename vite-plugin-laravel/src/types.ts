@@ -58,6 +58,14 @@ export interface Options {
 	 * Whether to automatically update the tsconfig.json file with aliases.
 	 */
 	updateTsConfig?: boolean
+
+	/**
+	 * Whether to allow overrides from the base configuration. If false, base
+	 * options will be ignored, so stuff like `--host 0.0.0.0` won't work.
+	 *
+	 * @default true
+	 */
+	allowOverrides?: boolean
 }
 
 export interface Certificates {

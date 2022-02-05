@@ -44,3 +44,25 @@ These are the default environment variables, but you can change them on a per-co
 :::tip Using Valet or Laragon?
 You may not need to fill the `DEV_SERVER_KEY` and `DEV_SERVER_CERT` environment variables, as they are inferred automatically.
 :::
+
+## Changing the host
+
+The development server URL, configured via `config/vite.php`, is used for generating the tags and telling the Vite server which address to listen to. 
+
+This may not be desirable depending on your environment, for instance if working in a container. In such a case, you may configure Vite to listen to another host:
+
+```ts {6}
+import { defineConfig } from 'vite'
+import laravel from 'vite-plugin-laravel'
+
+export default defineConfig({
+  server: {
+    host: '0.0.0.0'
+  },
+  plugins: [
+    laravel(),
+  ],
+})
+```
+
+Alternatively, you can use the `--host 0.0.0.0` command line argument to do the same without changing the configuration file.

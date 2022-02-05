@@ -17,7 +17,7 @@
   "scripts": {
     "prepare": "npm run build",
     "build": "tsup src/index.ts",
-		"test": "vitest"
+    "test": "vitest"
   },
   "devDependencies": {
     "@types/debug": "^4.1.7",
@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "debug": "^4.3.3",
+    "defu": "^5.0.0",
     "execa": "^6.0.0"
   }
 }

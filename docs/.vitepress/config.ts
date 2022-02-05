@@ -87,6 +87,7 @@ const sidebar: SidebarConfig = {
 				{ text: 'postcss', link: '/configuration/vite-plugin#postcss' },
 				{ text: 'ssr', link: '/configuration/vite-plugin#ssr' },
 				{ text: 'updateTsConfig', link: '/configuration/vite-plugin#updateTsConfig' },
+				{ text: 'allowOverrides', link: '/configuration/vite-plugin#allowOverrides' },
 			],
 		},
 	],

@@ -44,3 +44,9 @@ This option has the shape of [Vite's `ssr` option](https://vitejs.dev/config/#op
 ## `updateTsConfig`
 
 This option defines whether to update the `tsconfig.json` file with the aliases defined in `config/vite.php`'s `aliases`.
+
+## `allowOverrides`
+
+This option defines whether overrides defined by the user should be taken into account. This is `true` by default.
+
+For instance, the `--host 0.0.0.0` flag won't work if you set `allowOverrides` to `false`.

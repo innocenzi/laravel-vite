@@ -4,6 +4,7 @@ import path from 'node:path'
 import makeDebugger from 'debug'
 import { execaSync } from 'execa'
 import { Plugin, UserConfig, loadEnv } from 'vite'
+import defu from 'defu'
 import { finish, wrap } from './utils'
 import type { Certificates, Options, ResolvedConfiguration, ServerConfiguration } from './types'
 import { updateAliases } from './alias'
@@ -178,7 +179,7 @@ export const config = (options: Options = {}): Plugin => ({
 			server: {
 				host: hostname,
 				https: usesHttps
-					? { maxVersion: 'TLSv1.2', key, cert }
+					? { maxVersion: 'TLSv1.2' as const, key, cert }
 					: protocol === 'https:',
 				port: port ? Number(port) : 3000,
 				strictPort: !process.argv.includes('--no-strict-port'),
@@ -206,9 +207,17 @@ export const config = (options: Options = {}): Plugin => ({
 			css: { postcss: options.postcss ? { plugins: options.postcss } : baseConfig.css?.postcss },
 		}
 
-		debug('Resolved config:', resolvedConfig)
+		// If overrides are explicitely disabled, we don't merge the configuration back
+		// from the base config.
+		const finalConfig = options.allowOverrides === false
+			? resolvedConfig
+			: defu(baseConfig, resolvedConfig)
 
-		return resolvedConfig
+		debug('Initial config:', baseConfig)
+		debug('Resolved config:', resolvedConfig)
+		debug('Final config:', finalConfig)
+
+		return finalConfig
 	},
 })
 
