@@ -6,7 +6,7 @@ title: Entrypoints
 
 ## Overview
 
-Entrypoints are scripts or CSS files that Laravel Vite will recognize and use. They are the equivalent of Laravel Mix's `.js` or `.postCss`'s first parameters and are configured in `config/vite.php`. See the [related documentation](/configuration/laravel-package#entrypoints).
+Entrypoints are scripts or CSS files that Laravel Vite will recognize and use. They are the equivalent of Laravel Mix's `.js` or `.postCss`'s first parameters and are configured in `config/vite.php`. See the [relevant documentation](/configuration/laravel-package#entrypoints).
 
 Within Laravel Vite, it means they will be passed to Vite and will be injected automatically via the `@vite` directive.
 

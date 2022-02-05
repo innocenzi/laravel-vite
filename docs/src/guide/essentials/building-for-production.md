@@ -12,7 +12,7 @@ By default, assets are generated in `/public/build`. When using Laravel Mix, the
 
 With Vite, this is bad practice because the build directory is emptied at build-time. It also has the benefits of making the assets more organized and easier to ignore through `.gitignore`.
 
-If you wish, you can change the build path. See the [related documentation](/configuration/laravel-package.html#build-path).
+If you wish, you can change the build path. See the [relevant documentation](/configuration/laravel-package.html#build-path).
 
 ## `ASSET_URL` environment variable
 

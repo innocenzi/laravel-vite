@@ -17,7 +17,7 @@ As a reminder, you can publish the configuration using the following command:
 
 This option is an array of configurations, each one specific to a Vite configuration file. Most of the time, only one configuration is needed, the `default` one. 
 
-But sometimes, you may need to have multiple bundles, in which case you can define multiple configurations. You can learn more about that in the [related documentation](/guide/extra-topics/multiple-configurations).
+But sometimes, you may need to have multiple bundles, in which case you can define multiple configurations. You can learn more about that in the [relevant documentation](/guide/extra-topics/multiple-configurations).
 
 ### `entrypoints`
 
