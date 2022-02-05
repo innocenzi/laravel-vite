@@ -31,7 +31,7 @@ const head: HeadConfig[] = [
 ]
 
 if (process.env.NODE_ENV === 'production') {
-	head.push(['script', { async: 'true', src: 'https://unpkg.com/thesemetrics@latest' }])
+	head.push(['script', { 'src': 'https://microanalytics.io/js/script.js', 'data-host': 'https://microanalytics.io', 'data-dnt': 'false', 'id': 'ZwSg9rf6GA', 'async': 'true', 'defer': 'true' }])
 }
 
 const nav: NavItem[] = [
