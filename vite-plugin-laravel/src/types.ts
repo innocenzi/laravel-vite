@@ -56,6 +56,8 @@ export interface Options {
 
 	/**
 	 * Whether to automatically update the tsconfig.json file with aliases.
+	 *
+	 * @deprecated Use `vite.commands.artisan` => `vite:tsconfig` instead.
 	 */
 	updateTsConfig?: boolean
 

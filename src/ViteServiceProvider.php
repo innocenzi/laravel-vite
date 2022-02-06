@@ -4,6 +4,7 @@ namespace Innocenzi\Vite;
 
 use Illuminate\View\Compilers\BladeCompiler;
 use Innocenzi\Vite\Commands\ExportConfigurationCommand;
+use Innocenzi\Vite\Commands\UpdateTsconfigCommand;
 use Innocenzi\Vite\EntrypointsFinder\DefaultEntrypointsFinder;
 use Innocenzi\Vite\EntrypointsFinder\EntrypointsFinder;
 use Innocenzi\Vite\HeartbeatCheckers\HeartbeatChecker;
@@ -21,7 +22,8 @@ class ViteServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-vite')
             ->hasConfigFile()
-            ->hasCommand(ExportConfigurationCommand::class);
+            ->hasCommand(ExportConfigurationCommand::class)
+            ->hasCommand(UpdateTsconfigCommand::class);
     }
 
     public function registeringPackage()

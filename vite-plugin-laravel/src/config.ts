@@ -1,13 +1,13 @@
 import os from 'node:os'
 import fs from 'node:fs'
 import path from 'node:path'
+import defu from 'defu'
+import c from 'chalk'
 import makeDebugger from 'debug'
 import { execaSync } from 'execa'
 import { Plugin, UserConfig, loadEnv } from 'vite'
-import defu from 'defu'
 import { finish, wrap } from './utils'
 import type { Certificates, Options, ResolvedConfiguration, ServerConfiguration } from './types'
-import { updateAliases } from './alias'
 
 const PREFIX = 'vite:laravel:config'
 const CONFIG_ARTISAN_COMMAND = 'vite:config'
@@ -167,8 +167,9 @@ export const config = (options: Options = {}): Plugin => ({
 		})
 
 		// Updates aliases
-		if (command !== 'build' && options.updateTsConfig !== false) {
-			updateAliases(serverConfig.aliases)
+		if (command !== 'build' && options.updateTsConfig) {
+			// eslint-disable-next-line no-console
+			console.warn(c.yellow.bold(`(!) ${c.cyan(PREFIX)} To update the tsconfig.json file, use php artisan vite:tsconfig instead. You can add it in your vite.php artisan commands.`))
 		}
 
 		// Returns config

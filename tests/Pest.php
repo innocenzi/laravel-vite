@@ -11,6 +11,7 @@
 |
 */
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Innocenzi\Vite\Configuration;
@@ -101,4 +102,23 @@ function with_dev_server(bool $reacheable = true)
         Vite::CLIENT_SCRIPT_PATH => Http::response(status: 200),
         '*' => Http::response(status: 404),
     ]);
+}
+
+/**
+ * Creates a sandbox in which the base path is updated.
+ */
+function sandbox(callable $callback, string $base = __DIR__, bool $preserve = false): void
+{
+    $sandbox_base = $base . '/__sandbox__/';
+    $sandbox_path = $sandbox_base . Str::random();
+    $initial_base_path = base_path();
+
+    app()->setBasePath($sandbox_path);
+    File::makeDirectory($sandbox_path, recursive: true);
+    $callback($sandbox_path);
+    app()->setBasePath($initial_base_path);
+
+    if (!$preserve) {
+        File::deleteDirectory($sandbox_base);
+    }
 }
