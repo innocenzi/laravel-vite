@@ -85,13 +85,6 @@ Then, you can configure it again, with the following changes:
 - `build_path` -> `configs.default.build_path`
 - `commands` -> `commands.artisan`
 
-#### The `vite:aliases` artisan command
-
-Additionally, the `vite:aliases` artisan command no longer exists. 
-
-Its functionality has been moved to the plugin, which you can disable by setting the [`updateTsConfig`](/configuration/vite-plugin.html#updatetsconfig) option to `false`.
-
-
 ### The `@vite` directive
 
 This directive's first parameter was previously used to specify an entrypoint to include. If you were using that functionality, you should now use the `@tag` directive. 
@@ -99,6 +92,10 @@ This directive's first parameter was previously used to specify an entrypoint to
 You can learn more about the new directives in [their documentation](/guide/features/directives.html#tag).
 
 ## Low-impact changes
+
+### The `vite:aliases` artisan command
+
+This command has been renamed to `vite:tsconfig`. Additionally, it will now preserve the indentation of the existing `tsconfig.json` if there is one.
 
 ### The `Vite::generateTagsUsing` method 
 
