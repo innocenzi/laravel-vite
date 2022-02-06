@@ -39,7 +39,7 @@ Vite supports a few import modifiers, such as `?url` or `?raw`. You can learn mo
 
 ## Absolute URLs
 
-When trying to reference assets stored in the `public` directory, you will need to tell Vite not to bundle them, otherwise the build will fail (since the content of `public` should not be processed through Vite).
+When trying to reference assets stored in the `public` directory, you will need to tell Vite not to bundle them, otherwise the build will fail (see the [relevant Vite issue](https://github.com/vitejs/vite/issues/4836)).
 
 One way of doing that is using a dynamic path or a variable. For instance, if you have an image stored in `public/logo.png`, you can reference it like the following:
 
