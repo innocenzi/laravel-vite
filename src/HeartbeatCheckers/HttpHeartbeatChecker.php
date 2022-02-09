@@ -18,7 +18,7 @@ final class HttpHeartbeatChecker implements HeartbeatChecker
                 'verify' => false,
             ]);
 
-            if (Str::startsWith(app()->version(), '9')) {
+            if ((int) Str::substr(app()->version(), 0, 1) >= 9) {
                 $request->connectTimeout($timeout);
             }
 
