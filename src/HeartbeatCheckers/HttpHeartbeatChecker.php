@@ -13,10 +13,16 @@ final class HttpHeartbeatChecker implements HeartbeatChecker
         try {
             $url = Str::of($url)->finish('/')->append(Vite::CLIENT_SCRIPT_PATH);
 
-            return Http::withOptions([
+            $request = Http::withOptions([
                 'connect_timeout' => $timeout,
                 'verify' => false,
-            ])->get($url)->successful();
+            ]);
+
+            if (Str::startsWith(app()->version(), '9')) {
+                $request->connectTimeout($timeout);
+            }
+
+            return $request->get($url)->successful();
         } catch (\Throwable) {
         }
 
