@@ -30,7 +30,7 @@ Paths in your scripts, CSS and import statements will automatically be handled b
 Its sole purpose is to serve assets, such as scripts or stylesheets. It is not where your application is served: you still need to use something like [Valet](https://laravel.com/docs/8.x/valet), [Laragon](https://laragon.org/), [Docker](https://www.docker.com/) or `php artisan serve`.
 :::
 
-## Using HTTP over TSL
+## Using HTTP over TLS
 
 If you are using `https` locally, which you should, you will need to update the development server's URL to use the `https` protocol, and you will need to fill your environment variables with paths to your certificates.
 
