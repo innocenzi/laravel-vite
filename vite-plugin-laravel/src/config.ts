@@ -41,6 +41,14 @@ export function callShell(executable: string, ...params: string[]): string {
 export function readConfig(options: Options, env: NodeJS.ProcessEnv, name?: string): ResolvedConfiguration {
 	const executable = getPhpExecutablePath(options, env)
 	const configFromJson = (json: any, name?: string) => {
+		if (!json) {
+			throw new Error('The configuration object is empty')
+		}
+
+		if (!json.configs) {
+			throw new Error('The configuration object do not contain a "configs" property. Is innocenzi/laravel-vite up-to-date?')
+		}
+
 		if (name && !(name in json.configs)) {
 			throw new Error(`"${name}" is not defined in "config/vite.php"`)
 		}
