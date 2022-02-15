@@ -13,6 +13,14 @@ The main changes are related to the configuration files, which structure changed
 
 ## High-impact changes
 
+### Update `innocenzi/laravel-vite`
+
+Although no major breaking change is expected, the package is currently in beta, so you need to specify the version:
+
+```sh
+> composer require innocenzi/laravel-vite:0.2.*
+```
+
 ### Replace `laravel-vite` by `vite-plugin-laravel`
 
 First, make the changes to your dependencies:
