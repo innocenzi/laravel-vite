@@ -10,6 +10,7 @@ exports[`does not read config the CONFIG_PATH_VITE if config is set to false 1`]
     "artisan": [],
     "shell": [],
   },
+  "configName": "artisan",
   "dev_server": {
     "cert": null,
     "enabled": true,
@@ -39,6 +40,7 @@ exports[`reads config from the CONFIG_PATH_VITE environment variable 1`] = `
     "artisan": [],
     "shell": [],
   },
+  "configName": "default",
   "dev_server": {
     "cert": null,
     "enabled": true,
@@ -83,6 +85,7 @@ exports[`reads config from the given path 1`] = `
     "artisan": [],
     "shell": [],
   },
+  "configName": "default",
   "dev_server": {
     "cert": null,
     "enabled": true,
@@ -112,6 +115,7 @@ exports[`tries to read the specified configuration from php 1`] = `
     "artisan": [],
     "shell": [],
   },
+  "configName": "artisan",
   "dev_server": {
     "cert": null,
     "enabled": true,
