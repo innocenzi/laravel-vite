@@ -56,7 +56,7 @@ With that in mind, you can start replacing Mix. First, you can delete your `webp
 > npm remove laravel-mix
 
 # Require the packages
-> composer require innocenzi/laravel-vite
+> composer require innocenzi/laravel-vite:0.2.*
 > npm i -D vite vite-plugin-laravel
 ```
 
