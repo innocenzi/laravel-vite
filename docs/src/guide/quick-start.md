@@ -24,7 +24,7 @@ The recommended and the easiest approach to get started with Laravel Vite is to 
 To apply the preset, run the following command:
 
 ```sh
-> npx @preset/cli laravel:vite
+> npx @preset/cli apply laravel:vite
 ```
 
 &nbsp;
