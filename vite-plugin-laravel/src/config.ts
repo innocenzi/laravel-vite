@@ -119,116 +119,134 @@ function findConfigName(): string | undefined {
 /**
  * Loads the Laravel Vite configuration.
  */
-export const config = (options: Options = {}): Plugin => ({
-	name: 'laravel:config',
-	enforce: 'post',
-	config: (baseConfig, { command, mode }) => {
-		// Loads .env
-		const env = loadEnv(mode, process.cwd(), '')
+export const config = (options: Options = {}): Plugin => {
+	let configName: string | undefined
+	let env: Record<string, string>
+	let building: boolean = false
 
-		// Infer config name
-		const configName = findConfigName()
-		debug('Config name:', configName ?? 'not found')
+	return {
+		name: 'laravel:config',
+		enforce: 'post',
+		config: (baseConfig, { command, mode }) => {
+			building = command === 'build'
 
-		// Loads config
-		const serverConfig = readConfig(options, env, configName)
-		debug('Configuration from PHP:', serverConfig)
+			// Loads .env
+			env = loadEnv(mode, process.cwd(), '')
 
-		// Sets base
-		const base = finish(`${finish(env.ASSET_URL, '/', '/')}${command === 'build' ? `${serverConfig.build_path}/` : ''}`, '/')
-		debug('Base URL:', base || '<empty>')
+			// Infer config name
+			configName = findConfigName()
+			debug('Config name:', configName ?? 'not found')
 
-		// Parses dev url
-		const { protocol, hostname, port } = new URL(serverConfig.dev_server.url || 'http://localhost:3000')
-		const { key, cert } = findCertificates(serverConfig, env, hostname)
-		const usesHttps = key && cert && protocol === 'https:'
-		debug('Uses HTTPS:', usesHttps, { key, cert, protocol, hostname, port })
+			// Loads config
+			const serverConfig = readConfig(options, env, configName)
+			debug('Configuration from PHP:', serverConfig)
 
-		// Entrypoints
-		const ssr = process.argv.includes('--ssr')
-		const entrypoints = ssr ? serverConfig.entrypoints.ssr : serverConfig.entrypoints.paths
+			// Sets base
+			const base = finish(`${finish(env.ASSET_URL, '/', '/')}${command === 'build' ? `${serverConfig.build_path}/` : ''}`, '/')
+			debug('Base URL:', base || '<empty>')
 
-		// Runs commands
-		const executable = getPhpExecutablePath(options, env)
-		Object.entries(serverConfig.commands?.artisan ?? {}).forEach(([command, args]) => {
-			if (!isNaN(+command)) {
-				debug('Running artisan command without arguments:', executable, 'artisan', args)
-				debug(callArtisan(executable, args))
+			// Parses dev url
+			const { protocol, hostname, port } = new URL(serverConfig.dev_server.url || 'http://localhost:3000')
+			const { key, cert } = findCertificates(serverConfig, env, hostname)
+			const usesHttps = key && cert && protocol === 'https:'
+			debug('Uses HTTPS:', usesHttps, { key, cert, protocol, hostname, port })
 
-				return
+			// Entrypoints
+			const ssr = process.argv.includes('--ssr')
+			const entrypoints = ssr ? serverConfig.entrypoints.ssr : serverConfig.entrypoints.paths
+
+			// Runs commands
+			const executable = getPhpExecutablePath(options, env)
+			Object.entries(serverConfig.commands?.artisan ?? {}).forEach(([command, args]) => {
+				if (!isNaN(+command)) {
+					debug('Running artisan command without arguments:', executable, 'artisan', args)
+					debug(callArtisan(executable, args))
+
+					return
+				}
+
+				debug('Running artisan command:', executable, 'artisan', command, ...args)
+				debug(callArtisan(executable, command, ...args))
+			})
+
+			Object.entries(serverConfig.commands?.shell ?? {}).forEach(([command, args]) => {
+				if (!isNaN(+command)) {
+					debug('Running shell command without arguments:', args)
+					debug(callShell(args))
+
+					return
+				}
+
+				debug('Running shell command:', command, ...args)
+				debug(callShell(command, ...args))
+			})
+
+			// Updates aliases
+			if (command !== 'build' && options.updateTsConfig) {
+				// eslint-disable-next-line no-console
+				console.warn(c.yellow.bold(`(!) ${c.cyan(PREFIX)} To update the tsconfig.json file, use php artisan vite:tsconfig instead. You can add it in your vite.php artisan commands.`))
 			}
 
-			debug('Running artisan command:', executable, 'artisan', command, ...args)
-			debug(callArtisan(executable, command, ...args))
-		})
-
-		Object.entries(serverConfig.commands?.shell ?? {}).forEach(([command, args]) => {
-			if (!isNaN(+command)) {
-				debug('Running shell command without arguments:', args)
-				debug(callShell(args))
-
-				return
-			}
-
-			debug('Running shell command:', command, ...args)
-			debug(callShell(command, ...args))
-		})
-
-		// Updates aliases
-		if (command !== 'build' && options.updateTsConfig) {
-			// eslint-disable-next-line no-console
-			console.warn(c.yellow.bold(`(!) ${c.cyan(PREFIX)} To update the tsconfig.json file, use php artisan vite:tsconfig instead. You can add it in your vite.php artisan commands.`))
-		}
-
-		// Returns config
-		const resolvedConfig: UserConfig = {
-			envPrefix: wrap(serverConfig.env_prefixes, ['MIX_', 'VITE_', 'SCRIPT_']),
-			base,
-			publicDir: false,
-			server: {
-				host: hostname,
-				https: usesHttps
-					? { maxVersion: 'TLSv1.2' as const, key, cert }
-					: protocol === 'https:',
-				port: port ? Number(port) : 3000,
-				strictPort: !process.argv.includes('--no-strict-port'),
-				origin: `${protocol}//${hostname}:${port}`,
-				hmr: {
+			// Returns config
+			const resolvedConfig: UserConfig = {
+				envPrefix: wrap(serverConfig.env_prefixes, ['MIX_', 'VITE_', 'SCRIPT_']),
+				base,
+				publicDir: false,
+				server: {
 					host: hostname,
-					port: Number(port) || 3000,
+					https: usesHttps
+						? { maxVersion: 'TLSv1.2' as const, key, cert }
+						: protocol === 'https:',
+					port: port ? Number(port) : 3000,
+					strictPort: !process.argv.includes('--no-strict-port'),
+					origin: `${protocol}//${hostname}:${port}`,
+					hmr: {
+						host: hostname,
+						port: Number(port) || 3000,
+					},
 				},
-			},
-			build: {
-				assetsDir: 'assets',
-				ssrManifest: ssr,
-				manifest: !ssr,
-				ssr,
-				outDir: `public/${serverConfig.build_path || 'build'}`,
-				rollupOptions: {
-					input: entrypoints,
+				build: {
+					assetsDir: 'assets',
+					ssrManifest: ssr,
+					manifest: !ssr,
+					ssr,
+					outDir: `public/${serverConfig.build_path || 'build'}`,
+					rollupOptions: {
+						input: entrypoints,
+					},
 				},
-			},
-			resolve: {
-				alias: Object.fromEntries(Object.entries(serverConfig.aliases || {}).map(([alias, directory]) => {
-					return [alias, path.join(process.cwd(), directory)]
-				})),
-			},
-			css: { postcss: options.postcss ? { plugins: options.postcss } : baseConfig.css?.postcss },
-		}
+				resolve: {
+					alias: Object.fromEntries(Object.entries(serverConfig.aliases || {}).map(([alias, directory]) => {
+						return [alias, path.join(process.cwd(), directory)]
+					})),
+				},
+				css: { postcss: options.postcss ? { plugins: options.postcss } : baseConfig.css?.postcss },
+			}
 
-		// If overrides are explicitely disabled, we don't merge the configuration back
-		// from the base config.
-		const finalConfig = options.allowOverrides === false
-			? resolvedConfig
-			: defu(baseConfig, resolvedConfig)
+			// If overrides are explicitely disabled, we don't merge the configuration back
+			// from the base config.
+			const finalConfig = options.allowOverrides === false
+				? resolvedConfig
+				: defu(baseConfig, resolvedConfig)
 
-		debug('Initial config:', baseConfig)
-		debug('Resolved config:', resolvedConfig)
-		debug('Final config:', finalConfig)
+			debug('Initial config:', baseConfig)
+			debug('Resolved config:', resolvedConfig)
+			debug('Final config:', finalConfig)
 
-		return finalConfig
-	},
-})
+			return finalConfig
+		},
+		configResolved: (config) => {
+			setTimeout(() => {
+				config.logger.info(`\n    ${c.bgGreen.bold(' LARAVEL ')}\n`)
+				if (!building) {
+					config.logger.info(`  > Application URL: ${c.cyan(env.APP_URL)}`)
+				}
+				config.logger.info(`  > Current configuration: ${c.cyan(configName || 'default')}`)
+				config.logger.info(`  > Environment: ${c.cyan(env.APP_ENV)}\n`)
+			}, 50)
+		},
+	}
+}
 
 /**
  * Tries to find certificates from the environment.
