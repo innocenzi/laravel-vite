@@ -10,7 +10,7 @@ editLink: false
 Laravel Vite is a project that aims to integrate [Vite](https://vitejs.dev) as seemlessly as possible with [Laravel](https://laravel.com). It consists of three parts:
 
 - A PHP package, which provides support for parsing Vite's [manifest](https://vitejs.dev/guide/backend-integration.html#backend-integration), [Blade directives](/guide/features/directives), and [helper functions](/guide/features/helpers).
-- A Vite plugin, which leverages Laravel's configuration to integrate with Vite, and provides support for SSR and multiple confiurations.
+- A Vite plugin, which leverages Laravel's configuration to integrate with Vite, and provides support for SSR and multiple configurations.
 - A [preset](https://preset.dev), which installs Vite in a fresh Laravel project with just one command.
 
 ## Traditional approach
