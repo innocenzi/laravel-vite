@@ -125,6 +125,7 @@ const sidebar: SidebarConfig = {
 				{ text: 'Vite with Inertia', link: '/guide/extra-topics/inertia' },
 				{ text: 'Multiple configurations', link: '/guide/extra-topics/multiple-configurations' },
 				{ text: 'Tag generation', link: '/guide/extra-topics/tag-generation' },
+				{ text: 'Path to PHP', link: '/guide/extra-topics/php-path' },
 				{ text: 'Troubleshooting', link: '/guide/extra-topics/troubleshooting' },
 			],
 		},
