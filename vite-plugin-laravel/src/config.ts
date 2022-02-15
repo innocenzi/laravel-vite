@@ -6,6 +6,7 @@ import c from 'chalk'
 import makeDebugger from 'debug'
 import { execaSync } from 'execa'
 import { Plugin, UserConfig, loadEnv } from 'vite'
+import { version } from '../package.json'
 import { finish, wrap } from './utils'
 import type { Certificates, Options, ResolvedConfiguration, ServerConfiguration } from './types'
 
@@ -54,6 +55,7 @@ export function readConfig(options: Options, env: NodeJS.ProcessEnv, name?: stri
 		}
 
 		return <ResolvedConfiguration>{
+			configName: name ?? json.default,
 			commands: json.commands,
 			aliases: json.aliases,
 			...json.configs[name ?? json.default],
@@ -120,7 +122,7 @@ function findConfigName(): string | undefined {
  * Loads the Laravel Vite configuration.
  */
 export const config = (options: Options = {}): Plugin => {
-	let configName: string | undefined
+	let serverConfig: ResolvedConfiguration
 	let env: Record<string, string>
 	let building: boolean = false
 
@@ -134,11 +136,11 @@ export const config = (options: Options = {}): Plugin => {
 			env = loadEnv(mode, process.cwd(), '')
 
 			// Infer config name
-			configName = findConfigName()
-			debug('Config name:', configName ?? 'not found')
+			const configName = findConfigName()
+			debug('Config name:', configName ?? 'not specified')
 
 			// Loads config
-			const serverConfig = readConfig(options, env, configName)
+			serverConfig = readConfig(options, env, configName)
 			debug('Configuration from PHP:', serverConfig)
 
 			// Sets base
@@ -237,12 +239,12 @@ export const config = (options: Options = {}): Plugin => {
 		},
 		configResolved: (config) => {
 			setTimeout(() => {
-				config.logger.info(`\n    ${c.bgGreen.bold(' LARAVEL ')}\n`)
 				if (!building) {
-					config.logger.info(`  > Application URL: ${c.cyan(env.APP_URL)}`)
+					config.logger.info(`  > Application URL:  ${c.cyan(env.APP_URL)}`)
 				}
-				config.logger.info(`  > Current configuration: ${c.cyan(configName || 'default')}`)
-				config.logger.info(`  > Environment: ${c.cyan(env.APP_ENV)}\n`)
+				config.logger.info(`  > Configuration:    ${c.gray(serverConfig.configName)}`)
+				config.logger.info(`  > Environment:      ${c.gray(env.APP_ENV)}`)
+				config.logger.info(`  > Version:          ${c.gray(`v${version}`)}\n`)
 			}, 50)
 		},
 	}

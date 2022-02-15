@@ -29,6 +29,7 @@ export interface ViteConfiguration {
 }
 
 export type ResolvedConfiguration = ViteConfiguration & {
+	configName: string
 	aliases: Record<string, string>
 }
 
