@@ -22,7 +22,7 @@
     <img alt="npm" src="https://img.shields.io/npm/v/laravel-vite">
   </a>
   <span>&nbsp;</span>
-  <a href="https://laravel-vite.dev">
+  <a href="https://legacy.laravel-vite.dev">
     <img alt="docs" src="https://img.shields.io/badge/documentation-read-blue">
   </a>
   <br />
