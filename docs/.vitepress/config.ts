@@ -88,6 +88,7 @@ const sidebar: SidebarConfig = {
 				{ text: 'ssr', link: '/configuration/vite-plugin#ssr' },
 				{ text: 'updateTsConfig', link: '/configuration/vite-plugin#updateTsConfig' },
 				{ text: 'allowOverrides', link: '/configuration/vite-plugin#allowOverrides' },
+				{ text: 'watch', link: '/configuration/vite-plugin#watch' },
 			],
 		},
 	],
@@ -108,6 +109,7 @@ const sidebar: SidebarConfig = {
 				{ text: 'Working with assets', link: '/guide/essentials/working-with-assets' },
 				{ text: 'Configuration', link: '/guide/essentials/configuration' },
 				{ text: 'Building for production', link: '/guide/essentials/building-for-production' },
+				{ text: 'Tag generation', link: '/guide/essentials/tag-generation' },
 			],
 		},
 		{
@@ -124,7 +126,6 @@ const sidebar: SidebarConfig = {
 			items: [
 				{ text: 'Vite with Inertia', link: '/guide/extra-topics/inertia' },
 				{ text: 'Multiple configurations', link: '/guide/extra-topics/multiple-configurations' },
-				{ text: 'Tag generation', link: '/guide/extra-topics/tag-generation' },
 				{ text: 'Path to PHP', link: '/guide/extra-topics/php-path' },
 				{ text: 'Troubleshooting', link: '/guide/extra-topics/troubleshooting' },
 			],
