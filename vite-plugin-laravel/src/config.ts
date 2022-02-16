@@ -124,14 +124,11 @@ function findConfigName(): string | undefined {
 export const config = (options: Options = {}): Plugin => {
 	let serverConfig: ResolvedConfiguration
 	let env: Record<string, string>
-	let building: boolean = false
 
 	return {
 		name: 'laravel:config',
 		enforce: 'post',
 		config: (baseConfig, { command, mode }) => {
-			building = command === 'build'
-
 			// Loads .env
 			env = loadEnv(mode, process.cwd(), '')
 
@@ -237,16 +234,16 @@ export const config = (options: Options = {}): Plugin => {
 
 			return finalConfig
 		},
-		configResolved: (config) => {
-			setTimeout(() => {
-				if (!building) {
-					config.logger.info(`  > Application URL:  ${c.cyan(env.APP_URL)}`)
-				}
-				config.logger.info(`  > Configuration:    ${c.gray(serverConfig.configName)}`)
-				config.logger.info(`  > Environment:      ${c.gray(env.APP_ENV)}`)
-				config.logger.info(`  > Version:          ${c.gray(`v${version}`)}\n`)
-			}, 50)
-		},
+		configureServer: (server) => {
+			server.httpServer?.once('listening', () => {
+				setTimeout(() => {
+					server.config.logger.info(`  > Application URL:  ${c.cyan(env.APP_URL)}`)
+					server.config.logger.info(`  > Configuration:    ${c.gray(serverConfig.configName)}`)
+					server.config.logger.info(`  > Environment:      ${c.gray(env.APP_ENV)}`)
+					server.config.logger.info(`  > Version:          ${c.gray(`v${version}`)}\n`)
+				}, 10)
+			})
+		}
 	}
 }
 
