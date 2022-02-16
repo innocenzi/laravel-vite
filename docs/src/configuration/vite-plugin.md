@@ -14,9 +14,9 @@ import { defineConfig } from 'vite'
 import laravel from 'vite-plugin-laravel'
 
 export default defineConfig({
-	plugins: [
-		laravel({ /* ... */ })
-	]
+  plugins: [
+    laravel({ /* ... */ })
+  ]
 })
 ```
 :::
@@ -50,3 +50,65 @@ This option defines whether to update the `tsconfig.json` file with the aliases 
 This option defines whether overrides defined by the user should be taken into account. This is `true` by default.
 
 For instance, the `--host 0.0.0.0` flag won't work if you set `allowOverrides` to `false`.
+
+## `watch`
+
+This option is a convenient way of performing actions when a file changes.
+
+### As an array
+
+If `watch` is an array, its values must implement the following interface:
+
+```ts
+interface WatchInput {
+  condition: (file: string) => boolean
+  handle: (parameters: { file: string; server: ViteDevServer }) => void
+}
+```
+
+The `condition` callback takes the watched file that just changed and returns a value indicating whether `handle` should be called.
+
+The `handle` callback takes the same `file` as well as the Vite development server instance and can perform whatever action you want.
+
+### As an object
+
+If `watch` is an object, the following properties are available:
+
+```ts
+interface WatchOptions {
+  reloadOnBladeUpdates?: boolean
+  reloadOnConfigUpdates?: boolean
+  input?: WatchInput[]
+}
+```
+
+#### `reloadOnBladeUpdates`
+
+By default, Vite will perform a full reload when a Blade file is updated. You can set this option to `false` to disable this behavior.
+
+#### `reloadOnConfigUpdates`
+
+By default, Vite will invalidate the module graph and perform a full reload when the `config/vite.php` file is updated. You can set this option to `false` to disable this behavior.
+
+#### `input`
+
+In this case, `input` would be the same as if `watch` was an array. See the [documentation above](/configuration/vite-plugin.html#as-an-array).
+
+### Example
+
+The following example re-generates the translation files when a translation changes, and re-generates the route file when routes are updated.
+
+```ts
+laravel({
+  watch: [
+    {
+      condition: (file) => file.includes('resources/lang'),
+      handle: () => callArtisan(findPhpPath(), 'i18n:generate'),
+    },
+    {
+      condition: (file) => file.includes('routes/'),
+      handle: () => callArtisan(findPhpPath(), 'routes:generate'),
+    },
+  ],
+}),
+```
