@@ -109,7 +109,7 @@ This command has been renamed to `vite:tsconfig`. Additionally, it will now pres
 
 This method was used to change how the tags were generated. 
 
-It no longer exists, `Vite::makeScriptTagsUsing` and `Vite::makeStyleTagsUsing` should be used instead. You can learn more about that in the [tag generation](/guide/extra-topics/tag-generation.html) documentation.
+It no longer exists, `Vite::makeScriptTagsUsing` and `Vite::makeStyleTagsUsing` should be used instead. You can learn more about that in the [tag generation](/guide/essentials/tag-generation.html) documentation.
 
 ### The `Vite::withoutManifest` method
 

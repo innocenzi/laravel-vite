@@ -132,7 +132,7 @@ Vite has more features regarding `import.meta.env`, which you can read about in 
 
 This interface covers the logic for generating `script` and `link` tags. It can be useful to override it in case you need to add attributes such as `crossorigin` or `defer`.
 
-Read more about that in the [tag generation documentation](/guide/extra-topics/tag-generation).
+Read more about that in the [tag generation documentation](/guide/essentials/tag-generation).
 
 ### `heartbeat_checker`
 
