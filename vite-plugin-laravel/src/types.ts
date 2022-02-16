@@ -75,3 +75,20 @@ export interface Certificates {
 	key: string
 	cert: string
 }
+
+export interface PhpFinderOptions {
+	/**
+	 * Actual path to PHP. This will be used instead of
+	 */
+	path?: string
+
+	/**
+	 * Custom environment variables.
+	 */
+	env?: any
+
+	/**
+	 * Either `production` or `development`. Used for loading the environment.
+	 */
+	mode?: string
+}

@@ -4,10 +4,9 @@ import path from 'node:path'
 import defu from 'defu'
 import c from 'chalk'
 import makeDebugger from 'debug'
-import { execaSync } from 'execa'
 import { Plugin, UserConfig, loadEnv } from 'vite'
 import { version } from '../package.json'
-import { finish, wrap } from './utils'
+import { callArtisan, callShell, findPhpPath, finish, wrap } from './utils'
 import type { Certificates, Options, ResolvedConfiguration, ServerConfiguration } from './types'
 
 const PREFIX = 'vite:laravel:config'
@@ -15,32 +14,10 @@ const CONFIG_ARTISAN_COMMAND = 'vite:config'
 const debug = makeDebugger(PREFIX)
 
 /**
- * Calls an artisan command.
- */
-export function callArtisan(executable: string, ...params: string[]): string {
-	if (process.env.VITEST) {
-		return execaSync(process.env.TEST_ARTISAN_SCRIPT!, [executable, 'artisan', ...params], { encoding: 'utf-8' })?.stdout
-	}
-
-	return execaSync(executable, ['artisan', ...params])?.stdout
-}
-
-/**
- * Calls a shell command.
- */
-export function callShell(executable: string, ...params: string[]): string {
-	if (process.env.VITEST) {
-		return execaSync(process.env.TEST_ARTISAN_SCRIPT!, [executable, ...params])?.stdout
-	}
-
-	return execaSync(executable, [...params])?.stdout
-}
-
-/**
  * Reads the configuration from the `php artisan vite:config` command.
  */
 export function readConfig(options: Options, env: NodeJS.ProcessEnv, name?: string): ResolvedConfiguration {
-	const executable = getPhpExecutablePath(options, env)
+	const executable = findPhpPath({ env, path: options.php })
 	const configFromJson = (json: any, name?: string) => {
 		if (!json) {
 			throw new Error('The configuration object is empty')
@@ -155,7 +132,7 @@ export const config = (options: Options = {}): Plugin => {
 			const entrypoints = ssr ? serverConfig.entrypoints.ssr : serverConfig.entrypoints.paths
 
 			// Runs commands
-			const executable = getPhpExecutablePath(options, env)
+			const executable = findPhpPath({ env, path: options.php, mode })
 			Object.entries(serverConfig.commands?.artisan ?? {}).forEach(([command, args]) => {
 				if (!isNaN(+command)) {
 					debug('Running artisan command without arguments:', executable, 'artisan', args)
@@ -243,7 +220,7 @@ export const config = (options: Options = {}): Plugin => {
 					server.config.logger.info(`  > Version:          ${c.gray(`v${version}`)}\n`)
 				}, 10)
 			})
-		}
+		},
 	}
 }
 
@@ -307,8 +284,4 @@ export function findCertificates(cfg: ResolvedConfiguration, env: Record<string,
 		key,
 		cert,
 	}
-}
-
-function getPhpExecutablePath(options: Options = {}, env: any = {}) {
-	return options?.php || env.PHP_EXECUTABLE_PATH || 'php'
 }
