@@ -1,7 +1,8 @@
 import { PluginOption, UserConfig } from 'vite'
 import { manifest } from './manifest'
 import { config } from './config'
-import { blade } from './blade'
+import { reload } from './reload'
+import { callArtisan, callShell, findPhpPath } from './utils'
 import type { Options } from './types'
 
 export function defineConfig(base: UserConfig = {}) {
@@ -10,18 +11,18 @@ export function defineConfig(base: UserConfig = {}) {
 		plugins: [
 			...base?.plugins as any,
 			config(),
-			blade(),
+			reload(),
 			manifest(),
 		],
 	}
 }
 
 export const laravel = (options: Options = {}): PluginOption[] => [
-	blade(),
+	reload(options),
 	config(options),
 	manifest(),
 ]
 
-export { manifest, blade, config }
+export { manifest, reload, config, callArtisan, callShell, findPhpPath }
 
 export default laravel

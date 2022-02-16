@@ -1,4 +1,4 @@
-import type { SSROptions } from 'vite'
+import type { SSROptions, ViteDevServer } from 'vite'
 
 export interface ServerConfiguration {
 	default: keyof ServerConfiguration['configs']
@@ -69,6 +69,27 @@ export interface Options {
 	 * @default true
 	 */
 	allowOverrides?: boolean
+
+	/**
+	 * List of file changes to listen to.
+	 */
+	watch?: WatchInput[] | WatchOptions
+}
+
+export interface WatchOptions {
+	reloadOnBladeUpdates?: boolean
+	reloadOnConfigUpdates?: boolean
+	input?: WatchInput[]
+}
+
+export interface WatchInputHandlerParameters {
+	file: string
+	server: ViteDevServer
+}
+
+export interface WatchInput {
+	condition: (file: string) => boolean
+	handle: (parameters: WatchInputHandlerParameters) => void
 }
 
 export interface Certificates {
