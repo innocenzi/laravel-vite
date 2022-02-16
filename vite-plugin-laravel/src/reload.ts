@@ -21,23 +21,27 @@ export const reload = (options: Options = {}): Plugin => {
 
 	// When the config change, we want a full module graph
 	// invalidation as well as a full reload
-	watchOptions.input.push({
-		condition: (file) => file.endsWith('config/vite.php'),
-		handle: ({ server }) => {
-			debug('Configuration file changed, invalidating module graph and reloading')
-			server.moduleGraph.invalidateAll()
-			server.ws.send({ type: 'full-reload', path: '*' })
-		},
-	})
+	if (watchOptions.reloadOnConfigUpdates) {
+		watchOptions.input.push({
+			condition: (file) => file.endsWith('config/vite.php'),
+			handle: ({ server }) => {
+				debug('Configuration file changed, invalidating module graph and reloading')
+				server.moduleGraph.invalidateAll()
+				server.ws.send({ type: 'full-reload', path: '*' })
+			},
+		})
+	}
 
 	// Blade files
-	watchOptions.input.push({
-		condition: (file) => file.endsWith('.blade.php'),
-		handle: ({ server }) => {
-			debug('Blade file changed, reloading')
-			server.ws.send({ type: 'full-reload', path: '*' })
-		},
-	})
+	if (watchOptions.reloadOnBladeUpdates) {
+		watchOptions.input.push({
+			condition: (file) => file.endsWith('.blade.php'),
+			handle: ({ server }) => {
+				debug('Blade file changed, reloading')
+				server.ws.send({ type: 'full-reload', path: '*' })
+			},
+		})
+	}
 
 	function handleReload(file: string, server: ViteDevServer) {
 		file = file.replaceAll('\\', '/')
