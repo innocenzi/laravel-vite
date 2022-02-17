@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Innocenzi\Vite\EntrypointsFinder\EntrypointsFinder;
 use Innocenzi\Vite\Exceptions\NoBuildPathException;
 use Innocenzi\Vite\Exceptions\NoSuchConfigurationException;
+use Innocenzi\Vite\Exceptions\NoSuchEntrypointException;
 use Innocenzi\Vite\HeartbeatCheckers\HeartbeatChecker;
 use Innocenzi\Vite\TagGenerators\TagGenerator;
 
@@ -75,10 +76,8 @@ final class Configuration
             return $this->getManifest()->getEntry($entryName);
         }
 
-        return $this->getEntries()->first(
-            fn (string $chunk) => str_contains($chunk, $entryName),
-            $this->createDevelopmentTag($entryName)
-        );
+        return $this->getEntries()->first(fn (string $chunk) => str_contains($chunk, $entryName))
+            ?? throw NoSuchEntrypointException::inConfiguration($entryName, $this->getName());
     }
 
     /**

@@ -10,9 +10,28 @@ final class NoSuchEntrypointException extends ViteException implements ProvidesS
 {
     public function __construct(
         protected string $entry,
-        protected ?string $configName = null
+        protected ?string $configName = null,
+        ?string $message = null,
     ) {
-        $this->message = "Entry \"${entry}\" does not exist in the manifest.";
+        $this->message = $message ?? "Entry \"${entry}\" could not be found.";
+    }
+
+    public static function inManifest(string $entry, ?string $configName = null): self
+    {
+        return new self(
+            $entry,
+            $configName,
+            "Entry \"${entry}\" does not exist in the manifest."
+        );
+    }
+
+    public static function inConfiguration(string $entry, string $configName): self
+    {
+        return new self(
+            $entry,
+            $configName,
+            "Entry \"${entry}\" could not be found in the configuration."
+        );
     }
 
     public function getSolution(): Solution

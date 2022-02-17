@@ -4,6 +4,7 @@ use Illuminate\Routing\UrlGenerator;
 use Innocenzi\Vite\Configuration;
 use Innocenzi\Vite\Exceptions\NoBuildPathException;
 use Innocenzi\Vite\Exceptions\NoSuchConfigurationException;
+use Innocenzi\Vite\Exceptions\NoSuchEntrypointException;
 use Innocenzi\Vite\Vite;
 
 afterAll(fn () => Vite::$useManifestCallback = null);
@@ -102,6 +103,19 @@ it('finds a configured entrypoint by its name in development', function () {
 
     expect(vite()->getTag('main'))->toContain('http://localhost:3000/entrypoints/multiple/main.ts');
 });
+
+it('throws when getting a tag for an entrypoint that could not be found', function () {
+    with_dev_server();
+    set_fixtures_path('');
+    set_env('local');
+    set_vite_config('default', [
+        'entrypoints' => [
+            'paths' => 'entrypoints/multiple',
+        ],
+    ]);
+
+    vite()->getTag('main.js');
+})->throws(NoSuchEntrypointException::class, 'could not be found in the configuration');
 
 it('returns a valid asset URL in development', function () {
     with_dev_server();
