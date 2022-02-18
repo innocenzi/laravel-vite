@@ -3,6 +3,8 @@ import path from 'node:path'
 import { createHash } from 'node:crypto'
 import { Manifest, ManifestChunk, Plugin, ResolvedConfig } from 'vite'
 
+const PREFIX = 'vite:laravel:config'
+
 // The concept of this plugin was taken from the Vite Ruby project.
 // See: https://github.com/ElMassimo/vite_ruby/blob/main/vite-plugin-ruby/src/manifest.ts
 // The main difference is that instead of writing a separate manifest,
@@ -18,7 +20,7 @@ export function manifest(): Plugin {
 	let config: ResolvedConfig
 
 	return {
-		name: 'laravel:manifest',
+		name: PREFIX,
 		apply: 'build',
 		enforce: 'post',
 
