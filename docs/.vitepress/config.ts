@@ -59,6 +59,7 @@ const nav: NavItem[] = [
 					{ text: 'Vite', link: 'https://vitejs.dev/' },
 					{ text: 'Preset', link: 'https://preset.dev/' },
 					{ text: 'Laravel', link: 'https://laravel.com/' },
+					{ text: 'v0.1.x', link: 'https://legacy.laravel-vite.dev' },
 				],
 			},
 		],
