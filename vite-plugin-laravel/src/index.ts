@@ -23,6 +23,6 @@ export const laravel = (options: Options = {}): PluginOption[] => [
 	manifest(),
 ]
 
-export { manifest, reload, config, callArtisan, callShell, findPhpPath }
+export { manifest, reload, config, callArtisan, callShell, findPhpPath, Options }
 
 export default laravel
