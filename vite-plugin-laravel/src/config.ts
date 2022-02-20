@@ -135,12 +135,26 @@ export const config = (options: Options = {}): Plugin => {
 					server.config.logger.info(`\n  ${c.magenta(`${c.bold('LARAVEL')} v${version}`)}  ${c.dim(`(using ${c.white.bold(serverConfig.configName)} config)`)}\n`)
 					server.config.logger.info(`    ${c.magenta('➜')}  ${c.bold('Application')}: ${c.cyan(env.APP_URL)}`)
 					server.config.logger.info(`    ${c.magenta('➜')}  ${c.bold('Environment')}: ${c.dim(env.APP_ENV)}`)
+
+					if (!serverConfig.dev_server.enabled) {
+						const buildPath = `${server.config.root}/public/${serverConfig.build_path}`
+						const isBuilt = fs.existsSync(buildPath)
+						const color = isBuilt ? 'yellow' : 'red'
+						const hint = isBuilt
+							? `the ${c.bold(serverConfig.build_path)} directory will be used instead`
+							: `run ${c.bold('vite build')} to be able to preview your application`
+
+						server.config.logger.info(c[color](`    ${c[color]('➜')}  ${c.bold('dev_server.enabled')} is set to ${c.bold('false')}, ${hint}`))
+					}
+
+					if (!serverConfig.entrypoints.paths?.length) {
+						server.config.logger.info(c.red(`    ${c.red('➜')}  ${c.bold('entrypoints.paths')} is empty, no assets will be served and the production build will fail`))
+					}
 				}, 10)
 			})
 		},
 	}
 }
-
 
 /**
  * Reads the configuration from the `php artisan vite:config` command.

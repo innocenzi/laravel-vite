@@ -20,9 +20,11 @@ export interface ViteConfiguration {
 	}
 	build_path: string
 	dev_server: {
+		enabled: boolean
 		url: string
 		cert?: string
 		key?: string
+		build_path: string
 	}
 	commands?: CommandsConfiguration
 	env_prefixes?: string[]
