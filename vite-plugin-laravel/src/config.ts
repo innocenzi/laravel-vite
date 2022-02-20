@@ -14,88 +14,6 @@ const CONFIG_ARTISAN_COMMAND = 'vite:config'
 const debug = makeDebugger(PREFIX)
 
 /**
- * Reads the configuration from the `php artisan vite:config` command.
- */
-export function readConfig(options: Options, env: NodeJS.ProcessEnv, name?: string): ResolvedConfiguration {
-	const executable = findPhpPath({ env, path: options.php })
-	const configFromJson = (json: any, name?: string) => {
-		if (!json) {
-			throw new Error('The configuration object is empty')
-		}
-
-		if (!json.configs) {
-			throw new Error('The configuration object do not contain a "configs" property. Is innocenzi/laravel-vite up-to-date?')
-		}
-
-		if (name && !(name in json.configs)) {
-			throw new Error(`"${name}" is not defined in "config/vite.php"`)
-		}
-
-		return <ResolvedConfiguration>{
-			configName: name ?? json.default,
-			commands: json.commands,
-			aliases: json.aliases,
-			...json.configs[name ?? json.default],
-		}
-	}
-
-	try {
-		// Sets path from environment variable
-		if (!options.config && options.config !== false && env.CONFIG_PATH_VITE) {
-			debug('Setting configuration file path to CONFIG_PATH_VITE.')
-			options.config = env.CONFIG_PATH_VITE
-		}
-
-		if (typeof options.config === 'string') {
-			// Reads the config from the disk
-			if (fs.existsSync(options.config)) {
-				debug(`Reading configuration from ${options.config}`)
-				const json = JSON.parse(fs.readFileSync(options.config, { encoding: 'utf-8' })) as ServerConfiguration
-
-				return configFromJson(json, name)
-			}
-
-			// Use the specified config name
-			const json = JSON.parse(callArtisan(executable, CONFIG_ARTISAN_COMMAND)) as ServerConfiguration
-			debug('Using specified configuration name:', options.config)
-
-			return configFromJson(json, options.config)
-		}
-
-		// Returns the given config
-		if (typeof options.config === 'object') {
-			debug('Reading configuration from the given object.')
-
-			return options.config
-		}
-
-		// Asks PHP for the configuration
-		debug('Reading configuration from PHP.')
-		const json = JSON.parse(callArtisan(executable, CONFIG_ARTISAN_COMMAND)) as ServerConfiguration
-
-		return configFromJson(json, name)
-	} catch (error: any) {
-		throw new Error(`[${PREFIX}] Could not read configuration: ${error.message}`)
-	}
-}
-
-/**
- * Finds the current configuration name.
- */
-function findConfigName(): string | undefined {
-	const configIndex = process.argv.findIndex((arg) => ['-c', '--config'].includes(arg))
-
-	if (!configIndex) {
-		return
-	}
-
-	const fileNameRegex = /vite\.([\w-]+)\.config\.ts/
-	const configFile = process.argv.at(configIndex + 1)
-
-	return fileNameRegex.exec(configFile || '')?.at(1)?.trim()
-}
-
-/**
  * Loads the Laravel Vite configuration.
  */
 export const config = (options: Options = {}): Plugin => {
@@ -214,16 +132,98 @@ export const config = (options: Options = {}): Plugin => {
 		configureServer: (server) => {
 			server.httpServer?.once('listening', () => {
 				setTimeout(() => {
-					server.config.logger.info(`  > Application URL:  ${c.cyan(env.APP_URL)}`)
-					server.config.logger.info(`  > Configuration:    ${c.gray(serverConfig.configName)}`)
-					server.config.logger.info(`  > Environment:      ${c.gray(env.APP_ENV)}`)
-					server.config.logger.info(`  > Version:          ${c.gray(`v${version}`)}\n`)
+					server.config.logger.info(`\n    ${c.bgMagenta.white(`  ${c.bold('LARAVEL')} v${version}  `)}\n`)
+					server.config.logger.info(`  ${c.magenta('➜')}  Application URL:  ${c.cyan(env.APP_URL)}`)
+					server.config.logger.info(`  ${c.magenta('➜')}  Current config:   ${c.gray(serverConfig.configName)}`)
+					server.config.logger.info(`  ${c.magenta('➜')}  Environment:      ${c.gray(env.APP_ENV)}`)
 				}, 10)
 			})
 		},
 	}
 }
 
+
+/**
+ * Reads the configuration from the `php artisan vite:config` command.
+ */
+export function readConfig(options: Options, env: NodeJS.ProcessEnv, name?: string): ResolvedConfiguration {
+	const executable = findPhpPath({ env, path: options.php })
+	const configFromJson = (json: any, name?: string) => {
+		if (!json) {
+			throw new Error('The configuration object is empty')
+		}
+
+		if (!json.configs) {
+			throw new Error('The configuration object do not contain a "configs" property. Is innocenzi/laravel-vite up-to-date?')
+		}
+
+		if (name && !(name in json.configs)) {
+			throw new Error(`"${name}" is not defined in "config/vite.php"`)
+		}
+
+		return <ResolvedConfiguration>{
+			configName: name ?? json.default,
+			commands: json.commands,
+			aliases: json.aliases,
+			...json.configs[name ?? json.default],
+		}
+	}
+
+	try {
+		// Sets path from environment variable
+		if (!options.config && options.config !== false && env.CONFIG_PATH_VITE) {
+			debug('Setting configuration file path to CONFIG_PATH_VITE.')
+			options.config = env.CONFIG_PATH_VITE
+		}
+
+		if (typeof options.config === 'string') {
+			// Reads the config from the disk
+			if (fs.existsSync(options.config)) {
+				debug(`Reading configuration from ${options.config}`)
+				const json = JSON.parse(fs.readFileSync(options.config, { encoding: 'utf-8' })) as ServerConfiguration
+
+				return configFromJson(json, name)
+			}
+
+			// Use the specified config name
+			const json = JSON.parse(callArtisan(executable, CONFIG_ARTISAN_COMMAND)) as ServerConfiguration
+			debug('Using specified configuration name:', options.config)
+
+			return configFromJson(json, options.config)
+		}
+
+		// Returns the given config
+		if (typeof options.config === 'object') {
+			debug('Reading configuration from the given object.')
+
+			return options.config
+		}
+
+		// Asks PHP for the configuration
+		debug('Reading configuration from PHP.')
+		const json = JSON.parse(callArtisan(executable, CONFIG_ARTISAN_COMMAND)) as ServerConfiguration
+
+		return configFromJson(json, name)
+	} catch (error: any) {
+		throw new Error(`[${PREFIX}] Could not read configuration: ${error.message}`)
+	}
+}
+
+/**
+ * Finds the current configuration name.
+ */
+function findConfigName(): string | undefined {
+	const configIndex = process.argv.findIndex((arg) => ['-c', '--config'].includes(arg))
+
+	if (!configIndex) {
+		return
+	}
+
+	const fileNameRegex = /vite\.([\w-]+)\.config\.ts/
+	const configFile = process.argv.at(configIndex + 1)
+
+	return fileNameRegex.exec(configFile || '')?.at(1)?.trim()
+}
 /**
  * Tries to find certificates from the environment.
  */
