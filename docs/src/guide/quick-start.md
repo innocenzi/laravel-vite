@@ -65,6 +65,7 @@ Vite's configuration resides in a `vite.config.ts` file at the root of your proj
 ```ts
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import laravel from 'vite-plugin-laravel'
 
 export default defineConfig({
 	plugins: [
