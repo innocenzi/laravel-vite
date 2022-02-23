@@ -45,7 +45,7 @@ Alternatively, you can use the `--no-tailwindcss` or `--no-pest` flags to skip t
 
 ### From scratch
 
-If you don't want to use the preset, for instance if you are using [Laravel Breeze](https://github.com/laravel/breeze) or [Jetstream](https://github.com/laravel/jetstream), we recommand following the [official Inertia documentation](https://inertiajs.com/) and then switching from Webpack to Vite using our [quick start guide](/guide/quick-start#in-an-existing-project). It's not much, but it's honest work.
+If you don't want to use the preset, for instance if you are using [Laravel Breeze](https://github.com/laravel/breeze) or [Jetstream](https://github.com/laravel/jetstream), we recommend following the [official Inertia documentation](https://inertiajs.com/) and then switching from Webpack to Vite using our [quick start guide](/guide/quick-start#in-an-existing-project). It's not much, but it's honest work.
 
 ## Serving pages
 
