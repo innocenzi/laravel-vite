@@ -30,10 +30,6 @@ const head: HeadConfig[] = [
 	['meta', { property: 'og:description', content: description }],
 ]
 
-if (process.env.NODE_ENV === 'production') {
-	head.push(['script', { 'src': 'https://microanalytics.io/js/script.js', 'data-host': 'https://microanalytics.io', 'data-dnt': 'false', 'id': 'ZwSg9rf6GA', 'async': 'true', 'defer': 'true' }])
-}
-
 const nav: NavItem[] = [
 	{ text: 'Docs', link: '/guide/quick-start' },
 	{
