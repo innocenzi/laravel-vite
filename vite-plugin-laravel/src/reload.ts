@@ -1,5 +1,6 @@
 import { Plugin, ViteDevServer } from 'vite'
 import makeDebugger from 'debug'
+import { warn } from './utils'
 import { Options, WatchOptions } from './types'
 
 const PREFIX = 'vite:laravel:reload'
@@ -49,7 +50,12 @@ export const reload = (options: Options = {}): Plugin => {
 		watchOptions.input.forEach((value) => {
 			if (value.condition(file)) {
 				debug(`${file} changed, applying its handler`)
-				value.handle({ file, server })
+				try {
+					value.handle({ file, server })
+				} catch (error: any) {
+					warn(PREFIX, `Handler failed for ${file}: ${error.message}`)
+					debug('Full error:', error)
+				}
 			}
 		})
 	}
