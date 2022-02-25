@@ -6,8 +6,8 @@
     "serve": "vitepress serve"
   },
   "devDependencies": {
-    "@vue/theme": "^1.0.0",
+    "@vue/theme": "^1.0.1",
     "vitepress": "^0.21.6",
-    "vue": "^3.2.29"
+    "vue": "^3.2.31"
   }
 }
