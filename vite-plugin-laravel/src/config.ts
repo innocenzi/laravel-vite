@@ -6,7 +6,7 @@ import c from 'chalk'
 import makeDebugger from 'debug'
 import { Plugin, UserConfig, loadEnv } from 'vite'
 import { version } from '../package.json'
-import { callArtisan, callShell, findPhpPath, finish, wrap } from './utils'
+import { callArtisan, callShell, findPhpPath, finish, warn, wrap } from './utils'
 import type { Certificates, Options, ResolvedConfiguration, ServerConfiguration } from './types'
 
 const PREFIX = 'vite:laravel:config'
@@ -77,8 +77,7 @@ export const config = (options: Options = {}): Plugin => {
 
 			// Updates aliases
 			if (command !== 'build' && options.updateTsConfig) {
-				// eslint-disable-next-line no-console
-				console.warn(c.yellow.bold(`(!) ${c.cyan(PREFIX)} To update the tsconfig.json file, use php artisan vite:tsconfig instead. You can add it in your vite.php artisan commands.`))
+				warn(PREFIX, 'To update the tsconfig.json file, use php artisan vite:tsconfig instead. You can add it in your vite.php artisan commands.')
 			}
 
 			// Returns config
@@ -150,7 +149,9 @@ export const config = (options: Options = {}): Plugin => {
 					if (!serverConfig.entrypoints.paths?.length) {
 						server.config.logger.info(c.red(`    ${c.red('➜')}  ${c.bold('entrypoints.paths')} is empty, no assets will be served and the production build will fail`))
 					}
-				}, 10)
+
+					server.config.logger.info('')
+				}, 25)
 			})
 		},
 	}

@@ -1,3 +1,4 @@
+import c from 'chalk'
 import { execaSync } from 'execa'
 import { loadEnv } from 'vite'
 import { PhpFinderOptions } from './types'
@@ -65,4 +66,11 @@ export function callShell(executable: string, ...params: string[]): string {
 	}
 
 	return execaSync(executable, [...params])?.stdout
+}
+
+/**
+ * Prints a warn message.
+ */
+export function warn(prefix: string, message: string, ...args: any[]) {
+	console.warn(c.yellow.bold(`(!) ${c.cyan(prefix)} ${message}`, ...args))
 }
