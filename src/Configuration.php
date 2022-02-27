@@ -257,7 +257,7 @@ final class Configuration
     {
         $url = Str::of($this->config('dev_server.url'))->finish('/')->append($path);
 
-        if (Str::endsWith($path, ['.css', '.scss', '.sass', '.less', '.styl', '.stylus']) {
+        if (Str::endsWith($path, ['.css', '.scss', '.sass', '.less', '.styl', '.stylus'])) {
             return $this->tagGenerator->makeStyleTag($url);
         }
 
