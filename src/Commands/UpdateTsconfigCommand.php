@@ -3,21 +3,28 @@
 namespace Innocenzi\Vite\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Support\Facades\File;
 
 class UpdateTsconfigCommand extends Command
 {
-    public $signature = 'vite:tsconfig';
+    use ConfirmableTrait;
+
+    public $signature = 'vite:tsconfig {--force : Force the operation to run when in production}';
     public $description = 'Update the tsconfig.json file according to the current Vite configuration.';
 
     public function handle()
     {
-        if (!config('vite.aliases')) {
-            return;
+        if (!$this->confirmToProceed()) {
+            return self::SUCCESS;
         }
 
         if (!File::exists($this->getTsConfigPath())) {
             $this->createTsConfig();
+        }
+
+        if (!config('vite.aliases')) {
+            return;
         }
 
         $this->writeAliases();
@@ -54,6 +61,7 @@ class UpdateTsconfigCommand extends Command
         $tsconfig['compilerOptions']['baseUrl'] = '.';
         $tsconfig['compilerOptions']['paths'] = collect(config('vite.aliases'))
             ->mapWithKeys(fn ($value, $key) => ["${key}/*" => ["${value}/*"]])
+            ->merge($tsconfig['compilerOptions']['paths'] ?? [])
             ->toArray();
 
         $indent = $this->detectIndent($raw);

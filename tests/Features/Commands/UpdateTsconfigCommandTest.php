@@ -64,3 +64,22 @@ it('throws an error if the tsconfig is malformatted', function () {
         this()->artisan('vite:tsconfig');
     });
 })->throws(RuntimeException::class);
+
+it('asks for confirmation before running in production', function () {
+    sandbox(function () {
+        set_env('production');
+        this()->artisan('vite:tsconfig')
+            ->expectsConfirmation('Do you really wish to run this command?', 'yes')
+            ->assertExitCode(0);
+
+        expect(File::exists(base_path('tsconfig.json')))->toBeTrue();
+    });
+});
+
+it('does not ask for confirmation before running in production if --force is given', function () {
+    sandbox(function () {
+        set_env('production');
+        this()->artisan('vite:tsconfig', ['--force' => true])->assertExitCode(0);
+        expect(File::exists(base_path('tsconfig.json')))->toBeTrue();
+    });
+});
