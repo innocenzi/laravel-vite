@@ -3,8 +3,14 @@ import { execaSync } from 'execa'
 import { loadEnv } from 'vite'
 import { PhpFinderOptions } from './types'
 
-export function parseUrl(urlString: string) {
-	return new URL(urlString)
+export function parseUrl(urlString?: string) {
+	if (!urlString) {
+		return
+	}
+
+	try {
+		return new URL(urlString)
+	} catch {}
 }
 
 export function finish(str: string | undefined, character: string, _default: string = ''): string {

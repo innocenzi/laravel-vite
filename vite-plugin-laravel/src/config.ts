@@ -6,7 +6,7 @@ import c from 'chalk'
 import makeDebugger from 'debug'
 import { Plugin, UserConfig, loadEnv } from 'vite'
 import { version } from '../package.json'
-import { callArtisan, callShell, findPhpPath, finish, warn, wrap } from './utils'
+import { callArtisan, callShell, findPhpPath, finish, parseUrl, warn, wrap } from './utils'
 import type { Certificates, Options, ResolvedConfiguration, ServerConfiguration } from './types'
 
 const PREFIX = 'vite:laravel:config'
@@ -41,7 +41,7 @@ export const config = (options: Options = {}): Plugin => {
 
 			// Parses dev url
 			const { protocol, hostname, port } = new URL(serverConfig.dev_server.url || 'http://localhost:3000')
-			const { key, cert } = findCertificates(serverConfig, env, hostname)
+			const { key, cert } = findCertificates(serverConfig, env, env.APP_URL)
 			const usesHttps = key && cert && protocol === 'https:'
 			debug('Uses HTTPS:', usesHttps, { key, cert, protocol, hostname, port })
 
@@ -241,7 +241,7 @@ function findConfigName(): string | undefined {
 /**
  * Tries to find certificates from the environment.
  */
-export function findCertificates(cfg: ResolvedConfiguration, env: Record<string, string>, hostname?: string): Certificates {
+export function findCertificates(cfg: ResolvedConfiguration, env: Record<string, string>, appUrl?: string): Certificates {
 	let key = cfg.dev_server.key || env.DEV_SERVER_KEY || ''
 	let cert = cfg.dev_server.cert || env.DEV_SERVER_CERT || ''
 
@@ -249,7 +249,7 @@ export function findCertificates(cfg: ResolvedConfiguration, env: Record<string,
 		switch (os.platform()) {
 			case 'darwin': {
 				const home = os.homedir()
-				const domain = hostname
+				const domain = parseUrl(appUrl)?.hostname
 				const valetPath = '/.config/valet/Certificates/'
 
 				key ||= `${home}${valetPath}${domain}.key`
