@@ -48,7 +48,7 @@ Open `vite.config.ts` and make the following changes:
 - 	.withPlugin(vue)
 + export default defineConfig({
 +   plugins: [
-+     vue()
++     vue(),
 +     laravel()
 +   ]
 + })
@@ -64,7 +64,7 @@ Open `vite.config.ts` and make the following changes:
 - 	])
 + export default defineConfig({
 +   plugins: [
-+     vue()
++     vue(),
 +     laravel({
 +       postcss: [
 +      		tailwindcss(),
