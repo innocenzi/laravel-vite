@@ -62,3 +62,13 @@ if (!function_exists('vite_asset')) {
         return vite($configurationName)->getAssetUrl($path);
     }
 }
+
+if (!function_exists('vite_entry')) {
+    /**
+     * Gets the URL for the given entrypoint.
+     */
+    function vite_entry(string $path, string $configurationName = null)
+    {
+        return vite($configurationName)->getEntryUrl($path);
+    }
+}

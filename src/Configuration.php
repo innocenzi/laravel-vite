@@ -10,6 +10,7 @@ use Innocenzi\Vite\Exceptions\NoSuchConfigurationException;
 use Innocenzi\Vite\Exceptions\NoSuchEntrypointException;
 use Innocenzi\Vite\HeartbeatCheckers\HeartbeatChecker;
 use Innocenzi\Vite\TagGenerators\TagGenerator;
+use SplFileInfo;
 
 final class Configuration
 {
@@ -90,12 +91,7 @@ final class Configuration
         }
 
         return $this->findEntrypoints()
-            ->map(fn (\SplFileInfo $file) => $this->createDevelopmentTag(
-                Str::of($file->getPathname())
-                    ->replace(base_path(), '')
-                    ->replace('\\', '/')
-                    ->ltrim('/'),
-            ));
+            ->map(fn (\SplFileInfo $file) => $this->createDevelopmentTag($this->normalizePathName($file)));
     }
 
     /**
@@ -146,6 +142,24 @@ final class Configuration
         HTML;
 
         return sprintf($script, $this->config('dev_server.url'));
+    }
+
+    /**
+     * Gets an URL for the given entry.
+     */
+    public function getEntryUrl(string $entryName): string
+    {
+        if ($this->shouldUseManifest()) {
+            return $this->getManifest()->getEntry($entryName)->getAssetUrl();
+        }
+
+        try {
+            return $this->findEntrypoints()
+                ->map(fn (\SplFileInfo $file) => $this->getDevServerPathUrl($this->normalizePathName($file)))
+                ->firstOrfail(fn (string $chunk) => str_contains($chunk, $entryName));
+        } catch (\Throwable) {
+            throw NoSuchEntrypointException::inConfiguration($entryName, $this->getName());
+        }
     }
 
     /**
@@ -251,11 +265,19 @@ final class Configuration
     }
 
     /**
+     * Gets the development server URL for the given path.
+     */
+    protected function getDevServerPathUrl(string $path): string
+    {
+        return Str::of($this->config('dev_server.url'))->finish('/')->append($path);
+    }
+
+    /**
      * Creates a script tag using the development server URL.
      */
     protected function createDevelopmentTag(string $path): string
     {
-        $url = Str::of($this->config('dev_server.url'))->finish('/')->append($path);
+        $url = $this->getDevServerPathUrl($path);
 
         if (Str::endsWith($path, ['.css', '.scss', '.sass', '.less', '.styl', '.stylus'])) {
             return $this->tagGenerator->makeStyleTag($url);
@@ -285,5 +307,16 @@ final class Configuration
         }
 
         return config("vite.configs.{$this->name}", $default);
+    }
+
+    /**
+     * Gets the normalized path name for the given file.
+     */
+    protected function normalizePathName(SplFileInfo $file): string
+    {
+        return (string) Str::of($file->getPathname())
+            ->replace(base_path(), '')
+            ->replace('\\', '/')
+            ->ltrim('/');
     }
 }
