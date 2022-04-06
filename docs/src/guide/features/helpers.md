@@ -16,6 +16,17 @@ This function returns an instance of the default Vite configuration, or the spec
 echo vite()->getName(); // prints the value of config('vite.default')
 ```
 
+## `vite_entry`
+
+This function returns the URL for the given entrypoint. If the asset is not registered as an entrypoint, an exception will be thrown.
+You can specify the configuration name as the second parameter.
+
+```php
+echo vite_entry('main');
+// Local: https://localhost:3000/resources/scripts/main.ts
+// Prod:  https://app-url.test/build/assets/test.a2c636dd.js
+```
+
 ## `vite_asset`
 
 This function returns a valid URL for the given asset path. The path is not verified against the configured entrypoints. 
