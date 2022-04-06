@@ -193,3 +193,45 @@ it('does not override the mode if returning null from the callback', function ()
     set_env('local');
     expect(vite()->usesManifest())->toBeFalse();
 });
+
+it('returns an entrypoint URL in development', function () {
+    with_dev_server();
+    set_fixtures_path('');
+    set_env('local');
+    set_vite_config('default', [
+        'entrypoints' => [
+            'paths' => 'entrypoints/multiple',
+        ],
+    ]);
+
+    expect(vite()->getEntryUrl('main'))->toContain('http://localhost:3000/entrypoints/multiple/main.ts');
+});
+
+it('returns an entrypoint URL in production', function () {
+    set_fixtures_path('builds');
+    set_env('production');
+    set_vite_config('default', ['build_path' => 'with-css']);
+
+    expect(vite()->getEntryUrl('test'))->toContain('http://localhost/with-css/assets/test.a2c636dd.js');
+});
+
+it('throws when not finding an entrypoint url in development', function () {
+    with_dev_server();
+    set_fixtures_path('');
+    set_env('local');
+    set_vite_config('default', [
+        'entrypoints' => [
+            'paths' => 'entrypoints/multiple',
+        ],
+    ]);
+
+    vite()->getEntryUrl('non-existing-entrypoint');
+})->throws(NoSuchEntrypointException::class);
+
+it('throws when not finding an entrypoint url in production', function () {
+    set_fixtures_path('builds');
+    set_env('production');
+    set_vite_config('default', ['build_path' => 'with-css']);
+
+    vite()->getEntryUrl('non-existing-entrypoint');
+})->throws(NoSuchEntrypointException::class);
