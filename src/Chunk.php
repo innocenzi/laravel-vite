@@ -52,11 +52,11 @@ final class Chunk implements Stringable
     {
         // If the file is a CSS file, the main tag is a style tag.
         if (Str::endsWith($this->file, '.css')) {
-            return $this->tagGenerator->makeStyleTag($this->getAssetUrl($this->file), $this);
+            return $this->tagGenerator->makeStyleTag($this->getAssetUrl(), $this);
         }
 
         // Otherwise, it's a script tag.
-        return $this->tagGenerator->makeScriptTag($this->getAssetUrl($this->file), $this);
+        return $this->tagGenerator->makeScriptTag($this->getAssetUrl(), $this);
     }
 
     /**
@@ -64,7 +64,7 @@ final class Chunk implements Stringable
      */
     public function getStyleTags(): Collection
     {
-        return $this->css->map(fn (string $path) => $this->tagGenerator->makeStyleTag($this->getAssetUrl($path)));
+        return $this->css->map(fn (string $path) => $this->tagGenerator->makeStyleTag($this->getPathAssetUrl($path)));
     }
 
     /**
@@ -76,11 +76,19 @@ final class Chunk implements Stringable
             ->push($this->getTag())
             ->push(...$this->getStyleTags());
     }
+    
+    /**
+     * Gets the URL for this asset.
+     */
+    public function getAssetUrl(): string
+    {
+        return $this->getPathAssetUrl($this->file);
+    }
 
     /**
      * Gets the complete path for the given asset path.
      */
-    protected function getAssetUrl(string $path): string
+    protected function getPathAssetUrl(string $path): string
     {
         // Determines the base path from the manifest path
         $public = str_replace('\\', '/', public_path());
