@@ -4,6 +4,7 @@ namespace Innocenzi\Vite;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Macroable;
 use Innocenzi\Vite\EntrypointsFinder\EntrypointsFinder;
 use Innocenzi\Vite\Exceptions\NoBuildPathException;
 use Innocenzi\Vite\Exceptions\NoSuchConfigurationException;
@@ -14,6 +15,8 @@ use SplFileInfo;
 
 final class Configuration
 {
+    use Macroable;
+
     public function __construct(
         protected string $name,
         protected ?Manifest $manifest = null,

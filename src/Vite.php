@@ -3,9 +3,12 @@
 namespace Innocenzi\Vite;
 
 use Closure;
+use Illuminate\Support\Traits\Macroable;
 
 final class Vite
 {
+    use Macroable;
+    
     const CLIENT_SCRIPT_PATH = '@vite/client';
 
     protected array $configs = [];
