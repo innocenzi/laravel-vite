@@ -211,6 +211,22 @@ final class Configuration
     }
 
     /**
+     * Checks whether the manifest or development server is accessible.
+     */
+    public function canAccessAssets(): bool
+    {
+        if ($this->shouldUseManifest()) {
+            try {
+                return !!$this->getManifest();
+            } catch (\Throwable) {
+                return false;
+            }
+        }
+
+        return $this->isDevelopmentServerRunning();
+    }
+
+    /**
      * Finds entrypoints from the configuration.
      */
     protected function findEntrypoints(): Collection

@@ -235,3 +235,22 @@ it('throws when not finding an entrypoint url in production', function () {
 
     vite()->getEntryUrl('non-existing-entrypoint');
 })->throws(NoSuchEntrypointException::class);
+
+it('detects when assets are accessible', function () {
+    set_env('local');
+
+    // No server not manifest
+    set_fixtures_path('__none__');
+    expect(vite()->canAccessAssets())->toBeFalse();
+
+    // No server, but manifest
+    set_fixtures_path('builds');
+    set_vite_config('default', ['build_path' => 'with-css']);
+    expect(vite()->canAccessAssets())->toBeTrue();
+
+    // Server, no manifest
+    set_fixtures_path('__none__');
+    set_vite_config('default', []);
+    with_dev_server();
+    expect(vite()->canAccessAssets())->toBeTrue();
+});
