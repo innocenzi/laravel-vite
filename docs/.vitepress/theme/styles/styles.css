@@ -60,3 +60,7 @@ a.VPNavBarTitle {
 	justify-content: center;
 	align-items: center;
 }
+
+#VPContent .VPFooter {
+	background: none !important;
+}
