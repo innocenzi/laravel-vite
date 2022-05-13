@@ -32,13 +32,15 @@ final class Chunk implements Stringable
      */
     public static function fromArray(Manifest $manifest, array $manifestEntry): static
     {
+        $isEntry = $manifestEntry['isEntry'] ?? false;
+
         return new static(
             manifest: $manifest,
             file: $manifestEntry['file'] ?? '',
             src: $manifestEntry['src'] ?? null,
-            isEntry: $manifestEntry['isEntry'] ?? false,
+            isEntry: $isEntry,
             isDynamicEntry: $manifestEntry['isDynamicEntry'] ?? false,
-            isLegacyEntry: Str::contains($manifestEntry['file'] ?? '', '-legacy'),
+            isLegacyEntry: $isEntry && Str::contains($manifestEntry['file'] ?? '', '-legacy'),
             css: collect($manifestEntry['css'] ?? []),
             imports: collect($manifestEntry['imports'] ?? []),
             dynamicImports: collect($manifestEntry['dynamicImports'] ?? []),
