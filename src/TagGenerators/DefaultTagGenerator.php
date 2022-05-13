@@ -46,7 +46,7 @@ final class DefaultTagGenerator implements TagGenerator
         ];
 
         return ' ' . collect($attributes)
-                ->map(fn($value, $key) => sprintf('%s="%s"', $key, $value))
+                ->map(fn ($value, $key) => sprintf('%s="%s"', $key, $value))
                 ->join(' ');
     }
 }
