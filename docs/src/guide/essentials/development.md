@@ -66,3 +66,16 @@ export default defineConfig({
 ```
 
 Alternatively, you can use the `--host 0.0.0.0` command line argument to do the same without changing the configuration file.
+
+## Using Laravel Sail
+
+If using Sail, you will need to set it up to forward the port you are using to the container. Update your `docker-compose.yml` to add it:
+```yaml
+ports:
+    - '${APP_PORT:-80}:80'
+    - '3000:3000'
+```
+
+The development server will run inside the container. To install dependencies, use `sail npm ci`. Then `sail run dev` to start the server. 
+
+Do not forget to [configure Vite to listen to `0.0.0.0`](#changing-the-host).
