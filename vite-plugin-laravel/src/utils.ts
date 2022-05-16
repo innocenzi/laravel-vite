@@ -56,8 +56,8 @@ export function findPhpPath(options: PhpFinderOptions = {}): string {
  * Calls an artisan command.
  */
 export function callArtisan(executable: string, ...params: string[]): string {
-	if (process.env.VITEST) {
-		return execaSync(process.env.TEST_ARTISAN_SCRIPT!, [executable, 'artisan', ...params], { encoding: 'utf-8' })?.stdout
+	if (process.env.VITEST && process.env.TEST_ARTISAN_SCRIPT) {
+		return execaSync(process.env.TEST_ARTISAN_SCRIPT, [executable, 'artisan', ...params], { encoding: 'utf-8' })?.stdout
 	}
 
 	return execaSync(executable, ['artisan', ...params])?.stdout
@@ -67,8 +67,8 @@ export function callArtisan(executable: string, ...params: string[]): string {
  * Calls a shell command.
  */
 export function callShell(executable: string, ...params: string[]): string {
-	if (process.env.VITEST) {
-		return execaSync(process.env.TEST_ARTISAN_SCRIPT!, [executable, ...params])?.stdout
+	if (process.env.VITEST && process.env.TEST_ARTISAN_SCRIPT) {
+		return execaSync(process.env.TEST_ARTISAN_SCRIPT, [executable, ...params])?.stdout
 	}
 
 	return execaSync(executable, [...params])?.stdout
