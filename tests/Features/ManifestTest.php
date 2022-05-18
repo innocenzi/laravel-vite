@@ -92,3 +92,14 @@ it('throws when accessing a tag that does not exist by its name', function () {
 it('throws when trying to access an entry that does not exist', function () {
     get_manifest('with-entries.json')->getEntry('this-entry-does-not-exist');
 })->throws(NoSuchEntrypointException::class);
+
+it('generates legacy and polyfill script tags', function () {
+    set_fixtures_path('builds');
+    set_env('production');
+    set_vite_config('default', ['build_path' => 'legacy']);
+
+    expect(vite()->getTags())
+        ->toContain('<script nomodule src="http://localhost/legacy/assets/main-legacy.e72ecf9c.js"></script>')
+        ->toContain('<script type="module" src="http://localhost/legacy/assets/main.eb449349.js"></script>')
+        ->toContain('<script nomodule id="vite-legacy-polyfill"');
+});
