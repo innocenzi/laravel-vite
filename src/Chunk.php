@@ -17,6 +17,7 @@ final class Chunk implements Stringable
         public string|null $src,
         public bool $isEntry,
         public bool $isDynamicEntry,
+        public bool $isLegacyEntry,
         public Collection $css,
         public Collection $imports,
         public Collection $dynamicImports,
@@ -31,12 +32,17 @@ final class Chunk implements Stringable
      */
     public static function fromArray(Manifest $manifest, array $manifestEntry): static
     {
+        $file = $manifestEntry['file'] ?? '';
+        $isEntry = $manifestEntry['isEntry'] ?? false;
+        $isLegacyEntry = str_contains($file, '-legacy');
+
         return new static(
             manifest: $manifest,
-            file: $manifestEntry['file'] ?? '',
+            file: $file,
             src: $manifestEntry['src'] ?? null,
-            isEntry: $manifestEntry['isEntry'] ?? false,
+            isEntry: $isEntry,
             isDynamicEntry: $manifestEntry['isDynamicEntry'] ?? false,
+            isLegacyEntry: $isLegacyEntry,
             css: collect($manifestEntry['css'] ?? []),
             imports: collect($manifestEntry['imports'] ?? []),
             dynamicImports: collect($manifestEntry['dynamicImports'] ?? []),
@@ -76,7 +82,7 @@ final class Chunk implements Stringable
             ->push($this->getTag())
             ->push(...$this->getStyleTags());
     }
-    
+
     /**
      * Gets the URL for this asset.
      */

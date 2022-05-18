@@ -1,0 +1,17 @@
+{
+  "resources/ts/main-legacy.ts": {
+    "file": "assets/main-legacy.e72ecf9c.js",
+    "src": "resources/ts/main-legacy.ts",
+    "isEntry": true
+  },
+  "resources/ts/main.ts": {
+    "file": "assets/main.eb449349.js",
+    "src": "resources/ts/main.ts",
+    "isEntry": true
+  },
+  "vite/legacy-polyfills": {
+    "file": "assets/polyfills-legacy.f1fdfa46.js",
+    "src": "vite/legacy-polyfills",
+    "isEntry": true
+  }
+}
