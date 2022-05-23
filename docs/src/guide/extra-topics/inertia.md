@@ -161,7 +161,7 @@ Finally, you may add the relevant scripts to your `package.json`.
 {
   "scripts": {
     "dev": "vite",
-    "dev:ssr": "node public/build/main/ssr.js",
+    "dev:ssr": "node public/build/ssr.js",
     "build": "vite build",
     "build:ssr": "vite build --ssr"
   }
