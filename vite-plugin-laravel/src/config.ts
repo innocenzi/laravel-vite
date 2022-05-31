@@ -132,9 +132,9 @@ export const config = (options: Options = {}): Plugin => {
 		configureServer: (server) => {
 			server.httpServer?.once('listening', () => {
 				setTimeout(() => {
-					server.config.logger.info(`\n  ${c.magenta(`${c.bold('LARAVEL')} v${version}`)}  ${c.dim(`(using ${c.white.bold(serverConfig.configName)} config)`)}\n`)
-					server.config.logger.info(`    ${c.magenta('➜')}  ${c.bold('Application')}: ${c.cyan(env.APP_URL)}`)
-					server.config.logger.info(`    ${c.magenta('➜')}  ${c.bold('Environment')}: ${c.dim(env.APP_ENV)}`)
+					server.config.logger.info(`\n  ${c.magenta(`${c.bold('LARAVEL')} v${version}`)}  ${c.dim(`using ${c.white.bold(serverConfig.configName)} config`)}\n`)
+					server.config.logger.info(`  ${c.magenta('➜')}  ${c.bold('Application')}: ${c.cyan(env.APP_URL)}`)
+					server.config.logger.info(`  ${c.magenta('➜')}  ${c.bold('Environment')}: ${c.dim(env.APP_ENV)}`)
 
 					if (serverConfig.dev_server.enabled !== false) {
 						const buildPath = `${server.config.root}/public/${serverConfig.build_path}`
