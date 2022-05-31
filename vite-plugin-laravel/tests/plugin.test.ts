@@ -19,15 +19,16 @@ it('runs the plugin as expected', async() => {
 		],
 	}) as any
 
+	expect(result.output[0].fileName).to.match(/assets\/app\..*\.js/)
 	expect(result.output[0]).toMatchObject({
 		code: 'console.log("app content");\n',
 		isDynamicEntry: false,
 		isEntry: true,
 		isImplicitEntry: false,
 		type: 'chunk',
-		fileName: 'assets/app.d997abbd.js',
 	})
 
+	expect(result.output[1].fileName).to.match(/assets\/app\..*\.css/)
 	expect(result.output[1]).toMatchObject({
 		name: 'app.css',
 		fileName: 'assets/app.59db6eb8.css',
