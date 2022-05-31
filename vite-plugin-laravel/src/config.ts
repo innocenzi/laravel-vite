@@ -33,6 +33,7 @@ export const config = (options: Options = {}): Plugin => {
 
 			// Loads config
 			serverConfig = readConfig(options, env, configName)
+			serverConfig.build_path ??= 'build'
 			debug('Configuration from PHP:', serverConfig)
 
 			// Sets base
@@ -103,7 +104,7 @@ export const config = (options: Options = {}): Plugin => {
 					ssrManifest: ssr,
 					manifest: !ssr,
 					ssr,
-					outDir: `public/${serverConfig.build_path || 'build'}`,
+					outDir: `public/${serverConfig.build_path}`,
 					rollupOptions: {
 						input: entrypoints,
 					},
@@ -135,7 +136,7 @@ export const config = (options: Options = {}): Plugin => {
 					server.config.logger.info(`    ${c.magenta('➜')}  ${c.bold('Application')}: ${c.cyan(env.APP_URL)}`)
 					server.config.logger.info(`    ${c.magenta('➜')}  ${c.bold('Environment')}: ${c.dim(env.APP_ENV)}`)
 
-					if (!serverConfig.dev_server.enabled) {
+					if (serverConfig.dev_server.enabled !== false) {
 						const buildPath = `${server.config.root}/public/${serverConfig.build_path}`
 						const isBuilt = fs.existsSync(buildPath)
 						const color = isBuilt ? 'yellow' : 'red'
