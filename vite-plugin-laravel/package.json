@@ -1,9 +1,9 @@
 {
   "name": "vite-plugin-laravel",
-  "version": "0.2.0-beta.15",
+  "version": "0.2.0-beta.16",
   "author": "Enzo Innocenzi",
   "license": "MIT",
-	"exports": {
+  "exports": {
     ".": {
       "import": "./dist/index.mjs",
       "require": "./dist/index.js",
@@ -20,7 +20,7 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-		"*.d.ts"
+    "*.d.ts"
   ],
   "repository": {
     "type": "git",
@@ -30,9 +30,9 @@
   "bugs": "https://github.com/innocenzi/laravel-vite/issues",
   "scripts": {
     "prepare": "npm run build",
-		"build": "npm run build:index && npm run build:inertia",
+    "build": "npm run build:index && npm run build:inertia",
     "build:index": "tsup src/index.ts",
-		"build:inertia": "tsup src/inertia.ts --no-clean",
+    "build:inertia": "tsup src/inertia.ts --no-clean",
     "test": "vitest"
   },
   "devDependencies": {
