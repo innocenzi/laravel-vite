@@ -23,6 +23,6 @@ export const laravel = (options: Options = {}): PluginOption[] => [
 	manifest(),
 ]
 
+export * from './inertia'
 export { manifest, reload, config, callArtisan, callShell, findPhpPath, Options }
-
 export default laravel
