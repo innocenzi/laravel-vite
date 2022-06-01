@@ -41,7 +41,7 @@ export const config = (options: Options = {}): Plugin => {
 			debug('Base URL:', base || '<empty>')
 
 			// Parses dev url
-			const { protocol, hostname, port } = new URL(serverConfig.dev_server.url || 'http://localhost:3000')
+			const { protocol, hostname, port } = new URL(serverConfig.dev_server.url || 'http://localhost:5173')
 			const { key, cert } = findCertificates(serverConfig, env, env.APP_URL)
 			const usesHttps = key && cert && protocol === 'https:'
 			debug('Uses HTTPS:', usesHttps, { key, cert, protocol, hostname, port })
@@ -91,12 +91,12 @@ export const config = (options: Options = {}): Plugin => {
 					https: usesHttps
 						? { maxVersion: 'TLSv1.2' as const, key, cert }
 						: protocol === 'https:',
-					port: port ? Number(port) : 3000,
+					port: port ? Number(port) : 5173,
 					strictPort: !process.argv.includes('--no-strict-port'),
 					origin: `${protocol}//${hostname}:${port}`,
 					hmr: {
 						host: hostname,
-						port: Number(port) || 3000,
+						port: Number(port) || 5173,
 					},
 				},
 				build: {

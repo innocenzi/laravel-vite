@@ -12,7 +12,7 @@ it('runs the plugin as expected', async() => {
 				config: {
 					aliases: { '@': 'vite-plugin-laravel/tests/__fixtures__/resources' },
 					build_path: 'build',
-					dev_server: { url: 'http://localhost:3000' },
+					dev_server: { url: 'http://localhost:5173' },
 					entrypoints: { paths: path.resolve(__dirname, './__fixtures__/resources/scripts/app.ts') },
 				},
 			}),

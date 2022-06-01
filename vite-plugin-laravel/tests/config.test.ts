@@ -7,7 +7,7 @@ it('reads config from the given option object', () => {
 		config: {
 			aliases: { '@': 'resources' },
 			build_path: 'build',
-			dev_server: { url: 'http://localhost:3000' },
+			dev_server: { url: 'http://localhost:5173' },
 			entrypoints: { paths: 'resources/scripts/js' },
 		},
 	}, process.env)

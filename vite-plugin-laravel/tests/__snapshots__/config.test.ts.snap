@@ -67,7 +67,7 @@ exports[`reads config from the given option object 1`] = `
   },
   "build_path": "build",
   "dev_server": {
-    "url": "http://localhost:3000",
+    "url": "http://localhost:5173",
   },
   "entrypoints": {
     "paths": "resources/scripts/js",

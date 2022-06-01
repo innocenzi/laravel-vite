@@ -53,7 +53,7 @@ it('generates the Vite client script tag', function () {
     with_dev_server();
     set_env('local');
     expect(vite()->getClientScriptTag())
-        ->toBe('<script type="module" src="http://localhost:3000/@vite/client"></script>');
+        ->toBe('<script type="module" src="http://localhost:5173/@vite/client"></script>');
 });
 
 it('generates the Vite client script tag with the other tags', function () {
@@ -67,7 +67,7 @@ it('generates the Vite client script tag with the other tags', function () {
     ]);
     
     expect(vite()->getTags())
-        ->toContain('<script type="module" src="http://localhost:3000/@vite/client"></script>')
-        ->toContain('<script type="module" src="http://localhost:3000/entrypoints/multiple/main.ts"></script>')
-        ->toContain('<script type="module" src="http://localhost:3000/entrypoints/multiple/secondary.ts"></script>');
+        ->toContain('<script type="module" src="http://localhost:5173/@vite/client"></script>')
+        ->toContain('<script type="module" src="http://localhost:5173/entrypoints/multiple/main.ts"></script>')
+        ->toContain('<script type="module" src="http://localhost:5173/entrypoints/multiple/secondary.ts"></script>');
 });

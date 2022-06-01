@@ -11,7 +11,7 @@ afterAll(fn () => Vite::$useManifestCallback = null);
 
 it('uses the default configuration when not specifying one', function () {
     expect(vite()->getClientScriptTag())
-        ->toEqual('<script type="module" src="http://localhost:3000/@vite/client"></script>');
+        ->toEqual('<script type="module" src="http://localhost:5173/@vite/client"></script>');
 });
 
 it('uses the right configuration when specifying it', function () {
@@ -101,7 +101,7 @@ it('finds a configured entrypoint by its name in development', function () {
         ],
     ]);
 
-    expect(vite()->getTag('main'))->toContain('http://localhost:3000/entrypoints/multiple/main.ts');
+    expect(vite()->getTag('main'))->toContain('http://localhost:5173/entrypoints/multiple/main.ts');
 });
 
 it('throws when getting a tag for an entrypoint that could not be found', function () {
@@ -122,8 +122,8 @@ it('returns a valid asset URL in development', function () {
     set_env('local');
         
     set_vite_config('default', ['build_path' => '/should-not-be/included']);
-    expect(vite()->getAssetUrl('/my-custom-asset.txt'))->toContain('http://localhost:3000/my-custom-asset.txt');
-    expect(vite()->getAssetUrl('without-leading-slash.txt'))->toContain('http://localhost:3000/without-leading-slash.txt');
+    expect(vite()->getAssetUrl('/my-custom-asset.txt'))->toContain('http://localhost:5173/my-custom-asset.txt');
+    expect(vite()->getAssetUrl('without-leading-slash.txt'))->toContain('http://localhost:5173/without-leading-slash.txt');
 });
 
 it('returns a valid asset URL in production', function () {
@@ -204,7 +204,7 @@ it('returns an entrypoint URL in development', function () {
         ],
     ]);
 
-    expect(vite()->getEntryUrl('main'))->toContain('http://localhost:3000/entrypoints/multiple/main.ts');
+    expect(vite()->getEntryUrl('main'))->toContain('http://localhost:5173/entrypoints/multiple/main.ts');
 });
 
 it('returns an entrypoint URL in production', function () {

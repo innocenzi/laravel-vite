@@ -33,9 +33,9 @@ it('respects TagGenerator overrides in development', function () {
     ]);
     
     expect(vite()->getTags())
-        ->toContain('<script type="module" src="http://localhost:3000/@vite/client" crossorigin></script>')
-        ->toContain('<script type="module" src="http://localhost:3000/entrypoints/multiple-with-css/main.ts" crossorigin></script>')
-        ->toContain('<link rel="stylesheet" href="http://localhost:3000/entrypoints/multiple-with-css/style.css" crossorigin />');
+        ->toContain('<script type="module" src="http://localhost:5173/@vite/client" crossorigin></script>')
+        ->toContain('<script type="module" src="http://localhost:5173/entrypoints/multiple-with-css/main.ts" crossorigin></script>')
+        ->toContain('<link rel="stylesheet" href="http://localhost:5173/entrypoints/multiple-with-css/style.css" crossorigin />');
 });
 
 it('respects TagGenerator callback overrides in development', function () {
@@ -57,9 +57,9 @@ it('respects TagGenerator callback overrides in development', function () {
     ]);
     
     expect(vite()->getTags())
-        ->toContain('<script type="module" src="http://localhost:3000/@vite/client" crossorigin="anonymous"></script>')
-        ->toContain('<script type="module" src="http://localhost:3000/entrypoints/multiple-with-css/main.ts" crossorigin="anonymous"></script>')
-        ->toContain('<link rel="stylesheet" href="http://localhost:3000/entrypoints/multiple-with-css/style.css" crossorigin="anonymous" />');
+        ->toContain('<script type="module" src="http://localhost:5173/@vite/client" crossorigin="anonymous"></script>')
+        ->toContain('<script type="module" src="http://localhost:5173/entrypoints/multiple-with-css/main.ts" crossorigin="anonymous"></script>')
+        ->toContain('<link rel="stylesheet" href="http://localhost:5173/entrypoints/multiple-with-css/style.css" crossorigin="anonymous" />');
 
     Vite::makeScriptTagsUsing();
     Vite::makeStyleTagsUsing();
