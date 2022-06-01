@@ -34,7 +34,7 @@ return [
 				// ...
 			],
 			'dev_server' => [
-				'url' => env('DEV_SERVER_URL', 'http://localhost:3001'),
+				'url' => env('DEV_SERVER_URL', 'http://localhost:3000'),
 				// ...
 			],
 			'build_path' => 'build/back-office',
@@ -43,7 +43,7 @@ return [
 ];
 ```
 
-The important parts are the name of the config (the key of the array, `back-office`), `entrypoints`, `dev_server.url` and `build_path`. If you work on multiple configurations at the same time and need their development server started concurrently, their URL must be different. In the above exemple, note that the port was changed from `:3000` to `:3001`.
+The important parts are the name of the config (the key of the array, `back-office`), `entrypoints`, `dev_server.url` and `build_path`. If you work on multiple configurations at the same time and need their development server started concurrently, their URL must be different. In the above exemple, note that the port was changed from `:5173` to `:3000`.
 
 Aditionally, the `build_path` must differ as to not override other configurations' builds. In this case, the following will be generated:
 

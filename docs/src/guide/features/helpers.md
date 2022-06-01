@@ -23,7 +23,7 @@ You can specify the configuration name as the second parameter.
 
 ```php
 echo vite_entry('main');
-// Local: https://localhost:3000/resources/scripts/main.ts
+// Local: https://localhost:5173/resources/scripts/main.ts
 // Prod:  https://app-url.test/build/assets/test.a2c636dd.js
 ```
 
@@ -38,7 +38,7 @@ You can specify the configuration name as the second parameter.
 
 ```php
 echo vite_asset('/file.txt');
-// Local: https://localhost:3000/file.txt
+// Local: https://localhost:5173/file.txt
 // Prod:  https://app-url.test/build/file.txt
 ```
 
@@ -48,7 +48,7 @@ This function returns the tag for the given entrypoint. It's the exact same as t
 
 ```php
 echo vite_tag('main');
-// Local: <script type="module" src="http://localhost:3000/resources/scripts/main.ts"></script>
+// Local: <script type="module" src="http://localhost:5173/resources/scripts/main.ts"></script>
 //
 // Prod:  <script type="module" src="https://app-url.test/build/assets/main.a2c636dd.js"></script>
 //        <link rel="stylesheet" href="https://app-url.test/build/assets/main.65bd481b.css" />
@@ -60,8 +60,8 @@ This function returns the tags for the Vite client script and every configured e
 
 ```php
 echo vite_tags();
-// Local: <script type="module" src="http://localhost:3000/@vite/client"></script>
-//        <script type="module" src="http://localhost:3000/resources/scripts/main.ts"></script>
+// Local: <script type="module" src="http://localhost:5173/@vite/client"></script>
+//        <script type="module" src="http://localhost:5173/resources/scripts/main.ts"></script>
 //
 // Prod:  <script type="module" src="https://app-url.test/build/assets/main.a2c636dd.js"></script>
 //        <link rel="stylesheet" href="https://app-url.test/build/assets/main.65bd481b.css" />
@@ -73,7 +73,7 @@ This function returns the tag for the Vite client script. It's the exact same as
 
 ```php
 echo vite_tags();
-// Local: <script type="module" src="http://localhost:3000/@vite/client"></script>
+// Local: <script type="module" src="http://localhost:5173/@vite/client"></script>
 // Prod:  nothing
 ```
 

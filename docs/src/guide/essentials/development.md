@@ -18,7 +18,7 @@ Simply start the development server:
 
   vite v2.7.13 dev server running at:
 
-  > Local: http://localhost:3000/
+  > Local: http://localhost:5173/
   > Network: use `--host` to expose
 
   ready in 392ms.
@@ -73,7 +73,7 @@ If using Sail, you will need to set it up to forward the port you are using to t
 ```yaml
 ports:
     - '${APP_PORT:-80}:80'
-    - '3000:3000'
+    - '5173:5173'
 ```
 
 The development server will run inside the container. To install dependencies, use `sail npm ci`. Then `sail run dev` to start the server. 

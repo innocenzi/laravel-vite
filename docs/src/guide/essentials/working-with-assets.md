@@ -30,7 +30,7 @@ import logo from '@/resources/images/logo.png'
 document.getElementById('logo').src = logo
 ```
 
-In this example, `@/resources/images/logo.png` will be resolved to `http://localhost:3000/images/logo.png` during development, and become `/assets/logo.2d8efhg.png` in the production build.
+In this example, `@/resources/images/logo.png` will be resolved to `http://localhost:5173/images/logo.png` during development, and become `/assets/logo.2d8efhg.png` in the production build.
 
 :::tip Import modifiers
 Vite supports a few import modifiers, such as `?url` or `?raw`. You can learn more about this in [their documentation](https://vitejs.dev/guide/assets.html#the-public-directory).
