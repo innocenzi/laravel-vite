@@ -1,7 +1,7 @@
 /**
  * Resolves a page component.
  */
-export async function importPageComponent(name: string, pages: Record<string, any>) {
+export async function resolvePageComponent(name: string, pages: Record<string, any>) {
 	const path = Object.keys(pages)
 		.sort((a, b) => a.length - b.length)
 		.find((path) => path.endsWith(`${name.replaceAll('.', '/')}.vue`))
