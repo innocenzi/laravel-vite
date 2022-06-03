@@ -1,5 +1,5 @@
 import c from 'chalk'
-import { execaSync } from 'execa'
+import { sync } from 'execa'
 import { loadEnv } from 'vite'
 import { PhpFinderOptions } from './types'
 
@@ -57,10 +57,10 @@ export function findPhpPath(options: PhpFinderOptions = {}): string {
  */
 export function callArtisan(executable: string, ...params: string[]): string {
 	if (process.env.VITEST && process.env.TEST_ARTISAN_SCRIPT) {
-		return execaSync(process.env.TEST_ARTISAN_SCRIPT, [executable, 'artisan', ...params], { encoding: 'utf-8' })?.stdout
+		return sync(process.env.TEST_ARTISAN_SCRIPT, [executable, 'artisan', ...params], { encoding: 'utf-8' })?.stdout
 	}
 
-	return execaSync(executable, ['artisan', ...params])?.stdout
+	return sync(executable, ['artisan', ...params])?.stdout
 }
 
 /**
@@ -68,10 +68,10 @@ export function callArtisan(executable: string, ...params: string[]): string {
  */
 export function callShell(executable: string, ...params: string[]): string {
 	if (process.env.VITEST && process.env.TEST_ARTISAN_SCRIPT) {
-		return execaSync(process.env.TEST_ARTISAN_SCRIPT, [executable, ...params])?.stdout
+		return sync(process.env.TEST_ARTISAN_SCRIPT, [executable, ...params])?.stdout
 	}
 
-	return execaSync(executable, [...params])?.stdout
+	return sync(executable, [...params])?.stdout
 }
 
 /**
