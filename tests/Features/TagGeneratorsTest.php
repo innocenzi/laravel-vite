@@ -20,6 +20,11 @@ it('generates a style tag with the specified url', function () {
         ->toBe('<link rel="stylesheet" href="https://localhost/build/main.css" />');
 });
 
+it('generates a modulepreload tag with the specified url', function () {
+    expect(app(DefaultTagGenerator::class)->makePreloadTag('https://localhost/build/main.ts'))
+        ->toBe('<link rel="modulepreload" href="https://localhost/build/main.ts" />');
+});
+
 it('respects TagGenerator overrides in development', function () {
     app()->bind(TagGenerator::class, fn () => new CrossOriginTagGenerator());
 
@@ -31,7 +36,7 @@ it('respects TagGenerator overrides in development', function () {
             'paths' => 'entrypoints/multiple-with-css',
         ],
     ]);
-    
+
     expect(vite()->getTags())
         ->toContain('<script type="module" src="http://localhost:5173/@vite/client" crossorigin></script>')
         ->toContain('<script type="module" src="http://localhost:5173/entrypoints/multiple-with-css/main.ts" crossorigin></script>')
@@ -55,7 +60,7 @@ it('respects TagGenerator callback overrides in development', function () {
             'paths' => 'entrypoints/multiple-with-css',
         ],
     ]);
-    
+
     expect(vite()->getTags())
         ->toContain('<script type="module" src="http://localhost:5173/@vite/client" crossorigin="anonymous"></script>')
         ->toContain('<script type="module" src="http://localhost:5173/entrypoints/multiple-with-css/main.ts" crossorigin="anonymous"></script>')
@@ -70,16 +75,18 @@ it('respects TagGenerator overrides in production', function () {
 
     set_fixtures_path('builds');
     set_env('production');
-        
+
     expect(using_manifest('builds/public/with-css/manifest.json')->getTags())
         ->toContain('<link rel="stylesheet" href="http://localhost/with-css/assets/test.65bd481b.css" crossorigin />')
-        ->toContain('<script type="module" src="http://localhost/with-css/assets/test.a2c636dd.js" crossorigin></script>');
+        ->toContain('<script type="module" src="http://localhost/with-css/assets/test.a2c636dd.js" crossorigin></script>')
+        ->toContain('<link rel="stylesheet" href="http://localhost/with-css/assets/import.65bd481b.css" crossorigin />')
+        ->toContain('<link rel="modulepreload" href="http://localhost/with-css/assets/import.a1c332bb.js" crossorigin />');
 });
 
 it('uses integrity attributes when the chunk contains them', function () {
     set_fixtures_path('builds');
     set_env('production');
-        
+
     expect(using_manifest('builds/public/with-integrity/manifest.json')->getTags())
         ->toContain('<link rel="stylesheet" href="http://localhost/with-integrity/assets/main.65bd481b.css" />')
         ->toContain('<script type="module" src="http://localhost/with-integrity/assets/main.a2c636dd.js" integrity="sha384-2A5vUNf7cFDCWm6RTDPAnr/wmGjkQhXz4EP5keVPYX4OnI2Ws1iXgTQ70CTmC1Ux" crossorigin="anonymous"></script>')
@@ -96,5 +103,10 @@ class CrossOriginTagGenerator implements TagGenerator
     public function makeStyleTag(string $url, Chunk $chunk = null): string
     {
         return sprintf('<link rel="stylesheet" href="%s" crossorigin />', $url);
+    }
+
+    public function makePreloadTag(string $url, Chunk $chunk = null): string
+    {
+        return sprintf('<link rel="modulepreload" href="%s" crossorigin />', $url);
     }
 }

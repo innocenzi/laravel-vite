@@ -28,4 +28,13 @@ final class CallbackTagGenerator implements TagGenerator
 
         return $this->tagGenerator->makeStyleTag($url, $chunk);
     }
+
+    public function makePreloadTag(string $url, Chunk $chunk = null): string
+    {
+        if (\is_callable(Vite::$makePreloadTagsCallback)) {
+            return \call_user_func(Vite::$makePreloadTagsCallback, $url, $chunk);
+        }
+
+        return $this->tagGenerator->makePreloadTag($url, $chunk);
+    }
 }

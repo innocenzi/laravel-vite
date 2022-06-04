@@ -1,0 +1,26 @@
+{
+	"resources/scripts/A.ts": {
+		"file": "A.js",
+		"src": "resources/scripts/A.ts",
+		"isEntry": true,
+		"imports": ["B.js", "C.js"],
+		"css": ["A.css"]
+	},
+	"B.js": {
+		"file": "B.js",
+		"src": "resources/scripts/B.ts",
+		"imports": ["D.js"],
+		"css": ["B.css"]
+	},
+	"C.js": {
+		"file": "C.js",
+		"src": "resources/scripts/C.ts",
+		"imports": ["D.js"],
+		"css": ["C.css"]
+	},
+	"D.js": {
+		"file": "D.js",
+		"src": "resources/scripts/D.ts",
+		"css": ["D.css"]
+	}
+}

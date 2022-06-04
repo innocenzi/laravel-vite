@@ -62,7 +62,11 @@ final class Chunk implements Stringable
         }
 
         // Otherwise, it's a script tag.
-        return $this->tagGenerator->makeScriptTag($this->getAssetUrl(), $this);
+        if ($this->isEntry) {
+            return $this->tagGenerator->makeScriptTag($this->getAssetUrl(), $this);
+        }
+
+        return $this->tagGenerator->makePreloadTag($this->getAssetUrl(), $this);
     }
 
     /**
@@ -74,13 +78,23 @@ final class Chunk implements Stringable
     }
 
     /**
+     * Gets the tags for this chunk's imports.
+     */
+    public function getImportedTags(): Collection
+    {
+        return $this->imports->flatMap(fn (string $path) => Chunk::fromArray($this->manifest, $this->manifest->getChunks()[$path])->getTags());
+    }
+
+    /**
      * Gets every script and style tag.
      */
     public function getTags(): Collection
     {
         return collect()
             ->push($this->getTag())
-            ->push(...$this->getStyleTags());
+            ->push(...$this->getStyleTags())
+            ->push(...$this->getImportedTags())
+            ->unique();
     }
 
     /**
@@ -109,6 +123,6 @@ final class Chunk implements Stringable
 
     public function __toString(): string
     {
-        return $this->getTags()->join('');
+        return $this->getTags()->join("\n");
     }
 }

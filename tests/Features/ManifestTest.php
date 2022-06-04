@@ -11,7 +11,7 @@ it('guesses the configuration name from the manifest path', function () {
 
     expect(Manifest::guessConfigName(public_path('build/config-name/manifest.json')))
         ->toBe('config-name');
-        
+
     set_vite_config('default', [
         'build_path' => 'build',
     ]);
@@ -102,4 +102,20 @@ it('generates legacy and polyfill script tags', function () {
         ->toContain('<script nomodule src="http://localhost/legacy/assets/main-legacy.e72ecf9c.js"></script>')
         ->toContain('<script type="module" src="http://localhost/legacy/assets/main.eb449349.js"></script>')
         ->toContain('<script nomodule id="vite-legacy-polyfill"');
+});
+
+it('finds nested imports', function () {
+    set_fixtures_path('builds');
+    set_env('production');
+    set_vite_config('default', ['build_path' => 'with-nested-imports']);
+
+    expect(vite()->getTags())
+        ->toContain('<script type="module" src="http://localhost/with-nested-imports/A.js"></script>')
+        ->toContain('<link rel="stylesheet" href="http://localhost/with-nested-imports/A.css" />')
+        ->toContain('<link rel="modulepreload" href="http://localhost/with-nested-imports/B.js" />')
+        ->toContain('<link rel="stylesheet" href="http://localhost/with-nested-imports/B.css" />')
+        ->toContain('<link rel="modulepreload" href="http://localhost/with-nested-imports/C.js" />')
+        ->toContain('<link rel="stylesheet" href="http://localhost/with-nested-imports/C.css" />')
+        ->toContain('<link rel="modulepreload" href="http://localhost/with-nested-imports/D.js" />')
+        ->toContain('<link rel="stylesheet" href="http://localhost/with-nested-imports/D.css" />');
 });

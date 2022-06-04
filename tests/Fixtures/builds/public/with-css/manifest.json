@@ -3,8 +3,18 @@
     "file": "assets/test.a2c636dd.js",
     "src": "resources/scripts/test.ts",
     "isEntry": true,
+		"imports": [
+			"_import.a1c332bb.js"
+		],
     "css": [
       "assets/test.65bd481b.css"
     ]
-  }
+  },
+	"_import.a1c332bb.js": {
+		"file": "assets/import.a1c332bb.js",
+		"src": "resources/scripts/import.ts",
+		"css": [
+			"assets/import.65bd481b.css"
+		]
+	}
 }
