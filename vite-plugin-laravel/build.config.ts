@@ -13,10 +13,12 @@ export default defineBuildConfig({
 		'esbuild',
 		'tailwindcss',
 		'autoprefixer',
+		'chalk',
+		'execa',
 	],
 	rollup: {
 		emitCJS: true,
 		cjsBridge: true,
-		inlineDependencies: true,
+		// inlineDependencies: true,
 	},
 })
