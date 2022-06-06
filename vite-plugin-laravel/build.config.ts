@@ -13,7 +13,6 @@ export default defineBuildConfig({
 		'esbuild',
 		'tailwindcss',
 		'autoprefixer',
-		'chalk',
 	],
 	rollup: {
 		emitCJS: true,

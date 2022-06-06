@@ -36,10 +36,11 @@
   "devDependencies": {
     "@types/debug": "^4.1.7",
     "execa": "^5.1.1",
-    "unbuild": "^0.7.4",
     "typescript": "^4.7.2",
+    "unbuild": "^0.7.4",
     "vite": "^2.9.9",
-    "vitest": "^0.13.1"
+    "vitest": "^0.13.1",
+    "chalk": "^5.0.1"
   },
   "dependencies": {
     "debug": "^4.3.4",
