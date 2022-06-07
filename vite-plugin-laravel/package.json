@@ -5,14 +5,14 @@
   "license": "MIT",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.cjs"
     },
     "./inertia": {
+      "types": "./dist/inertia.d.ts",
       "import": "./dist/inertia.mjs",
-      "require": "./dist/inertia.cjs",
-      "types": "./dist/inertia.d.ts"
+      "require": "./dist/inertia.cjs"
     }
   },
   "main": "dist/index.cjs",
