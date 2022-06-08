@@ -61,11 +61,12 @@ final class Chunk implements Stringable
             return $this->tagGenerator->makeStyleTag($this->getAssetUrl(), $this);
         }
 
-        // Otherwise, it's a script tag.
+        // If the file is an entrypoint, we make a script tag.
         if ($this->isEntry) {
             return $this->tagGenerator->makeScriptTag($this->getAssetUrl(), $this);
         }
-
+        
+        // Otherwise, it's a preload tag.
         return $this->tagGenerator->makePreloadTag($this->getAssetUrl(), $this);
     }
 
@@ -82,7 +83,10 @@ final class Chunk implements Stringable
      */
     public function getImportedTags(): Collection
     {
-        return $this->imports->flatMap(fn (string $path) => Chunk::fromArray($this->manifest, $this->manifest->getChunks()[$path])->getTags());
+        return $this->imports->flatMap(fn (string $path) => Chunk::fromArray(
+            $this->manifest,
+            $this->manifest->getChunks()->get($path)
+        )->getTags());
     }
 
     /**
