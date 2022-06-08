@@ -20,6 +20,11 @@ final class DefaultTagGenerator implements TagGenerator
         return sprintf('<link rel="stylesheet" href="%s"%s />', $url, $this->processIntegrity($chunk));
     }
 
+    public function makePreloadTag(string $url, Chunk $chunk = null): string
+    {
+        return sprintf('<link rel="modulepreload" href="%s"%s />', $url, $this->processIntegrity($chunk));
+    }
+
     protected function makeLegacyScriptTag(string $url, Chunk $chunk = null): string
     {
         if (str_contains($chunk?->src, 'vite/legacy-polyfills')) {

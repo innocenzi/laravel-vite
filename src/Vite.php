@@ -8,7 +8,7 @@ use Illuminate\Support\Traits\Macroable;
 final class Vite
 {
     use Macroable;
-    
+
     const CLIENT_SCRIPT_PATH = '@vite/client';
 
     protected array $configs = [];
@@ -17,11 +17,16 @@ final class Vite
      * @var (Closure(string, Innocenzi\Vite\Chunk|null): string)
      */
     public static Closure|null $makeScriptTagsCallback = null;
-    
+
     /**
      * @var (Closure(string, Innocenzi\Vite\Chunk|null): string)
      */
     public static Closure|null $makeStyleTagsCallback = null;
+
+    /**
+     * @var (Closure(string, Innocenzi\Vite\Chunk|null): string)
+     */
+    public static Closure|null $makePreloadTagsCallback = null;
 
     /**
      * @var (Closure(Innocenzi\Vite\Configuration): bool|null)
@@ -59,6 +64,16 @@ final class Vite
     }
 
     /**
+     * Sets the logic for creating a module preload tag.
+     *
+     * @param (Closure(string, Innocenzi\Vite\Chunk|null): string) $callback
+     */
+    public static function makePreloadTagsUsing(Closure $callback = null): void
+    {
+        static::$makePreloadTagsCallback = $callback;
+    }
+
+    /**
      * Sets the logic for determining if the manifest should be used.
      *
      * @param (Closure(Innocenzi\Vite\Configuration): bool|null) $callback
@@ -67,7 +82,7 @@ final class Vite
     {
         static::$useManifestCallback = $callback;
     }
-    
+
     /**
      * Execute a method against the default configuration.
      */
