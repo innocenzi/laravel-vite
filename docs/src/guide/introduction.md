@@ -22,6 +22,6 @@ That means that Laravel Vite is **a replacement for Laravel Mix**.
 ## Requirements
 
 - The Laravel package requires PHP 8.0 or greater.
-- The Vite plugin requires Node 16 or greater.
+- The Vite plugin requires Node 16.15.1 or greater.
 - Vite requires [native ESM dynamic import support](https://caniuse.com/es6-module-dynamic-import) during development.
 - The production build assumes a baseline support for [native ESM via script tags](https://caniuse.com/es6-module). Vite does not perform any compatibility transpilation by default. Legacy browsers can be supported via the official [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy).
