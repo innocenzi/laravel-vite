@@ -25,10 +25,10 @@ jobs:
           registry-url: https://registry.npmjs.org/
           cache: "pnpm"
 
-      - run: npx conventional-github-releaser -p angular
+      - run: npx changelogithub --no-capitalize --no-emoji --no-group
         continue-on-error: true
         env:
-          CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Install Dependencies
         run: pnpm install
