@@ -17,7 +17,7 @@
   <a href="https://laravel-vite.dev"><img alt="docs" src="https://img.shields.io/badge/documentation-online-blue?logo=readthedocs&logoColor=white"></a>
   <br />
   <br />
-  <pre><div align="center">composer require innocenzi/laravel-vite:0.2.*</div></pre>
+  <pre><div align="center">composer require "innocenzi/laravel-vite:0.2.*"</div></pre>
 </p>
 <br />
 
