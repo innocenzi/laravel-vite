@@ -29,9 +29,8 @@ it('runs the plugin as expected', async() => {
 	})
 
 	expect(result.output[1].fileName).to.match(/assets\/app\..*\.css/)
+	expect(result.output[1].name).to.include('app.css')
 	expect(result.output[1]).toMatchObject({
-		name: 'app.css',
-		fileName: 'assets/app.59db6eb8.css',
 		source: 'body{color:red}\n',
 		isAsset: true,
 		type: 'asset',
