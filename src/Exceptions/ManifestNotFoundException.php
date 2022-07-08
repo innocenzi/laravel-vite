@@ -2,9 +2,9 @@
 
 namespace Innocenzi\Vite\Exceptions;
 
-use Facade\IgnitionContracts\BaseSolution;
-use Facade\IgnitionContracts\ProvidesSolution;
-use Facade\IgnitionContracts\Solution;
+use Spatie\Ignition\Contracts\BaseSolution;
+use Spatie\Ignition\Contracts\ProvidesSolution;
+use Spatie\Ignition\Contracts\Solution;
 
 final class ManifestNotFoundException extends ViteException implements ProvidesSolution
 {
@@ -24,6 +24,7 @@ final class ManifestNotFoundException extends ViteException implements ProvidesS
 
     public function getSolution(): Solution
     {
+        /** @var string */
         $baseCommand = collect([
             'pnpm-lock.yaml' => 'pnpm',
             'yarn.lock' => 'yarn',
