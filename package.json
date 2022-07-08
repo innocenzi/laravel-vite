@@ -11,12 +11,12 @@
     "test:vite": "vitest --run"
   },
   "devDependencies": {
-    "@innocenzi/eslint-config": "^0.11.0",
-    "@types/node": "^18.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.29.0",
-    "@typescript-eslint/parser": "^5.29.0",
+    "@innocenzi/eslint-config": "^0.12.0",
+    "@types/node": "^18.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
     "bumpp": "^8.2.1",
-    "eslint": "^8.18.0",
+    "eslint": "^8.19.0",
     "typescript": "^4.7.4"
   },
   "pnpm": {
