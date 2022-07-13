@@ -37,8 +37,8 @@
     "@types/debug": "^4.1.7",
     "typescript": "^4.7.4",
     "unbuild": "^0.7.4",
-    "vite": "^2.9.14",
-    "vitest": "^0.17.1"
+    "vite": "^3.0.0",
+    "vitest": "^0.18.0"
   },
   "dependencies": {
     "debug": "^4.3.4",
