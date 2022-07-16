@@ -60,7 +60,7 @@ With that in mind, you can start replacing Mix. First, you can delete your `webp
 > npm i -D vite vite-plugin-laravel
 ```
 
-Vite's configuration resides in a `vite.config.js` file at the root of your project. Go ahead and create it, and import `vite-plugin-laravel`.
+Vite's configuration resides in a `vite.config.ts` file at the root of your project. Go ahead and create it, and import `vite-plugin-laravel`.
 
 ```ts
 import { defineConfig } from 'vite'
