@@ -1,8 +1,10 @@
 <?php
 
+use Innocenzi\Vite\Configuration;
 use Innocenzi\Vite\Exceptions\ManifestNotFoundException;
 use Innocenzi\Vite\Exceptions\NoSuchEntrypointException;
 use Innocenzi\Vite\Manifest;
+use Innocenzi\Vite\Vite;
 
 it('guesses the configuration name from the manifest path', function () {
     set_vite_config('config-name', [
@@ -118,4 +120,16 @@ it('finds nested imports', function () {
         ->toContain('<link rel="stylesheet" href="http://localhost/with-nested-imports/C.css" />')
         ->toContain('<link rel="modulepreload" href="http://localhost/with-nested-imports/D.js" />')
         ->toContain('<link rel="stylesheet" href="http://localhost/with-nested-imports/D.css" />');
+});
+
+it('can override the manifest path name generation', function () {
+    set_fixtures_path('builds');
+    set_env('production');
+
+    Vite::findManifestPathWith(function (Configuration $configuration) {
+        return $configuration->getConfig('build_path') . '/owo/manifest.json';
+    });
+
+    set_vite_config('default', ['build_path' => '/build']);
+    expect(vite()->getManifestPath())->toBe('/build/owo/manifest.json');
 });
