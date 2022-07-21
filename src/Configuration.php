@@ -52,6 +52,16 @@ final class Configuration
      */
     public function getManifestPath(): string
     {
+        // If there is a strategy override, try to use that.
+        if (\is_callable(Vite::$findManifestPathWith)) {
+            $result = \call_user_func(Vite::$findManifestPathWith, $this);
+
+            // Only override if there is a result.
+            if (!\is_null($result)) {
+                return $result;
+            }
+        }
+
         return str_replace(
             ['\\', '//'],
             '/',

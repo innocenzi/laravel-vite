@@ -34,6 +34,11 @@ final class Vite
     public static Closure|null $useManifestCallback = null;
 
     /**
+     * @var (Closure(Innocenzi\Vite\Configuration): bool|null)
+     */
+    public static Closure|null $findManifestPathWith = null;
+
+    /**
      * Gets the given configuration or the default one.
      */
     public function config(string $name = null): Configuration
@@ -81,6 +86,16 @@ final class Vite
     public static function useManifest(Closure $callback = null): void
     {
         static::$useManifestCallback = $callback;
+    }
+
+    /**
+     * Sets the logic for finding the manifest path.
+     *
+     * @param (Closure(Innocenzi\Vite\Configuration): bool|null) $callback
+     */
+    public static function findManifestPathWith(Closure $callback = null): void
+    {
+        static::$findManifestPathWith = $callback;
     }
 
     /**
