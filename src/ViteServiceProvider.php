@@ -2,6 +2,8 @@
 
 namespace Innocenzi\Vite;
 
+use Composer\InstalledVersions;
+use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\View\Compilers\BladeCompiler;
 use Innocenzi\Vite\Commands\ExportConfigurationCommand;
 use Innocenzi\Vite\Commands\UpdateTsconfigCommand;
@@ -30,6 +32,7 @@ class ViteServiceProvider extends PackageServiceProvider
     {
         $this->registerBindings();
         $this->registerDirectives();
+        $this->registerAbout();
     }
 
     protected function registerBindings()
@@ -89,5 +92,21 @@ class ViteServiceProvider extends PackageServiceProvider
                 );
             });
         });
+    }
+
+    protected function registerAbout()
+    {
+        if (!class_exists(AboutCommand::class)) {
+            return;
+        }
+
+        $default = config('vite.default');
+        $configurations = array_diff(array_keys(config('vite.configs', [])), [$default]);
+
+        AboutCommand::add('Vite', [
+            'Version' => InstalledVersions::getPrettyVersion('innocenzi/laravel-vite'),
+            'Configurations' => implode(' <fg=gray>/</> ', ["<fg=yellow;options=bold>{$default}</>", ...$configurations]),
+            'Environment variable prefixes' => implode(' <fg=gray>/</> ', config('vite.env_prefixes', [])),
+        ]);
     }
 }
