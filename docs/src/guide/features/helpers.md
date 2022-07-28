@@ -29,7 +29,7 @@ echo vite_entry('main');
 
 ## `vite_asset`
 
-This function returns a valid URL for the given asset path. The path is not verified against the configured entrypoints. 
+This function returns a valid URL for the given asset path. The path is not verified against the configured entrypoints.
 
 - In manifest mode, Laravel's `asset` is used and the `build_path` is prepended to the given path.
 - In server mode, the development server URL is used and the path is appended as-is.
@@ -72,7 +72,7 @@ echo vite_tags();
 This function returns the tag for the Vite client script. It's the exact same as the [`@client` directive](/guide/features/directives#client). You can specify the configuration name as the first parameter.
 
 ```php
-echo vite_tags();
+echo vite_client();
 // Local: <script type="module" src="http://localhost:5173/@vite/client"></script>
 // Prod:  nothing
 ```
