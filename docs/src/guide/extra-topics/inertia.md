@@ -59,22 +59,26 @@ With Vite though, you must use [`import.meta.glob` or `import.meta.globEager`](h
 
 ### Example implementation
 
-If you used the [distributed preset](/guide/extra-topics/inertia#initial-setup), this is already done for you. If not, here is an example:
+If you used the [distributed preset](/guide/extra-topics/inertia#initial-setup), this is already done for you. Otherwise, you can `import { resolvePageComponent } from 'vite-plugin-laravel/inertia'`.
+
+Here is a minimal example:
 
 ```ts
 /**
  * Imports the given page component from the page record.
  */
 function resolvePageComponent(name: string, pages: Record<string, any>) {
-  for (const path in pages) {
-    if (path.endsWith(`${name.replace('.', '/')}.vue`)) {
-      return typeof pages[path] === 'function'
-        ? pages[path]()
-        : pages[path]
-    }
-  }
+	const path = Object.keys(pages)
+		.sort((a, b) => a.length - b.length)
+		.find((path) => path.endsWith(`${name.replaceAll('.', '/')}.vue`))
 
-  throw new Error(`Page not found: ${name}`)
+	if (!path) {
+		throw new Error(`Page not found: ${name}`)
+	}
+
+	return typeof pages[path] === 'function'
+		? await pages[path]()
+		: pages[path]
 }
 
 // Creates the Inertia app, nothing fancy.
