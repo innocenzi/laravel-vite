@@ -31,7 +31,7 @@ If you are used to the conventions from the Inertia ecosystem, you may notice so
 - The main entrypoint is `resources/scripts/main.ts` instead of `resources/js/app.js`
 - Pages are stored in `resources/views/pages` instead of `resources/js/Pages`
 - Components are stored in `resources/views/components` instead of `resources/js/Shared`
-- Components are stored in `resources/views/layouts` instead of `resources/js/Layouts`
+- Layouts are stored in `resources/views/layouts` instead of `resources/js/Layouts`
 - File and directory names use `kebab-case` instead of `StudlyCase`
 - Inertia pages components can be referenced using dots instead of just slashes
 
