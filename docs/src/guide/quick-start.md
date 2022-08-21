@@ -87,7 +87,7 @@ The main configuration is defined in `config/vite.php`, which the Vite plugin re
 
 If you were using any Webpack loader for TypeScript, Vue, PostCSS, SASS, Stylus... you can safely remove them. Vite handles them without additional configuration. 
 
-You can learn more about this on the [Vite documentation](https://vitejs.dev/guide/features.html#css-pre-processors).
+Except for PostCSS, you do need to install the CSS pre-processors you are using, though. You can learn more about this on the [Vite documentation](https://vitejs.dev/guide/features.html#css-pre-processors).
 
 #### Input files
 
