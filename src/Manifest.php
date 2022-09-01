@@ -3,6 +3,7 @@
 namespace Innocenzi\Vite;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Innocenzi\Vite\Exceptions\ManifestNotFoundException;
 use Innocenzi\Vite\Exceptions\NoSuchEntrypointException;
@@ -21,12 +22,21 @@ final class Manifest implements Stringable
     public function __construct(protected string|null $path)
     {
         $this->path = str_replace('\\', '/', $path);
-        
+
         if (!$path || !file_exists($path)) {
-            throw new ManifestNotFoundException($path, static::guessConfigName($path));
+            $content = null;
+            if (str_starts_with($path, 'http')) {
+                $content = Http::get($path);
+            }
+
+            if ($content === null) {
+                throw new ManifestNotFoundException($path, static::guessConfigName($path));
+            }
+        } else {
+            $content = file_get_contents($path);
         }
 
-        $this->chunks = Collection::make(json_decode(file_get_contents($path), true));
+        $this->chunks = Collection::make(json_decode($content, true, 512, JSON_THROW_ON_ERROR));
         $this->entries = $this->chunks
             ->map(fn (array $value) => Chunk::fromArray($this, $value))
             ->filter(fn (Chunk $entry) => $entry->isEntry);
