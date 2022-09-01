@@ -302,11 +302,23 @@ final class Configuration
     }
 
     /**
+     * Gets the client development server URL for the given path.
+     */
+    protected function getClientDevServerPathUrl(string $path): string
+    {
+        if (!$this->config('dev_server.client_url')) {
+            return $this->getDevServerPathUrl($path);
+        }
+
+        return Str::of($this->config('dev_server.url'))->finish('/')->append($path);
+    }
+
+    /**
      * Creates a script tag using the development server URL.
      */
     protected function createDevelopmentTag(string $path): string
     {
-        $url = $this->getDevServerPathUrl($path);
+        $url = $this->getClientDevServerPathUrl($path);
 
         if (Str::endsWith($path, ['.css', '.scss', '.sass', '.less', '.styl', '.stylus'])) {
             return $this->tagGenerator->makeStyleTag($url);
