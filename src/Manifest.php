@@ -36,7 +36,7 @@ final class Manifest implements Stringable
             $content = file_get_contents($path);
         }
 
-        $this->chunks = Collection::make(json_decode($content, true, 512, JSON_THROW_ON_ERROR));
+        $this->chunks = Collection::make(json_decode($content, true, 512, \JSON_THROW_ON_ERROR));
         $this->entries = $this->chunks
             ->map(fn (array $value) => Chunk::fromArray($this, $value))
             ->filter(fn (Chunk $entry) => $entry->isEntry);
