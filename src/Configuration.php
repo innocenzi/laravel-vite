@@ -25,8 +25,7 @@ final class Configuration
         protected ?EntrypointsFinder $entrypointsFinder = null,
         protected ?HeartbeatChecker  $heartbeatChecker = null,
         protected ?TagGenerator      $tagGenerator = null,
-    )
-    {
+    ) {
         if (!config()->has("vite.configs.${name}")) {
             throw new NoSuchConfigurationException($name);
         }
@@ -83,7 +82,7 @@ final class Configuration
     {
         if (!file_exists($path = $this->getManifestPath())) {
             if (str_starts_with($path, 'http')) {
-                $content = Cache::remember('vite.remote_manifest', 3600, function() use ($path) {
+                $content = Cache::remember('vite.remote_manifest', 3600, function () use ($path) {
                     return Http::get($path)->body();
                 });
 
@@ -105,7 +104,7 @@ final class Configuration
             return $this->getManifest()->getEntry($entryName);
         }
 
-        return $this->getEntries()->first(fn(string $chunk) => str_contains($chunk, $entryName))
+        return $this->getEntries()->first(fn (string $chunk) => str_contains($chunk, $entryName))
             ?? throw NoSuchEntrypointException::inConfiguration($entryName, $this->getName());
     }
 
@@ -119,7 +118,7 @@ final class Configuration
         }
 
         return $this->findEntrypoints()
-            ->map(fn(\SplFileInfo $file) => $this->createDevelopmentTag($this->normalizePathName($file)));
+            ->map(fn (\SplFileInfo $file) => $this->createDevelopmentTag($this->normalizePathName($file)));
     }
 
     /**
@@ -134,7 +133,7 @@ final class Configuration
         }
 
         return $tags->merge($this->getEntries())
-            ->map(fn($entrypoint) => (string)$entrypoint)
+            ->map(fn ($entrypoint) => (string)$entrypoint)
             ->join('');
     }
 
@@ -183,8 +182,8 @@ final class Configuration
 
         try {
             return $this->findEntrypoints()
-                ->map(fn(\SplFileInfo $file) => $this->getDevServerPathUrl($this->normalizePathName($file)))
-                ->firstOrfail(fn(string $chunk) => str_contains($chunk, $entryName));
+                ->map(fn (\SplFileInfo $file) => $this->getDevServerPathUrl($this->normalizePathName($file)))
+                ->firstOrfail(fn (string $chunk) => str_contains($chunk, $entryName));
         } catch (\Throwable) {
             throw NoSuchEntrypointException::inConfiguration($entryName, $this->getName());
         }

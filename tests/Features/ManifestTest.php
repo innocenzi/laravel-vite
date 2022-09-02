@@ -102,7 +102,7 @@ it('can load manifest from remote', function () {
             file_get_contents(
                 fixtures_path('manifests/with-entries.json')
             )
-        )
+        ),
     ]);
 
     $configuration = new Configuration('default');
@@ -113,7 +113,6 @@ it('can load manifest from remote', function () {
         ->toContain('resources/scripts/main.ts')
         ->toContain('resources/scripts/entry.ts')
         ->toHaveCount(2);
-
 });
 
 it('throws when trying to access an entry that does not exist', function () {

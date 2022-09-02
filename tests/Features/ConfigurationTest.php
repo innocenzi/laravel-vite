@@ -105,7 +105,7 @@ it('finds the remote manifest version', function () {
     $hash = md5($content);
 
     Http::fake([
-        'manifest.test/build/manifest.json' => Http::response($content)
+        'manifest.test/build/manifest.json' => Http::response($content),
     ]);
 
     $configuration = new Configuration('default');
