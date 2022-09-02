@@ -320,7 +320,7 @@ final class Configuration
             return $this->getDevServerPathUrl($path);
         }
 
-        return Str::of($this->config('dev_server.url'))->finish('/')->append($path);
+        return Str::of($this->config('dev_server.client_url'))->finish('/')->append($path);
     }
 
     /**
