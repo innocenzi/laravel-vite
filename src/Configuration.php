@@ -3,8 +3,6 @@
 namespace Innocenzi\Vite;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Innocenzi\Vite\EntrypointsFinder\EntrypointsFinder;
@@ -20,11 +18,11 @@ final class Configuration
     use Macroable;
 
     public function __construct(
-        protected string             $name,
-        protected ?Manifest          $manifest = null,
+        protected string $name,
+        protected ?Manifest $manifest = null,
         protected ?EntrypointsFinder $entrypointsFinder = null,
-        protected ?HeartbeatChecker  $heartbeatChecker = null,
-        protected ?TagGenerator      $tagGenerator = null,
+        protected ?HeartbeatChecker $heartbeatChecker = null,
+        protected ?TagGenerator $tagGenerator = null,
     ) {
         if (!config()->has("vite.configs.${name}")) {
             throw new NoSuchConfigurationException($name);
@@ -80,15 +78,13 @@ final class Configuration
      */
     public function getHash(): string|null
     {
-        if (!file_exists($path = $this->getManifestPath())) {
-            if (str_starts_with($path, 'http')) {
-                $content = Cache::remember('vite.remote_manifest', 3600, function () use ($path) {
-                    return Http::get($path)->body();
-                });
+        $path = $this->getManifestPath();
 
-                return md5($content);
-            }
-
+        if (str_starts_with($path, 'http')) {
+            return md5(Manifest::getManifestContent($path));
+        }
+        
+        if (!file_exists($path)) {
             return null;
         }
 
@@ -133,7 +129,7 @@ final class Configuration
         }
 
         return $tags->merge($this->getEntries())
-            ->map(fn ($entrypoint) => (string)$entrypoint)
+            ->map(fn ($entrypoint) => (string) $entrypoint)
             ->join('');
     }
 
@@ -357,7 +353,7 @@ final class Configuration
      */
     protected function normalizePathName(SplFileInfo $file): string
     {
-        return (string)Str::of($file->getPathname())
+        return (string) Str::of($file->getPathname())
             ->replace(base_path(), '')
             ->replace('\\', '/')
             ->ltrim('/');

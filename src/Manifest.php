@@ -3,7 +3,6 @@
 namespace Innocenzi\Vite;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Innocenzi\Vite\Exceptions\ManifestNotFoundException;
@@ -24,22 +23,11 @@ final class Manifest implements Stringable
     {
         $this->path = str_replace('\\', '/', $path);
 
-        if (!$path || !file_exists($path)) {
-            $content = null;
-            if (str_starts_with($path, 'http')) {
-                $content = Cache::remember('vite.remote_manifest', 3600, function () use ($path) {
-                    return Http::get($path)->body();
-                });
-            }
-
-            if ($content === null) {
-                throw new ManifestNotFoundException($path, static::guessConfigName($path));
-            }
-        } else {
-            $content = file_get_contents($path);
+        if (!$manifest = static::getManifestContent($path)) {
+            throw new ManifestNotFoundException($path, static::guessConfigName($path));
         }
 
-        $this->chunks = Collection::make(json_decode($content, true, 512, \JSON_THROW_ON_ERROR));
+        $this->chunks = Collection::make(json_decode($manifest, true, 512, \JSON_THROW_ON_ERROR));
         $this->entries = $this->chunks
             ->map(fn (array $value) => Chunk::fromArray($this, $value))
             ->filter(fn (Chunk $entry) => $entry->isEntry);
@@ -103,6 +91,26 @@ final class Manifest implements Stringable
             ->first(fn ($config) => $config[1] === $inferredBuildPath);
 
         return $name;
+    }
+
+    /**
+     * Fetches the manifest's contents from the given path.
+     */
+    public static function getManifestContent(string|null $path): string|null
+    {
+        if (str_starts_with($path, 'http')) {
+            return cache()->remember(
+                config('vite.remote_manifest.cache_key', 'vite.remote_manifest'),
+                config('vite.remote_manifest.cache_duration', now()->addHour()),
+                fn () => Http::get($path)->body()
+            );
+        }
+
+        if (file_exists($path)) {
+            return file_get_contents($path);
+        }
+
+        return null;
     }
 
     /**
