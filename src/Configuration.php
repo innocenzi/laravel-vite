@@ -32,7 +32,7 @@ final class Configuration
         $this->heartbeatChecker ??= app(HeartbeatChecker::class);
         $this->tagGenerator ??= app(TagGenerator::class);
     }
-    
+
     /**
      * Returns the manifest, reading it from the disk if necessary.
      *
@@ -62,6 +62,10 @@ final class Configuration
             }
         }
 
+        if (str_starts_with($this->config('build_path'), 'http')) {
+            return sprintf('%s/%s', trim($this->config('build_path'), '/\\'), 'manifest.json');
+        }
+
         return str_replace(
             ['\\', '//'],
             '/',
@@ -74,7 +78,13 @@ final class Configuration
      */
     public function getHash(): string|null
     {
-        if (!file_exists($path = $this->getManifestPath())) {
+        $path = $this->getManifestPath();
+
+        if (str_starts_with($path, 'http')) {
+            return md5(Manifest::getManifestContent($path));
+        }
+        
+        if (!file_exists($path)) {
             return null;
         }
 
@@ -122,7 +132,7 @@ final class Configuration
             ->map(fn ($entrypoint) => (string) $entrypoint)
             ->join('');
     }
-    
+
     /**
      * Gets the script tag for the client module.
      */
@@ -261,7 +271,7 @@ final class Configuration
                 return $result;
             }
         }
-        
+
         // If the development server is disabled, use the manifest.
         if (!$this->config('dev_server.enabled', true)) {
             return true;
