@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-laravel",
-  "version": "0.2.0-beta.29",
+  "version": "0.2.0-beta.30",
   "author": "Enzo Innocenzi",
   "license": "MIT",
   "exports": {
