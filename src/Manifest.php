@@ -3,6 +3,7 @@
 namespace Innocenzi\Vite;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Innocenzi\Vite\Exceptions\ManifestNotFoundException;
@@ -26,7 +27,9 @@ final class Manifest implements Stringable
         if (!$path || !file_exists($path)) {
             $content = null;
             if (str_starts_with($path, 'http')) {
-                $content = Http::get($path);
+                $content = Cache::remember('vite.remote_manifest', 3600, function() use ($path) {
+                    return Http::get($path)->body();
+                });
             }
 
             if ($content === null) {
@@ -38,8 +41,8 @@ final class Manifest implements Stringable
 
         $this->chunks = Collection::make(json_decode($content, true, 512, \JSON_THROW_ON_ERROR));
         $this->entries = $this->chunks
-            ->map(fn (array $value) => Chunk::fromArray($this, $value))
-            ->filter(fn (Chunk $entry) => $entry->isEntry);
+            ->map(fn(array $value) => Chunk::fromArray($this, $value))
+            ->filter(fn(Chunk $entry) => $entry->isEntry);
     }
 
     /**
@@ -63,7 +66,7 @@ final class Manifest implements Stringable
      */
     public function getEntry(string $name): Chunk
     {
-        if (!$entry = $this->entries->first(fn (Chunk $entry) => str_contains($entry->src, $name))) {
+        if (!$entry = $this->entries->first(fn(Chunk $entry) => str_contains($entry->src, $name))) {
             throw NoSuchEntrypointException::inManifest($name, static::guessConfigName($this->getPath()));
         }
 
@@ -93,11 +96,11 @@ final class Manifest implements Stringable
     {
         $path = str_replace(['\\', '//'], '/', $path);
         $public = str_replace(['\\', '//'], '/', public_path());
-        $inferredBuildPath = (string) Str::of($path)->beforeLast('/manifest.json')->replace($public, '')->trim('/');
+        $inferredBuildPath = (string)Str::of($path)->beforeLast('/manifest.json')->replace($public, '')->trim('/');
 
         [$name] = collect(config('vite.configs'))
-            ->map(fn ($config, $name) => [$name, $config['build_path']])
-            ->first(fn ($config) => $config[1] === $inferredBuildPath);
+            ->map(fn($config, $name) => [$name, $config['build_path']])
+            ->first(fn($config) => $config[1] === $inferredBuildPath);
 
         return $name;
     }
