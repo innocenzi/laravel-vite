@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Http;
 use Innocenzi\Vite\Configuration;
 use Innocenzi\Vite\Exceptions\ManifestNotFoundException;
 use Innocenzi\Vite\Exceptions\NoSuchEntrypointException;
@@ -90,6 +91,30 @@ it('throws when accessing a tag that does not exist by its name', function () {
 
     expect(vite()->getTag('main'));
 })->throws(NoSuchEntrypointException::class);
+
+it('can load manifest from remote', function () {
+    set_vite_config('default', [
+        'build_path' => 'http://manifest.test/build',
+    ]);
+
+    Http::fake([
+        'manifest.test/build/manifest.json' => Http::response(
+            file_get_contents(
+                fixtures_path('manifests/with-entries.json')
+            )
+        )
+    ]);
+
+    $configuration = new Configuration('default');
+    $manifest = $configuration->getManifest();
+
+    expect($manifest->getEntries()
+        ->keys())
+        ->toContain('resources/scripts/main.ts')
+        ->toContain('resources/scripts/entry.ts')
+        ->toHaveCount(2);
+
+});
 
 it('throws when trying to access an entry that does not exist', function () {
     get_manifest('with-entries.json')->getEntry('this-entry-does-not-exist');
