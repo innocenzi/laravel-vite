@@ -62,6 +62,18 @@ final class Manifest implements Stringable
     }
 
     /**
+     * Gets a chunk for the given name.
+     */
+    public function getChunk(string $name): Chunk
+    {
+        if (!$chunk = $this->chunks->first(fn (array $chunk) => data_get($chunk, 'src') === $name)) {
+            throw NoSuchEntrypointException::inManifest($name, static::guessConfigName($this->getPath()));
+        }
+
+        return Chunk::fromArray($this, $chunk);
+    }
+
+    /**
      * Gets every entry.
      */
     public function getEntries(): Collection

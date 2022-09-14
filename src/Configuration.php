@@ -192,7 +192,7 @@ final class Configuration
     public function getAssetUrl(string $path): string
     {
         if ($this->shouldUseManifest()) {
-            return asset(sprintf('/%s/%s', trim($this->config('build_path'), '/\\'), ltrim($path, '/')));
+            return $this->getManifest()->getChunk($path)->getAssetUrl();
         }
 
         return sprintf('%s/%s', rtrim($this->config('dev_server.url'), '/'), ltrim($path, '/'));
