@@ -5,11 +5,13 @@ on:
     branches: [main]
     paths-ignore:
       - "docs/**"
+      - "README.md"
   pull_request:
     branches: [main]
 
 jobs:
   vite:
+    if: ${{ !startsWith(github.event.head_commit.message, 'release:') }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -40,6 +42,7 @@ jobs:
         run: pnpm run test:vite
 
   php:
+    if: ${{ !startsWith(github.event.head_commit.message, 'release:') }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
