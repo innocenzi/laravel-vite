@@ -28,6 +28,7 @@ const head: HeadConfig[] = [
 	['meta', { property: 'og:title', content: title }],
 	['meta', { property: 'og:image', content: image }],
 	['meta', { property: 'og:description', content: description }],
+	['meta', { name: 'robots', content: 'noindex' }],
 ]
 
 const nav: NavItem[] = [
