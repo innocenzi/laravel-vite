@@ -10,6 +10,7 @@
     "test:php": ".\\vendor\\bin\\pest",
     "test:vite": "vitest --run"
   },
+	"packageManager": "pnpm@7.13.4",
   "devDependencies": {
     "@innocenzi/eslint-config": "^0.12.0",
     "@types/node": "^18.11.0",
