@@ -234,7 +234,7 @@ function findConfigName(): string | undefined {
 		return
 	}
 
-	const fileNameRegex = /vite\.([\w-]+)\.config\.ts/
+	const fileNameRegex = /vite\.?([\w-]+)?\.config\.ts/
 	const configFile = process.argv.at(configIndex + 1)
 
 	return fileNameRegex.exec(configFile || '')?.at(1)?.trim()
