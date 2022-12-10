@@ -17,18 +17,16 @@
   <a href="https://laravel-vite.dev"><img alt="docs" src="https://img.shields.io/badge/documentation-online-blue?logo=readthedocs&logoColor=white"></a>
   <br />
   <br />
+  <b>This project is low maintenance since Laravel built their own <a href="https://github.com/laravel/vite-plugin">Vite integration</a>.</b>
+  <br />
+  Future plan is to rewrite it entirely to improve their integration instead of providing a different one. We suggest migrating to the official Vite integration.
+  <br />
+  <br />
+  <a href="https://laravel-vite.dev">See the legacy documentation</a>
+  <br />
+  <br />
   <pre><div align="center">composer require "innocenzi/laravel-vite:0.2.*"</div></pre>
 </p>
-<br />
-
-<div align="center">
-  This project aims to integrate <a href="https://vitejs.dev">Vite</a> with the Laravel framework as seamlessly as possible.
-  <br />
-  It consists of a preset, a Laravel package and a Vite plugin.
-  <br />
-  <br />
-  <a href="https://laravel-vite.dev">See the documentation</a>
-</div>
 
 <p align="center">
   <br />
