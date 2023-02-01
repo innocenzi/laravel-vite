@@ -1,66 +1,66 @@
 {
-	"name": "innocenzi/laravel-vite",
-	"description": "Vite integration for Laravel",
-	"keywords": [
-		"innocenzi",
-		"laravel-vite"
-	],
-	"homepage": "https://github.com/innocenzi/laravel-vite",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Enzo Innocenzi",
-			"email": "enzo@innocenzi.dev",
-			"role": "Developer"
-		}
-	],
-	"require": {
-		"php": "^8.0",
-		"guzzlehttp/guzzle": "^6.0|^7.2",
-		"illuminate/contracts": "^8.0|^9.0",
-		"spatie/ignition": "^1.3",
-		"spatie/laravel-package-tools": "^1.1"
-	},
-	"require-dev": {
-		"friendsofphp/php-cs-fixer": "^3.5",
-		"orchestra/testbench": "^6.0|^7.0",
-		"pestphp/pest": "^1.21",
-		"phpunit/phpunit": "^9.3",
-		"symfony/process": "^5.3|^6.0"
-	},
-	"autoload": {
-		"files": [
-			"src/helpers.php"
-		],
-		"psr-4": {
-			"Innocenzi\\Vite\\": "src",
-			"Innocenzi\\Vite\\Database\\Factories\\": "database/factories"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"Innocenzi\\Vite\\Tests\\": "tests"
-		}
-	},
-	"scripts": {
-		"test": "pest"
-	},
-	"config": {
-		"sort-packages": true,
-		"allow-plugins": {
-			"pestphp/pest-plugin": true
-		}
-	},
-	"extra": {
-		"laravel": {
-			"providers": [
-				"Innocenzi\\Vite\\ViteServiceProvider"
-			],
-			"aliases": {
-				"Vite": "Innocenzi\\Vite\\ViteFacade"
-			}
-		}
-	},
-	"minimum-stability": "dev",
-	"prefer-stable": true
+    "name": "innocenzi/laravel-vite",
+    "description": "Vite integration for Laravel",
+    "keywords": [
+        "innocenzi",
+        "laravel-vite"
+    ],
+    "homepage": "https://github.com/innocenzi/laravel-vite",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Enzo Innocenzi",
+            "email": "enzo@innocenzi.dev",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "guzzlehttp/guzzle": "^6.0|^7.2",
+        "illuminate/contracts": "^8.0|^9.0|^10.0",
+        "spatie/ignition": "^1.3",
+        "spatie/laravel-package-tools": "^1.1"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.5",
+        "orchestra/testbench": "^6.0|^7.0|^8.0",
+        "pestphp/pest": "^1.21",
+        "phpunit/phpunit": "^9.3",
+        "symfony/process": "^5.3|^6.0"
+    },
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
+        "psr-4": {
+            "Innocenzi\\Vite\\": "src",
+            "Innocenzi\\Vite\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Innocenzi\\Vite\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "pest"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Innocenzi\\Vite\\ViteServiceProvider"
+            ],
+            "aliases": {
+                "Vite": "Innocenzi\\Vite\\ViteFacade"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
