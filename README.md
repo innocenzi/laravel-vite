@@ -14,7 +14,7 @@
   <span>&nbsp;</span>
   <a href="https://github.com/innocenzi/laravel-vite/releases"><img alt="version" src="https://img.shields.io/github/v/release/innocenzi/laravel-vite?include_prereleases&label=version&logo=github&logoColor=white"></a>
   <span>&nbsp;</span>
-  <a href="https://laravel-vite.dev"><img alt="docs" src="https://img.shields.io/badge/documentation-online-blue?logo=readthedocs&logoColor=white"></a>
+  <a href="https://laravel-vite.innocenzi.dev"><img alt="docs" src="https://img.shields.io/badge/documentation-online-blue?logo=readthedocs&logoColor=white"></a>
   <br />
   <br />
   <b>This project is low maintenance since Laravel built their own <a href="https://github.com/laravel/vite-plugin">Vite integration</a>.</b>
