@@ -9,8 +9,8 @@ use Spatie\Ignition\Contracts\Solution;
 final class ManifestNotFoundException extends ViteException implements ProvidesSolution
 {
     protected array $links = [
-        'About development' => 'https://laravel-vite.dev/guide/essentials/development',
-        'Building for production' => 'https://laravel-vite.dev/guide/essentials/building-for-production',
+        'About development' => 'https://laravel-vite.innocenzi.dev/guide/essentials/development',
+        'Building for production' => 'https://laravel-vite.innocenzi.dev/guide/essentials/building-for-production',
     ];
 
     public function __construct(

@@ -39,8 +39,8 @@ final class NoSuchEntrypointException extends ViteException implements ProvidesS
         return BaseSolution::create("Add it to your configuration")
             ->setSolutionDescription("That entry point should be defined by the `vite.configs.{$this->getConfigName()}.entrypoints` configuration option.")
             ->setDocumentationLinks([
-                'About entrypoints' => 'https://laravel-vite.dev/guide/usage.html#entrypoints',
-                'Configuring entrypoints' => 'https://laravel-vite.dev/guide/configuration.html#options',
+                'About entrypoints' => 'https://laravel-vite.innocenzi.dev/guide/usage.html#entrypoints',
+                'Configuring entrypoints' => 'https://laravel-vite.innocenzi.dev/guide/configuration.html#options',
             ]);
     }
 }

@@ -24,7 +24,7 @@ final class NoBuildPathException extends ViteException implements ProvidesSoluti
                 . 'This option cannot be empty because the `/public` directory would be emptied.'
             )
             ->setDocumentationLinks([
-                'Configuration' => 'https://laravel-vite.dev/guide/essentials/configuration#url',
+                'Configuration' => 'https://laravel-vite.innocenzi.dev/guide/essentials/configuration#url',
                 'Building for production' => '/guide/essentials/building-for-production',
             ]);
     }
