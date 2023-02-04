@@ -58,6 +58,9 @@ jobs:
             testbench: 6.*
           - laravel: "9.*"
             testbench: 7.x-dev
+        exclude:
+          - laravel: 10.*
+            php: 8.0
     name: PHP ${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
     steps:
       - name: Checkout code
