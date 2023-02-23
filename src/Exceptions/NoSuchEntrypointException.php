@@ -13,7 +13,7 @@ final class NoSuchEntrypointException extends ViteException implements ProvidesS
         protected ?string $configName = null,
         ?string $message = null,
     ) {
-        $this->message = $message ?? "Entry \"${entry}\" could not be found.";
+        $this->message = $message ?? "Entry \"{$entry}\" could not be found.";
     }
 
     public static function inManifest(string $entry, ?string $configName = null): self
@@ -21,7 +21,7 @@ final class NoSuchEntrypointException extends ViteException implements ProvidesS
         return new self(
             $entry,
             $configName,
-            "Entry \"${entry}\" does not exist in the manifest."
+            "Entry \"{$entry}\" does not exist in the manifest."
         );
     }
 
@@ -30,7 +30,7 @@ final class NoSuchEntrypointException extends ViteException implements ProvidesS
         return new self(
             $entry,
             $configName,
-            "Entry \"${entry}\" could not be found in the configuration."
+            "Entry \"{$entry}\" could not be found in the configuration."
         );
     }
 

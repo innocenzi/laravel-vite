@@ -52,7 +52,7 @@ function fixtures_path(string $path = ''): string
 {
     $path = (string) Str::of($path)->start('/');
 
-    return realpath(__DIR__ . "/Fixtures/${path}");
+    return realpath(__DIR__ . "/Fixtures/{$path}");
 }
 
 /**
@@ -68,7 +68,7 @@ function using_manifest(string $path): Configuration
  */
 function get_manifest(string $manifest = 'manifest.json'): Manifest
 {
-    return Manifest::read(fixtures_path("manifests/${manifest}"));
+    return Manifest::read(fixtures_path("manifests/{$manifest}"));
 }
 
 /**
@@ -86,7 +86,7 @@ function set_fixtures_path(string $path = '')
  */
 function set_vite_config(string $name, array $config): void
 {
-    config()->set("vite.configs.${name}", array_replace_recursive(config('vite.configs.default'), $config));
+    config()->set("vite.configs.{$name}", array_replace_recursive(config('vite.configs.default'), $config));
 }
 
 /**

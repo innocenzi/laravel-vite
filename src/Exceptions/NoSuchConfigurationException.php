@@ -10,7 +10,7 @@ final class NoSuchConfigurationException extends ViteException implements Provid
 {
     public function __construct(protected $configName)
     {
-        $this->message = "Configuration \"${configName}\" does not exist.";
+        $this->message = "Configuration \"{$configName}\" does not exist.";
     }
 
     public function getSolution(): Solution
