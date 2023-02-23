@@ -24,7 +24,7 @@ class ExportConfigurationCommand extends Command
         if ($path = $this->option('export')) {
             File::put($path, $config);
 
-            $this->info("Configuration file written to <comment>${path}</comment>.");
+            $this->info("Configuration file written to <comment>{$path}</comment>.");
 
             return;
         }
