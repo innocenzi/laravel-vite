@@ -22,7 +22,7 @@
   Future plan is to rewrite it entirely to improve their integration instead of providing a different one. We suggest migrating to the official Vite integration.
   <br />
   <br />
-  <a href="https://laravel-vite.netlify.app">See the legacy documentation</a>
+  <a href="https://laravel-vite.netlify.app">See the legacy documentation</a> and the <a href="./MIGRATION.md">migration guide</a>
   <br />
   <br />
   <pre><div align="center">composer require innocenzi/laravel-vite</div></pre>
