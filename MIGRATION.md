@@ -4,7 +4,7 @@ This guide is a rough migration guide to move from Innocenzi's vite integration 
 
 LP = Legacy Plugin, aka `innocenzi/laravel-vite`
 
-1. Remote `innocenzi/laravel-vite` from your `composer.json` and run `composer update`
+1. Remove `innocenzi/laravel-vite` from your `composer.json` and run `composer update`
 2. Run `yarn remove laravel-vite` and then `yarn add laravel-vite-plugin` to swap to the official plugin
 3. Under the plugins section in your `vite.config.ts`, create a new laravel plugin instance and port your LP settings over.
    - Swap the old import to the new one `import laravel from 'laravel-vite-plugin'`
