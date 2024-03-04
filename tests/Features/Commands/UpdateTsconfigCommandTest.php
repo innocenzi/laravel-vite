@@ -70,7 +70,7 @@ it('asks for confirmation before running in production', function () {
         set_env('production');
         this()->artisan('vite:tsconfig')
             ->expectsConfirmation(
-                question: 'Do you really wish to run this command?',
+                question: 'Are you sure you want to run this command?',
                 answer: 'yes'
             )
             ->assertExitCode(0);
