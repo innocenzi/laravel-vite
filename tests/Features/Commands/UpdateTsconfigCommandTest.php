@@ -67,14 +67,10 @@ it('throws an error if the tsconfig is malformatted', function () {
 
 it('asks for confirmation before running in production', function () {
     sandbox(function () {
-        $isLaravel10OrGreater = version_compare(app()->version(), '10.0.0', '>=');
-        
         set_env('production');
         this()->artisan('vite:tsconfig')
             ->expectsConfirmation(
-                question: $isLaravel10OrGreater
-                    ? 'Are you sure you want to run this command?'
-                    : 'Do you really wish to run this command?',
+                question: 'Are you sure you want to run this command?',
                 answer: 'yes'
             )
             ->assertExitCode(0);
